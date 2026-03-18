@@ -1,0 +1,16 @@
+# User config (contains personal paths)
+config.py
+
+# Personal data exports
+jgamboa.csv
+*.csv
+
+# All user data (scrobbles, caches, dashboard output)
+data/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+.DS_Store
