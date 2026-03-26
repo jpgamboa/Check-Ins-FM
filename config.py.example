@@ -6,6 +6,12 @@
 # Set this to the path of the downloaded CSV file.
 LASTFM_EXPORT_FILE = ""  # e.g. "./my-lastfm-export.csv"
 
+# ── Spotify (alternative to Last.fm) ─────────────────────────────────────────
+# Request your "Extended streaming history" at: https://www.spotify.com/account/privacy/
+# Set to the folder containing Streaming_History_Audio_*.json files.
+# If both Last.fm and Spotify are set, Spotify takes precedence.
+SPOTIFY_EXPORT_DIR = ""  # e.g. "./my-spotify-export"
+
 # ── Foursquare ────────────────────────────────────────────────────────────────
 # Download your data at: https://foursquare.com/download-my-data
 # Set to the path of your extracted export folder (containing checkins*.json)

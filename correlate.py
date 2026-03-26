@@ -139,6 +139,10 @@ def _load(path, default):
 
 # ── Home city detection ────────────────────────────────────────────────────────
 
+_HOME_WINDOW_DAYS = 90   # rolling window to detect dominant city
+_HOME_MIN_SHARE   = 0.40 # city must be ≥40% of window's checkins to count
+
+
 def _infer_home_city(checkins):
     """
     Returns the (city, country_code) tuple that appears most in all checkins.
@@ -154,9 +158,121 @@ def _infer_home_city(checkins):
     return city_counts.most_common(1)[0][0]
 
 
+def _infer_home_periods(checkins):
+    """
+    Detect home city changes over time by finding the dominant city in
+    rolling windows. Returns a list of dicts:
+      [{"city": ..., "country_code": ..., "start": date, "end": date}, ...]
+    sorted chronologically. Each period represents where the user lived.
+    """
+    # Build daily checkin city counts
+    dated = []
+    for c in checkins:
+        city = c.get("city", "")
+        cc = c.get("country_code", "")
+        if not city or not cc:
+            continue
+        try:
+            dt = _parse_ts(c["timestamp"]).date()
+            dated.append((dt, city, cc))
+        except Exception:
+            continue
+
+    if not dated:
+        return []
+
+    dated.sort(key=lambda x: x[0])
+
+    # For each month, find the dominant city using a rolling window
+    from collections import deque
+    window = deque()
+    window_counts = Counter()
+    monthly_dominant = []  # (month_start_date, city, cc)
+
+    all_dates = sorted(set(d for d, _, _ in dated))
+    if not all_dates:
+        return []
+
+    # Walk through each day, maintaining a rolling window
+    date_idx = 0
+    cur = all_dates[0]
+    last = all_dates[-1]
+    day = timedelta(days=1)
+    prev_month = None
+
+    while cur <= last:
+        # Add checkins for this day
+        while date_idx < len(dated) and dated[date_idx][0] <= cur:
+            d, city, cc = dated[date_idx]
+            window.append((d, city, cc))
+            window_counts[(city, cc)] += 1
+            date_idx += 1
+
+        # Remove checkins outside the window
+        cutoff = cur - timedelta(days=_HOME_WINDOW_DAYS)
+        while window and window[0][0] < cutoff:
+            _, city, cc = window.popleft()
+            window_counts[(city, cc)] -= 1
+            if window_counts[(city, cc)] == 0:
+                del window_counts[(city, cc)]
+
+        # Record dominant city at month boundaries
+        month_key = (cur.year, cur.month)
+        if month_key != prev_month and window_counts:
+            top, top_count = window_counts.most_common(1)[0]
+            total = sum(window_counts.values())
+            if top_count / total >= _HOME_MIN_SHARE:
+                monthly_dominant.append((cur, top[0], top[1]))
+            prev_month = month_key
+
+        cur += day
+
+    if not monthly_dominant:
+        # Fallback to overall most common
+        overall = Counter((city, cc) for _, city, cc in dated).most_common(1)[0][0]
+        return [{"city": overall[0], "country_code": overall[1],
+                 "start": all_dates[0].isoformat(),
+                 "end": last.isoformat()}]
+
+    # Collapse consecutive months with the same dominant city into periods
+    periods = []
+    cur_city, cur_cc = monthly_dominant[0][1], monthly_dominant[0][2]
+    cur_start = monthly_dominant[0][0]
+
+    for dt, city, cc in monthly_dominant[1:]:
+        if city != cur_city or cc != cur_cc:
+            periods.append({
+                "city": cur_city, "country_code": cur_cc,
+                "start": cur_start.isoformat(), "end": dt.isoformat(),
+            })
+            cur_city, cur_cc, cur_start = city, cc, dt
+
+    periods.append({
+        "city": cur_city, "country_code": cur_cc,
+        "start": cur_start.isoformat(), "end": last.isoformat(),
+    })
+
+    return periods
+
+
+def _home_at(home_periods, dt):
+    """Return (city, country_code) for the home city active at datetime dt."""
+    if not home_periods:
+        return ("", "")
+    d = dt.date() if hasattr(dt, 'date') else dt
+    d_iso = d.isoformat() if hasattr(d, 'isoformat') else str(d)
+    for p in home_periods:
+        if p["start"] <= d_iso <= p["end"]:
+            return (p["city"], p["country_code"])
+    # Before first period or after last — use nearest
+    if d_iso < home_periods[0]["start"]:
+        return (home_periods[0]["city"], home_periods[0]["country_code"])
+    return (home_periods[-1]["city"], home_periods[-1]["country_code"])
+
+
 # ── Attribution ───────────────────────────────────────────────────────────────
 
-def _attribute_scrobbles(checkins, scrobbles, home_city="", home_cc=""):
+def _attribute_scrobbles(checkins, scrobbles, home_periods=None):
     """
     For each scrobble, find the most recent checkin within a per-category
     attribution window. Returns a list of (scrobble, checkin | None) pairs.
@@ -165,14 +281,23 @@ def _attribute_scrobbles(checkins, scrobbles, home_city="", home_cc=""):
     when in the home city — you're likely at work. When traveling, keep
     restaurant attribution active.
     """
+    home_periods = home_periods or []
     sorted_checkins = sorted(checkins, key=lambda c: c["timestamp"])
     checkin_ts = [_parse_ts(c["timestamp"]) for c in sorted_checkins]
+    # Pre-compute local hours (for weekday lunch suppression)
+    checkin_local_ts = []
+    for c in sorted_checkins:
+        utc = _parse_ts(c["timestamp"])
+        offset_min = c.get("tz_offset_min", 0) or 0
+        checkin_local_ts.append(utc + timedelta(minutes=offset_min))
     # Pre-compute categories and home-city flags
     checkin_cats = [_categorize_venue(c.get("venue_name", "")) for c in sorted_checkins]
-    checkin_is_home = [
-        (c.get("city", "") == home_city and c.get("country_code", "") == home_cc)
-        for c in sorted_checkins
-    ]
+    checkin_is_home = []
+    for c, ck_ts in zip(sorted_checkins, checkin_ts):
+        hc, hcc = _home_at(home_periods, ck_ts)
+        checkin_is_home.append(
+            c.get("city", "") == hc and c.get("country_code", "") == hcc
+        )
 
     attributed = []
 
@@ -190,9 +315,11 @@ def _attribute_scrobbles(checkins, scrobbles, home_city="", home_cc=""):
             cat = checkin_cats[idx]
 
             # Suppress restaurants during weekday lunch ONLY in home city
+            # Use local time (not UTC) so the 10am-4pm window is correct
+            local_ts = checkin_local_ts[idx]
             is_weekday_lunch = (checkin_is_home[idx]
-                                and ck_ts.weekday() < 5
-                                and 10 <= ck_ts.hour < 16)
+                                and local_ts.weekday() < 5
+                                and 10 <= local_ts.hour < 16)
             if is_weekday_lunch and cat in _CAT_WINDOW_WEEKDAY_LUNCH:
                 window_sec = _CAT_WINDOW_WEEKDAY_LUNCH[cat]
             else:
@@ -211,13 +338,13 @@ def _attribute_scrobbles(checkins, scrobbles, home_city="", home_cc=""):
 
 # ── Trip detection ─────────────────────────────────────────────────────────────
 
-def _detect_trips(checkins, home_city, home_country_code):
+def _detect_trips(checkins, home_periods):
     """
     Returns a list of trip dicts. Each trip has:
       start, end (datetime), duration_days, checkins (count),
       cities (Counter), countries (Counter), destination (str)
     """
-    if not home_country_code:
+    if not home_periods:
         return []
 
     # Build daily checkin map: date → list of checkins
@@ -230,20 +357,23 @@ def _detect_trips(checkins, home_city, home_country_code):
         except Exception:
             pass
 
-    # Away days: days where all checkins are outside home city
-    def _is_away(day_checkins):
+    # Away days: days where all checkins are outside the home city for that date
+    def _is_away(day_checkins, date):
+        home_city, home_cc = _home_at(home_periods, date)
+        if not home_cc:
+            return False
         for c in day_checkins:
             city = c.get("city", "")
             cc   = c.get("country_code", "")
             # Home if same city+country, or if no geocode data
             if not cc:
                 return False
-            if city == home_city and cc == home_country_code:
+            if city == home_city and cc == home_cc:
                 return False
         return True
 
     sorted_dates = sorted(by_date.keys())
-    away_dates   = [d for d in sorted_dates if _is_away(by_date[d])]
+    away_dates   = [d for d in sorted_dates if _is_away(by_date[d], d)]
 
     if not away_dates:
         return []
@@ -273,7 +403,8 @@ def _detect_trips(checkins, home_city, home_country_code):
         countries = Counter(c.get("country_code", "") for c in trip_checkins if c.get("country_code"))
 
         # Destination label: top countries (excl. home if international) or top cities
-        top_countries = [cc for cc, _ in countries.most_common(3) if cc != home_country_code]
+        _, trip_home_cc = _home_at(home_periods, start)
+        top_countries = [cc for cc, _ in countries.most_common(3) if cc != trip_home_cc]
         if not top_countries:
             top_countries = [cc for cc, _ in countries.most_common(1)]
 
@@ -324,13 +455,19 @@ def run(data_dir="./data"):
 
     print(f"Correlating {len(scrobbles):,} scrobbles with {len(checkins):,} checkins...")
 
-    # ── Infer home ────────────────────────────────────────────────────────────
-    home_city, home_cc = _infer_home_city(checkins)
-    print(f"  Inferred home: {home_city}, {home_cc} "
-          f"(from most frequent checkin city)")
+    # ── Infer home periods ──────────────────────────────────────────────────
+    home_periods = _infer_home_periods(checkins)
+    if len(home_periods) == 1:
+        p = home_periods[0]
+        print(f"  Inferred home: {p['city']}, {p['country_code']}")
+    else:
+        print(f"  Inferred {len(home_periods)} home periods:")
+        for p in home_periods:
+            print(f"    {p['city']}, {p['country_code']}  "
+                  f"({p['start'][:7]} → {p['end'][:7]})")
 
     # ── Attribute scrobbles to venues ─────────────────────────────────────────
-    attributed = _attribute_scrobbles(checkins, scrobbles, home_city, home_cc)
+    attributed = _attribute_scrobbles(checkins, scrobbles, home_periods)
     attributed_count = sum(1 for _, ck in attributed if ck)
     print(f"  Attributed {attributed_count:,}/{len(scrobbles):,} scrobbles to venues "
           f"({attributed_count/max(len(scrobbles),1)*100:.1f}%)")
@@ -436,8 +573,9 @@ def run(data_dir="./data"):
     ]
 
     # ── Trip detection ────────────────────────────────────────────────────────
-    print(f"  Detecting trips (home: {home_city or '?'}, {home_cc or '?'})...")
-    trips = _detect_trips(checkins, home_city, home_cc)
+    home_labels = [f"{p['city']}, {p['country_code']}" for p in home_periods]
+    print(f"  Detecting trips (home: {' → '.join(home_labels) or '?'})...")
+    trips = _detect_trips(checkins, home_periods)
 
     # Attach top scrobbles to each trip
     scrobble_by_date = defaultdict(list)
@@ -542,7 +680,7 @@ def run(data_dir="./data"):
     ]
 
     result = {
-        "home":               {"city": home_city, "country_code": home_cc},
+        "home":               home_periods,
         "attributed":         attributed_count,
         "venue_plays":        venue_plays[:50],
         "by_category":        by_category,

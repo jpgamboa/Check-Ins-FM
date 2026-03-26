@@ -1,0 +1,5002 @@
+{
+  "38.95,-121.08": {
+    "city": "Auburn",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "29.41,-98.49": {
+    "city": "San Antonio",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "32.8,-117.25": {
+    "city": "San Diego",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.22,-97.87": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "38.79,-121.28": {
+    "city": "Roseville",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "38.61,-90.32": {
+    "city": "Maplewood",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.67,-97.74": {
+    "city": "Georgetown",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "41.99,44.11": {
+    "city": "Gori",
+    "country": "Georgia",
+    "country_code": "GE"
+  },
+  "30.3,-97.72": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "33.52,-86.8": {
+    "city": "Birmingham",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "33.3,-111.84": {
+    "city": "Chandler",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.36,-97.69": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "29.51,-98.4": {
+    "city": "San Antonio",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "41.74,45.3": {
+    "city": "Sagarejo Municipality",
+    "country": "Georgia",
+    "country_code": "GE"
+  },
+  "36.07,120.31": {
+    "city": "Shinan District",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "30.16,-97.8": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "39.3,-76.62": {
+    "city": "Baltimore",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "31.22,121.37": {
+    "city": "Shanghai",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "30.28,-97.7": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "25.08,121.56": {
+    "city": "Taipei",
+    "country": "Taiwan",
+    "country_code": "TW"
+  },
+  "19.25,-99.09": {
+    "city": "Mexico City",
+    "country": "Mexico",
+    "country_code": "MX"
+  },
+  "30.19,-98.02": {
+    "city": "Hays County",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "29.93,-90.07": {
+    "city": "New Orleans",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "37.56,126.97": {
+    "city": "Seoul",
+    "country": "South Korea",
+    "country_code": "KR"
+  },
+  "51.95,-7.72": {
+    "city": "County Waterford",
+    "country": "Ireland",
+    "country_code": "IE"
+  },
+  "30.25,-97.7": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.51,-97.7": {
+    "city": "Round Rock",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "38.9,-121.07": {
+    "city": "Auburn",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "31.2,121.49": {
+    "city": "Shanghai",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "38.64,34.83": {
+    "city": "Göreme",
+    "country": "Turkey",
+    "country_code": "TR"
+  },
+  "55.68,12.57": {
+    "city": "Copenhagen",
+    "country": "Denmark",
+    "country_code": "DK"
+  },
+  "30.09,-97.98": {
+    "city": "Hays County",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "19.36,-99.16": {
+    "city": "Mexico City",
+    "country": "Mexico",
+    "country_code": "MX"
+  },
+  "39.25,-120.14": {
+    "city": "Placer County",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "32.75,-117.21": {
+    "city": "San Diego",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.17,-97.83": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "1.3,103.83": {
+    "city": "Singapore",
+    "country": "Singapore",
+    "country_code": "SG"
+  },
+  "28.44,-81.32": {
+    "city": "Orlando",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "38.65,-121.38": {
+    "city": "Sacramento County",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "50.83,-0.14": {
+    "city": "Brighton",
+    "country": "United Kingdom",
+    "country_code": "GB"
+  },
+  "21.28,-157.7": {
+    "city": "Honolulu",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "29.44,-98.48": {
+    "city": "San Antonio",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "31.2,121.34": {
+    "city": "Shanghai",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "38.78,-121.29": {
+    "city": "Roseville",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "22.27,114.15": {
+    "city": "Hong Kong",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "29.66,-82.33": {
+    "city": "Gainesville",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "17.49,-88.18": {
+    "city": "Belize District",
+    "country": "Belize",
+    "country_code": "BZ"
+  },
+  "20.85,107.07": {
+    "city": "Ha Long Ward",
+    "country": "Vietnam",
+    "country_code": "VN"
+  },
+  "34.67,135.5": {
+    "city": "Osaka",
+    "country": "Japan",
+    "country_code": "JP"
+  },
+  "29.58,118.98": {
+    "city": "Chun'an County",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "4.67,-74.05": {
+    "city": "Bogota, Capital District",
+    "country": "Colombia",
+    "country_code": "CO"
+  },
+  "38.75,-121.29": {
+    "city": "Roseville",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.26,-97.73": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.32,-97.7": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.25,-97.72": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.21,-97.78": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.23,-97.73": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "39.15,-119.75": {
+    "city": "Carson City",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "55.67,12.56": {
+    "city": "Copenhagen",
+    "country": "Denmark",
+    "country_code": "DK"
+  },
+  "30.31,-97.69": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "52.37,4.87": {
+    "city": "Amsterdam",
+    "country": "Netherlands",
+    "country_code": "NL"
+  },
+  "54.68,25.28": {
+    "city": "Vilnius",
+    "country": "Lithuania",
+    "country_code": "LT"
+  },
+  "30.2,-97.77": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.29,-97.7": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.57,-97.69": {
+    "city": "Round Rock",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.18,-97.78": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.24,-97.75": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "19.43,-99.16": {
+    "city": "Mexico City",
+    "country": "Mexico",
+    "country_code": "MX"
+  },
+  "34.1,-118.13": {
+    "city": "Alhambra",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.43,-97.77": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "40.68,-73.98": {
+    "city": "New York",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "25.04,121.55": {
+    "city": "Taipei",
+    "country": "Taiwan",
+    "country_code": "TW"
+  },
+  "31.21,121.56": {
+    "city": "Yanqiao",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "34.98,-118.95": {
+    "city": "Kern County",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "22.3,114.17": {
+    "city": "Hong Kong",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "28.94,-81.34": {
+    "city": "Volusia County",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "29.69,121.28": {
+    "city": "Fenghua District",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "28.46,-81.4": {
+    "city": "Orange County",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "38.3,-122.29": {
+    "city": "Napa",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "29.41,-98.5": {
+    "city": "San Antonio",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "32.8,-117.26": {
+    "city": "San Diego County",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "37.78,-122.46": {
+    "city": "San Francisco",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "29.98,-90.1": {
+    "city": "New Orleans",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.47,-97.97": {
+    "city": "Travis County",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.3,-97.73": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "51.52,-0.08": {
+    "city": "City of London",
+    "country": "United Kingdom",
+    "country_code": "GB"
+  },
+  "30.19,-97.56": {
+    "city": "Travis County",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "35.12,-106.61": {
+    "city": "Albuquerque",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "22.28,114.19": {
+    "city": "Hong Kong",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "30.36,-97.7": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "35.69,139.69": {
+    "city": "Shinjuku",
+    "country": "Japan",
+    "country_code": "JP"
+  },
+  "35.68,139.77": {
+    "city": "Chuo",
+    "country": "Japan",
+    "country_code": "JP"
+  },
+  "30.13,-97.85": {
+    "city": "Travis County",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "25.05,121.52": {
+    "city": "Taipei",
+    "country": "Taiwan",
+    "country_code": "TW"
+  },
+  "22.31,113.93": {
+    "city": "Hong Kong",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "28.47,-81.47": {
+    "city": "Orlando",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "39.01,-77.06": {
+    "city": "Chevy Chase",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "29.93,-90.08": {
+    "city": "New Orleans",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.27,-97.7": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "37.79,-122.41": {
+    "city": "San Francisco",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.33,-97.92": {
+    "city": "Travis County",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.33,-97.67": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "38.9,-121.08": {
+    "city": "Auburn",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.22,-98.0": {
+    "city": "Hays County",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "40.72,-73.95": {
+    "city": "New York",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "40.8,-73.97": {
+    "city": "New York",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "41.9,-87.63": {
+    "city": "Chicago",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.19,-97.58": {
+    "city": "Travis County",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "28.49,-81.43": {
+    "city": "Orlando",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "40.69,-73.95": {
+    "city": "New York",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.33,-97.82": {
+    "city": "Travis County",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "34.98,135.76": {
+    "city": "Kyoto",
+    "country": "Japan",
+    "country_code": "JP"
+  },
+  "30.05,-97.16": {
+    "city": "Bastrop County",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "52.36,4.89": {
+    "city": "Amsterdam",
+    "country": "Netherlands",
+    "country_code": "NL"
+  },
+  "29.52,-99.7": {
+    "city": "Uvalde County",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "21.68,-157.95": {
+    "city": "Honolulu County",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.28,-97.73": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.19,-98.05": {
+    "city": "Hays County",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "37.56,126.94": {
+    "city": "Seoul",
+    "country": "South Korea",
+    "country_code": "KR"
+  },
+  "30.25,-97.73": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "38.69,-121.59": {
+    "city": "Sacramento County",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "19.42,-99.15": {
+    "city": "Mexico City",
+    "country": "Mexico",
+    "country_code": "MX"
+  },
+  "9.69,100.08": {
+    "city": "Ban Tai",
+    "country": "Thailand",
+    "country_code": "TH"
+  },
+  "29.97,-90.08": {
+    "city": "New Orleans",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.31,-97.7": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "38.92,-77.02": {
+    "city": "Washington",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "21.06,105.82": {
+    "city": "Hà Nội",
+    "country": "Vietnam",
+    "country_code": "VN"
+  },
+  "30.18,-97.79": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "10.47,-84.73": {
+    "city": "La Fortuna",
+    "country": "Costa Rica",
+    "country_code": "CR"
+  },
+  "9.7,100.01": {
+    "city": "Ban Tai",
+    "country": "Thailand",
+    "country_code": "TH"
+  },
+  "19.43,-99.17": {
+    "city": "Mexico City",
+    "country": "Mexico",
+    "country_code": "MX"
+  },
+  "30.48,-98.15": {
+    "city": "Burnet County",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "36.17,-115.29": {
+    "city": "Las Vegas",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "38.91,-121.08": {
+    "city": "Auburn",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "38.54,-121.49": {
+    "city": "Sacramento",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "45.81,15.98": {
+    "city": "City of Zagreb",
+    "country": "Croatia",
+    "country_code": "HR"
+  },
+  "35.67,139.71": {
+    "city": "Shibuya",
+    "country": "Japan",
+    "country_code": "JP"
+  },
+  "42.66,44.64": {
+    "city": "Kazbegi Municipality",
+    "country": "Georgia",
+    "country_code": "GE"
+  },
+  "31.21,121.55": {
+    "city": "Yanqiao",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "49.28,-123.12": {
+    "city": "Vancouver",
+    "country": "Canada",
+    "country_code": "CA"
+  },
+  "36.22,-115.25": {
+    "city": "Las Vegas",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "53.35,-6.27": {
+    "city": "Dublin",
+    "country": "Ireland",
+    "country_code": "IE"
+  },
+  "28.37,-81.41": {
+    "city": "Orange County",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "35.7,139.78": {
+    "city": "Chiyoda",
+    "country": "Japan",
+    "country_code": "JP"
+  },
+  "31.21,121.4": {
+    "city": "Shanghai",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "37.78,-122.47": {
+    "city": "San Francisco",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "20.62,-87.07": {
+    "city": "",
+    "country": "Mexico",
+    "country_code": "MX"
+  },
+  "38.8,-121.28": {
+    "city": "Rocklin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.4,-97.75": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "41.9,-87.62": {
+    "city": "Chicago",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "1.32,103.91": {
+    "city": "Singapore",
+    "country": "Singapore",
+    "country_code": "SG"
+  },
+  "29.97,-90.1": {
+    "city": "New Orleans",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.66,-97.75": {
+    "city": "Williamson County",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.29,-97.73": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "41.62,45.92": {
+    "city": "Signagi Municipality",
+    "country": "Georgia",
+    "country_code": "GE"
+  },
+  "30.24,-97.78": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "19.43,-99.19": {
+    "city": "Mexico City",
+    "country": "Mexico",
+    "country_code": "MX"
+  },
+  "4.65,-74.06": {
+    "city": "Bogota, Capital District",
+    "country": "Colombia",
+    "country_code": "CO"
+  },
+  "10.43,-75.55": {
+    "city": "",
+    "country": "Colombia",
+    "country_code": "CO"
+  },
+  "51.5,-0.11": {
+    "city": "Greater London",
+    "country": "United Kingdom",
+    "country_code": "GB"
+  },
+  "21.27,-157.69": {
+    "city": "Honolulu",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.23,-97.91": {
+    "city": "Travis County",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "29.87,121.5": {
+    "city": "Haishu District",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "40.19,44.52": {
+    "city": "Yerevan",
+    "country": "Armenia",
+    "country_code": "AM"
+  },
+  "38.58,-121.49": {
+    "city": "Sacramento",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "39.26,-121.02": {
+    "city": "Nevada City",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.05,-96.7": {
+    "city": "Fayette County",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "39.72,-104.95": {
+    "city": "Denver",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "29.99,-90.06": {
+    "city": "New Orleans",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.24,-98.0": {
+    "city": "Travis County",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "52.36,4.91": {
+    "city": "Amsterdam",
+    "country": "Netherlands",
+    "country_code": "NL"
+  },
+  "40.76,-74.0": {
+    "city": "New York",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "33.58,-117.66": {
+    "city": "Mission Viejo",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "29.96,-90.14": {
+    "city": "Jefferson Parish",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "41.9,-87.64": {
+    "city": "Chicago",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "38.78,-121.24": {
+    "city": "Rocklin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "37.51,127.06": {
+    "city": "Seoul",
+    "country": "South Korea",
+    "country_code": "KR"
+  },
+  "38.82,-78.57": {
+    "city": "Edinburg",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "34.03,-118.15": {
+    "city": "Los Angeles County",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "29.42,-98.44": {
+    "city": "San Antonio",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "55.69,12.56": {
+    "city": "Copenhagen",
+    "country": "Denmark",
+    "country_code": "DK"
+  },
+  "31.25,121.58": {
+    "city": "Jinqiao",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "29.61,119.03": {
+    "city": "Chun'an County",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "35.71,139.78": {
+    "city": "Taito",
+    "country": "Japan",
+    "country_code": "JP"
+  },
+  "30.35,-97.71": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "37.53,126.86": {
+    "city": "Seoul",
+    "country": "South Korea",
+    "country_code": "KR"
+  },
+  "31.2,121.32": {
+    "city": "Minhang District",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "38.79,-121.22": {
+    "city": "Rocklin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.24,-92.11": {
+    "city": "Scott",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "32.06,118.79": {
+    "city": "Xuanwu District",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "30.25,120.18": {
+    "city": "Shangcheng District",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "55.96,37.41": {
+    "city": "Khimki",
+    "country": "Russia",
+    "country_code": "RU"
+  },
+  "22.26,114.0": {
+    "city": "Hong Kong",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "31.25,121.43": {
+    "city": "Shanghai",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "35.7,139.79": {
+    "city": "Taito",
+    "country": "Japan",
+    "country_code": "JP"
+  },
+  "39.72,-121.81": {
+    "city": "Chico",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.1,-98.09": {
+    "city": "Hays County",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "31.22,121.43": {
+    "city": "Shanghai",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "29.97,-90.09": {
+    "city": "New Orleans",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "37.37,127.11": {
+    "city": "Seongnam-si",
+    "country": "South Korea",
+    "country_code": "KR"
+  },
+  "30.2,-97.79": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "29.71,-98.13": {
+    "city": "New Braunfels",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "40.18,44.51": {
+    "city": "Yerevan",
+    "country": "Armenia",
+    "country_code": "AM"
+  },
+  "19.43,-99.18": {
+    "city": "Mexico City",
+    "country": "Mexico",
+    "country_code": "MX"
+  },
+  "43.51,16.44": {
+    "city": "Split",
+    "country": "Croatia",
+    "country_code": "HR"
+  },
+  "36.16,-115.33": {
+    "city": "Las Vegas",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "29.6,-98.61": {
+    "city": "San Antonio",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "32.75,-117.25": {
+    "city": "San Diego",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "37.45,126.7": {
+    "city": "Incheon",
+    "country": "South Korea",
+    "country_code": "KR"
+  },
+  "30.53,-97.63": {
+    "city": "Round Rock",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "29.74,-98.1": {
+    "city": "New Braunfels",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "41.94,-87.64": {
+    "city": "Chicago",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "51.51,-0.08": {
+    "city": "City of London",
+    "country": "United Kingdom",
+    "country_code": "GB"
+  },
+  "29.81,-95.46": {
+    "city": "Houston",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "31.2,121.55": {
+    "city": "Yanqiao",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "30.39,-97.71": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "31.28,121.45": {
+    "city": "Shanghai",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "31.17,121.37": {
+    "city": "Minhang District",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "10.77,106.7": {
+    "city": "Thủ Đức",
+    "country": "Vietnam",
+    "country_code": "VN"
+  },
+  "29.78,-95.42": {
+    "city": "Houston",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "20.64,-87.07": {
+    "city": "Playa del Carmen",
+    "country": "Mexico",
+    "country_code": "MX"
+  },
+  "36.77,-90.42": {
+    "city": "Poplar Bluff",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "37.29,127.2": {
+    "city": "Yongin-si",
+    "country": "South Korea",
+    "country_code": "KR"
+  },
+  "34.07,-118.12": {
+    "city": "Alhambra",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "38.8,-121.29": {
+    "city": "Rocklin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "40.75,-73.99": {
+    "city": "New York",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "31.2,121.4": {
+    "city": "Shanghai",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "29.97,-90.11": {
+    "city": "New Orleans",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "41.01,28.98": {
+    "city": "Istanbul",
+    "country": "Turkey",
+    "country_code": "TR"
+  },
+  "25.03,121.56": {
+    "city": "Taipei",
+    "country": "Taiwan",
+    "country_code": "TW"
+  },
+  "38.83,-121.19": {
+    "city": "Loomis",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.24,-97.79": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "19.43,-99.2": {
+    "city": "Mexico City",
+    "country": "Mexico",
+    "country_code": "MX"
+  },
+  "37.61,126.66": {
+    "city": "Incheon",
+    "country": "South Korea",
+    "country_code": "KR"
+  },
+  "21.28,-157.71": {
+    "city": "Honolulu",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "35.48,-83.01": {
+    "city": "Waynesville",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "21.01,105.85": {
+    "city": "Hà Nội",
+    "country": "Vietnam",
+    "country_code": "VN"
+  },
+  "31.39,121.52": {
+    "city": "Shanghai",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "30.23,-97.67": {
+    "city": "Travis County",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "19.42,-99.08": {
+    "city": "Mexico City",
+    "country": "Mexico",
+    "country_code": "MX"
+  },
+  "30.2,-97.71": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "40.19,44.51": {
+    "city": "Yerevan",
+    "country": "Armenia",
+    "country_code": "AM"
+  },
+  "17.75,-88.02": {
+    "city": "Belize District",
+    "country": "Belize",
+    "country_code": "BZ"
+  },
+  "31.24,121.45": {
+    "city": "Shanghai",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "39.17,-120.14": {
+    "city": "Placer County",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "36.15,-115.34": {
+    "city": "Clark County",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "41.86,45.23": {
+    "city": "Sagarejo Municipality",
+    "country": "Georgia",
+    "country_code": "GE"
+  },
+  "55.68,12.58": {
+    "city": "Copenhagen",
+    "country": "Denmark",
+    "country_code": "DK"
+  },
+  "35.59,-82.55": {
+    "city": "Asheville",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.24,-98.01": {
+    "city": "Travis County",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "31.21,121.37": {
+    "city": "Xinjing",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "59.44,24.73": {
+    "city": "Tallinn",
+    "country": "Estonia",
+    "country_code": "EE"
+  },
+  "35.68,-105.94": {
+    "city": "Santa Fe",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "39.77,-104.99": {
+    "city": "Denver",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "32.74,-97.11": {
+    "city": "Arlington",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.33,-97.84": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "54.7,25.29": {
+    "city": "Vilnius",
+    "country": "Lithuania",
+    "country_code": "LT"
+  },
+  "38.75,-121.25": {
+    "city": "Roseville",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.89,121.57": {
+    "city": "Qingcun",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "29.75,-95.48": {
+    "city": "Houston",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "40.81,-73.94": {
+    "city": "New York",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "38.8,-121.21": {
+    "city": "Rocklin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "55.7,12.57": {
+    "city": "Copenhagen",
+    "country": "Denmark",
+    "country_code": "DK"
+  },
+  "30.21,-97.74": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.25,120.17": {
+    "city": "Shangcheng District",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "29.96,-97.66": {
+    "city": "Caldwell County",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "40.82,-73.96": {
+    "city": "New York",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "51.93,-8.57": {
+    "city": "Cork",
+    "country": "Ireland",
+    "country_code": "IE"
+  },
+  "30.25,-92.74": {
+    "city": "Jefferson Davis Parish",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "21.64,-158.06": {
+    "city": "Honolulu County",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "55.67,12.57": {
+    "city": "Copenhagen",
+    "country": "Denmark",
+    "country_code": "DK"
+  },
+  "52.37,4.88": {
+    "city": "Amsterdam",
+    "country": "Netherlands",
+    "country_code": "NL"
+  },
+  "19.35,-99.16": {
+    "city": "Mexico City",
+    "country": "Mexico",
+    "country_code": "MX"
+  },
+  "40.79,-73.96": {
+    "city": "New York",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "21.02,105.85": {
+    "city": "Hà Nội",
+    "country": "Vietnam",
+    "country_code": "VN"
+  },
+  "39.32,-120.16": {
+    "city": "Truckee",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "31.22,121.42": {
+    "city": "Fahua",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "21.57,-158.12": {
+    "city": "Honolulu County",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "29.99,-90.09": {
+    "city": "New Orleans",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "25.8,-80.37": {
+    "city": "Doral",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "38.53,-121.46": {
+    "city": "Sacramento County",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.02,-96.73": {
+    "city": "Fayette County",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "40.76,-73.96": {
+    "city": "New York",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "33.8,-117.88": {
+    "city": "Anaheim",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.38,121.17": {
+    "city": "Cixi",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "21.31,-157.85": {
+    "city": "Honolulu",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "29.94,-97.64": {
+    "city": "Caldwell County",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "36.05,-115.17": {
+    "city": "Clark County",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "41.94,-87.65": {
+    "city": "Chicago",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "37.77,-122.44": {
+    "city": "San Francisco",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "51.2,3.22": {
+    "city": "Bruges",
+    "country": "Belgium",
+    "country_code": "BE"
+  },
+  "28.37,-81.43": {
+    "city": "Orange County",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "10.47,-84.65": {
+    "city": "La Fortuna",
+    "country": "Costa Rica",
+    "country_code": "CR"
+  },
+  "38.79,-121.25": {
+    "city": "Rocklin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.39,-97.72": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "40.77,-73.98": {
+    "city": "New York",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.42,-98.04": {
+    "city": "Briarcliff",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "29.96,-90.07": {
+    "city": "New Orleans",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "31.19,121.37": {
+    "city": "Minhang District",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "30.19,-97.77": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "10.79,106.7": {
+    "city": "Thủ Đức",
+    "country": "Vietnam",
+    "country_code": "VN"
+  },
+  "10.77,106.69": {
+    "city": "Thủ Đức",
+    "country": "Vietnam",
+    "country_code": "VN"
+  },
+  "40.02,-105.27": {
+    "city": "Boulder",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "31.22,121.65": {
+    "city": "Tang Zhen",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "39.83,-105.02": {
+    "city": "Westminster",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.22,-97.74": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "41.91,-87.62": {
+    "city": "Cook County",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.28,-97.67": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "21.22,105.79": {
+    "city": "Hà Nội",
+    "country": "Vietnam",
+    "country_code": "VN"
+  },
+  "29.68,-98.16": {
+    "city": "Comal County",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "37.78,-122.39": {
+    "city": "San Francisco",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.21,-97.73": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "51.51,-0.11": {
+    "city": "City of London",
+    "country": "United Kingdom",
+    "country_code": "GB"
+  },
+  "22.4,103.84": {
+    "city": "Xã Tả Phìn",
+    "country": "Vietnam",
+    "country_code": "VN"
+  },
+  "30.23,-97.68": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "38.58,-121.51": {
+    "city": "West Sacramento",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.39,-97.74": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "17.74,-88.02": {
+    "city": "Belize District",
+    "country": "Belize",
+    "country_code": "BZ"
+  },
+  "37.54,126.73": {
+    "city": "Incheon",
+    "country": "South Korea",
+    "country_code": "KR"
+  },
+  "34.1,-118.33": {
+    "city": "Los Angeles",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "35.59,-82.56": {
+    "city": "Asheville",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "22.24,113.98": {
+    "city": "Hong Kong",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "38.91,-77.06": {
+    "city": "Washington",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "52.39,13.52": {
+    "city": "Schönefeld",
+    "country": "Germany",
+    "country_code": "DE"
+  },
+  "1.29,103.84": {
+    "city": "Singapore",
+    "country": "Singapore",
+    "country_code": "SG"
+  },
+  "52.37,4.9": {
+    "city": "Amsterdam",
+    "country": "Netherlands",
+    "country_code": "NL"
+  },
+  "35.68,-105.95": {
+    "city": "Santa Fe",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "31.16,121.81": {
+    "city": "Zhuqiao",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "13.76,100.5": {
+    "city": "Bangkok",
+    "country": "Thailand",
+    "country_code": "TH"
+  },
+  "32.7,-117.15": {
+    "city": "San Diego",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "29.43,-98.44": {
+    "city": "San Antonio",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "29.94,-90.07": {
+    "city": "New Orleans",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "29.92,-90.08": {
+    "city": "New Orleans",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "37.16,128.99": {
+    "city": "Taebaek-si",
+    "country": "South Korea",
+    "country_code": "KR"
+  },
+  "29.74,-95.48": {
+    "city": "Houston",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "37.78,-122.41": {
+    "city": "San Francisco",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "32.52,-88.3": {
+    "city": "York",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "38.61,-90.28": {
+    "city": "St. Louis",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "32.9,-97.04": {
+    "city": "Grapevine",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "29.76,-95.36": {
+    "city": "Houston",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "32.06,118.77": {
+    "city": "Gulou District",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "38.63,-121.22": {
+    "city": "Sacramento County",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.25,120.16": {
+    "city": "Shangcheng District",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "31.19,121.38": {
+    "city": "Minhang District",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "29.28,-95.42": {
+    "city": "Brazoria County",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "41.92,-87.69": {
+    "city": "Chicago",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "32.76,-117.13": {
+    "city": "San Diego",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "39.79,-105.03": {
+    "city": "Denver",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "36.24,-121.77": {
+    "city": "Monterey County",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "40.79,-73.97": {
+    "city": "New York",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "33.94,-118.41": {
+    "city": "Los Angeles",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.24,-97.72": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "19.43,-99.13": {
+    "city": "Mexico City",
+    "country": "Mexico",
+    "country_code": "MX"
+  },
+  "31.22,121.41": {
+    "city": "Shanghai",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "30.22,-97.73": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "19.69,-98.84": {
+    "city": "Teotihuacán",
+    "country": "Mexico",
+    "country_code": "MX"
+  },
+  "38.29,-122.46": {
+    "city": "Sonoma",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "41.71,44.8": {
+    "city": "Tbilisi",
+    "country": "Georgia",
+    "country_code": "GE"
+  },
+  "40.76,-73.97": {
+    "city": "New York",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "12.25,109.18": {
+    "city": "Phường Tây Nha Trang",
+    "country": "Vietnam",
+    "country_code": "VN"
+  },
+  "25.11,121.85": {
+    "city": "New Taipei",
+    "country": "Taiwan",
+    "country_code": "TW"
+  },
+  "37.58,126.98": {
+    "city": "Seoul",
+    "country": "South Korea",
+    "country_code": "KR"
+  },
+  "51.47,-0.49": {
+    "city": "Greater London",
+    "country": "United Kingdom",
+    "country_code": "GB"
+  },
+  "31.16,121.79": {
+    "city": "Zhuqiao",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "40.67,-74.0": {
+    "city": "New York",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "53.35,-6.26": {
+    "city": "Dublin",
+    "country": "Ireland",
+    "country_code": "IE"
+  },
+  "4.69,-74.03": {
+    "city": "Bogota",
+    "country": "Colombia",
+    "country_code": "CO"
+  },
+  "32.7,-117.17": {
+    "city": "San Diego",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "25.8,-80.28": {
+    "city": "Miami-Dade County",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "22.29,114.17": {
+    "city": "Hong Kong",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "28.16,-97.0": {
+    "city": "Aransas County",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "37.77,-122.45": {
+    "city": "San Francisco",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.41,-97.72": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "31.11,121.21": {
+    "city": "",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "29.65,-82.35": {
+    "city": "Gainesville",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "12.23,109.2": {
+    "city": "Khánh Hòa Province",
+    "country": "Vietnam",
+    "country_code": "VN"
+  },
+  "30.27,-97.8": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "32.68,-117.19": {
+    "city": "Coronado",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "29.95,-90.07": {
+    "city": "New Orleans",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "35.69,139.72": {
+    "city": "Shinjuku",
+    "country": "Japan",
+    "country_code": "JP"
+  },
+  "30.22,-97.75": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "19.41,-99.16": {
+    "city": "Mexico City",
+    "country": "Mexico",
+    "country_code": "MX"
+  },
+  "41.67,44.96": {
+    "city": "Tbilisi",
+    "country": "Georgia",
+    "country_code": "GE"
+  },
+  "30.11,-97.33": {
+    "city": "Bastrop",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "40.76,-73.99": {
+    "city": "New York",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "51.53,-0.13": {
+    "city": "Greater London",
+    "country": "United Kingdom",
+    "country_code": "GB"
+  },
+  "10.27,-85.02": {
+    "city": "Las Juntas",
+    "country": "Costa Rica",
+    "country_code": "CR"
+  },
+  "32.55,-116.94": {
+    "city": "Tijuana",
+    "country": "Mexico",
+    "country_code": "MX"
+  },
+  "29.87,121.54": {
+    "city": "Haishu District",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "30.28,-97.68": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "40.74,-74.0": {
+    "city": "New York",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "37.56,126.99": {
+    "city": "Seoul",
+    "country": "South Korea",
+    "country_code": "KR"
+  },
+  "29.59,119.21": {
+    "city": "Chun'an County",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "31.01,121.42": {
+    "city": "Jiangchuanlu",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "30.51,-97.68": {
+    "city": "Round Rock",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "40.71,-74.0": {
+    "city": "New York",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "28.62,-96.62": {
+    "city": "Port Lavaca",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "29.88,121.56": {
+    "city": "Yinzhou District",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "30.2,-97.98": {
+    "city": "Dripping Springs",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "29.29,-100.37": {
+    "city": "Kinney County",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "37.77,-122.47": {
+    "city": "San Francisco",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "38.07,-122.82": {
+    "city": "Marin County",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "37.54,126.97": {
+    "city": "Seoul",
+    "country": "South Korea",
+    "country_code": "KR"
+  },
+  "34.1,-118.34": {
+    "city": "Los Angeles",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.27,-97.82": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "32.75,-117.19": {
+    "city": "San Diego",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "1.3,103.85": {
+    "city": "Singapore",
+    "country": "Singapore",
+    "country_code": "SG"
+  },
+  "29.69,-95.46": {
+    "city": "Houston",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "1.35,103.99": {
+    "city": "Singapore",
+    "country": "Singapore",
+    "country_code": "SG"
+  },
+  "25.14,121.5": {
+    "city": "Taipei",
+    "country": "Taiwan",
+    "country_code": "TW"
+  },
+  "31.2,121.36": {
+    "city": "Xinjing",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "13.76,100.49": {
+    "city": "Bangkok",
+    "country": "Thailand",
+    "country_code": "TH"
+  },
+  "31.15,121.81": {
+    "city": "Zhuqiao",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "29.94,-90.08": {
+    "city": "New Orleans",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "35.77,140.39": {
+    "city": "Narita",
+    "country": "Japan",
+    "country_code": "JP"
+  },
+  "35.69,139.8": {
+    "city": "Sumida",
+    "country": "Japan",
+    "country_code": "JP"
+  },
+  "38.97,-95.24": {
+    "city": "Lawrence",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "29.92,-90.09": {
+    "city": "New Orleans",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "52.38,4.91": {
+    "city": "Amsterdam",
+    "country": "Netherlands",
+    "country_code": "NL"
+  },
+  "37.78,-122.42": {
+    "city": "San Francisco",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "29.76,-95.37": {
+    "city": "Houston",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "35.62,-82.55": {
+    "city": "Asheville",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "10.81,106.66": {
+    "city": "Thủ Đức",
+    "country": "Vietnam",
+    "country_code": "VN"
+  },
+  "38.8,-121.23": {
+    "city": "Rocklin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.21,-97.76": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "43.66,-79.41": {
+    "city": "Toronto",
+    "country": "Canada",
+    "country_code": "CA"
+  },
+  "30.38,-97.65": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "32.07,118.78": {
+    "city": "Xuanwu District",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "37.75,-122.42": {
+    "city": "San Francisco",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.29,-97.68": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.48,-97.8": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.07,-97.84": {
+    "city": "Buda",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "40.75,-74.0": {
+    "city": "New York",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "20.95,107.03": {
+    "city": "Bai Chay Ward",
+    "country": "Vietnam",
+    "country_code": "VN"
+  },
+  "32.04,118.78": {
+    "city": "Qinhuai District",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "35.66,139.69": {
+    "city": "Shibuya",
+    "country": "Japan",
+    "country_code": "JP"
+  },
+  "30.24,-97.73": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "19.43,-99.14": {
+    "city": "Mexico City",
+    "country": "Mexico",
+    "country_code": "MX"
+  },
+  "37.76,-122.44": {
+    "city": "San Francisco",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "40.76,-73.98": {
+    "city": "New York",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "50.82,4.34": {
+    "city": "Forest - Vorst",
+    "country": "Belgium",
+    "country_code": "BE"
+  },
+  "30.23,-97.86": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "-8.52,115.26": {
+    "city": "Ubud District",
+    "country": "Indonesia",
+    "country_code": "ID"
+  },
+  "40.76,-111.9": {
+    "city": "Salt Lake City",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "37.55,126.93": {
+    "city": "Seoul",
+    "country": "South Korea",
+    "country_code": "KR"
+  },
+  "51.52,-0.06": {
+    "city": "Greater London",
+    "country": "United Kingdom",
+    "country_code": "GB"
+  },
+  "40.7,-73.99": {
+    "city": "New York",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "38.92,33.56": {
+    "city": "Şereflikoçhisar",
+    "country": "Turkey",
+    "country_code": "TR"
+  },
+  "31.02,121.45": {
+    "city": "Wujing",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "30.52,-97.65": {
+    "city": "Round Rock",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "54.67,25.27": {
+    "city": "Vilnius",
+    "country": "Lithuania",
+    "country_code": "LT"
+  },
+  "49.26,-123.11": {
+    "city": "Vancouver",
+    "country": "Canada",
+    "country_code": "CA"
+  },
+  "31.21,121.43": {
+    "city": "Fahua",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "43.65,-79.45": {
+    "city": "Toronto",
+    "country": "Canada",
+    "country_code": "CA"
+  },
+  "32.3,-106.76": {
+    "city": "Las Cruces",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "3.15,101.71": {
+    "city": "Kuala Lumpur",
+    "country": "Malaysia",
+    "country_code": "MY"
+  },
+  "12.23,109.19": {
+    "city": "Nha Trang",
+    "country": "Vietnam",
+    "country_code": "VN"
+  },
+  "30.4,-97.72": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "37.62,-122.39": {
+    "city": "San Mateo County",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.16,-97.79": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "31.22,121.38": {
+    "city": "Xinjing",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "32.73,-117.16": {
+    "city": "San Diego",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.22,-97.76": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "19.41,-99.17": {
+    "city": "Mexico City",
+    "country": "Mexico",
+    "country_code": "MX"
+  },
+  "29.74,-95.41": {
+    "city": "Houston",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "34.05,-118.35": {
+    "city": "Los Angeles",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "22.29,113.94": {
+    "city": "Hong Kong",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "30.23,-97.88": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "37.8,-122.44": {
+    "city": "San Francisco",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "31.25,121.48": {
+    "city": "Shanghai",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "40.74,-74.01": {
+    "city": "New York",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "31.31,121.51": {
+    "city": "Shanghai",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "35.66,139.77": {
+    "city": "Chuo",
+    "country": "Japan",
+    "country_code": "JP"
+  },
+  "31.22,121.48": {
+    "city": "Shanghai",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "30.22,-97.66": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "40.71,-74.01": {
+    "city": "New York",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "39.19,-120.2": {
+    "city": "Placer County",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "55.68,12.59": {
+    "city": "Copenhagen",
+    "country": "Denmark",
+    "country_code": "DK"
+  },
+  "38.92,-121.19": {
+    "city": "Placer County",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "36.13,-115.2": {
+    "city": "Clark County",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "27.74,-82.75": {
+    "city": "Saint Pete Beach",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "32.75,-117.2": {
+    "city": "San Diego",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "29.8,-95.39": {
+    "city": "Houston",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "38.74,-121.23": {
+    "city": "Roseville",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "31.34,120.58": {
+    "city": "Gusu District",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "38.9,-121.21": {
+    "city": "Placer County",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "27.97,-82.5": {
+    "city": "Tampa",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "39.21,-121.05": {
+    "city": "Grass Valley",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "31.19,121.43": {
+    "city": "Shanghai",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "37.8,-122.46": {
+    "city": "San Francisco",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "31.28,121.5": {
+    "city": "Shanghai",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "31.15,121.8": {
+    "city": "Zhuqiao",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "60.17,24.94": {
+    "city": "Helsinki",
+    "country": "Finland",
+    "country_code": "FI"
+  },
+  "29.49,-98.43": {
+    "city": "San Antonio",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.23,-92.46": {
+    "city": "Acadia Parish",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "31.23,121.45": {
+    "city": "Shanghai",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "40.71,-73.96": {
+    "city": "New York",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "41.04,28.89": {
+    "city": "Bayrampaşa",
+    "country": "Turkey",
+    "country_code": "TR"
+  },
+  "29.78,-95.12": {
+    "city": "Harris County",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.34,-98.03": {
+    "city": "Lakeway",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "52.37,4.89": {
+    "city": "Amsterdam",
+    "country": "Netherlands",
+    "country_code": "NL"
+  },
+  "54.68,25.3": {
+    "city": "Vilnius",
+    "country": "Lithuania",
+    "country_code": "LT"
+  },
+  "33.51,-86.81": {
+    "city": "Birmingham",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "32.72,-117.17": {
+    "city": "San Diego",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "31.2,121.45": {
+    "city": "Shanghai",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "30.2,-97.76": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "39.27,-76.6": {
+    "city": "Baltimore",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "41.89,-87.65": {
+    "city": "Chicago",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.37,-97.79": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "19.43,-99.15": {
+    "city": "Mexico City",
+    "country": "Mexico",
+    "country_code": "MX"
+  },
+  "30.56,-98.27": {
+    "city": "Marble Falls",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "39.33,-76.64": {
+    "city": "Baltimore",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "38.74,-121.25": {
+    "city": "Roseville",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.14,-97.44": {
+    "city": "Bastrop County",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "55.69,12.54": {
+    "city": "Copenhagen",
+    "country": "Denmark",
+    "country_code": "DK"
+  },
+  "20.4,-87.35": {
+    "city": "Tulum",
+    "country": "Mexico",
+    "country_code": "MX"
+  },
+  "39.17,-119.77": {
+    "city": "Carson City",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "38.9,-77.02": {
+    "city": "Washington",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.2,-97.66": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "37.55,126.92": {
+    "city": "Seoul",
+    "country": "South Korea",
+    "country_code": "KR"
+  },
+  "50.85,2.94": {
+    "city": "Ypres",
+    "country": "Belgium",
+    "country_code": "BE"
+  },
+  "51.2,3.23": {
+    "city": "Bruges",
+    "country": "Belgium",
+    "country_code": "BE"
+  },
+  "30.51,-99.78": {
+    "city": "Kimble County",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "32.75,-97.11": {
+    "city": "Arlington",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "40.78,-73.96": {
+    "city": "New York",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "31.23,121.43": {
+    "city": "Shanghai",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "31.21,121.42": {
+    "city": "Fahua",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "39.95,-75.16": {
+    "city": "Philadelphia",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.4,-97.73": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "27.96,-82.51": {
+    "city": "Tampa",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "29.84,-96.71": {
+    "city": "Fayette County",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "31.2,121.43": {
+    "city": "Shanghai",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "32.74,-97.06": {
+    "city": "Arlington",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "37.51,127.1": {
+    "city": "Seoul",
+    "country": "South Korea",
+    "country_code": "KR"
+  },
+  "30.48,-97.83": {
+    "city": "Cedar Park",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "35.69,139.7": {
+    "city": "Shinjuku",
+    "country": "Japan",
+    "country_code": "JP"
+  },
+  "38.66,-121.34": {
+    "city": "Sacramento County",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "20.63,-87.07": {
+    "city": "Playa del Carmen",
+    "country": "Mexico",
+    "country_code": "MX"
+  },
+  "30.44,-97.79": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "38.77,-121.33": {
+    "city": "Roseville",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.24,-97.76": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "28.67,-81.34": {
+    "city": "Casselberry",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "32.73,-117.17": {
+    "city": "San Diego",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.15,-97.79": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "34.59,-85.64": {
+    "city": "DeKalb County",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.4,-97.63": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.23,-97.64": {
+    "city": "Travis County",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "31.19,121.44": {
+    "city": "Shanghai",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "37.49,126.73": {
+    "city": "Incheon",
+    "country": "South Korea",
+    "country_code": "KR"
+  },
+  "35.12,129.04": {
+    "city": "Busan",
+    "country": "South Korea",
+    "country_code": "KR"
+  },
+  "28.35,-81.42": {
+    "city": "Orange County",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "31.24,121.48": {
+    "city": "Shanghai",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "1.31,103.86": {
+    "city": "Singapore",
+    "country": "Singapore",
+    "country_code": "SG"
+  },
+  "31.22,121.47": {
+    "city": "Shanghai",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "37.79,-122.4": {
+    "city": "San Francisco",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "21.27,-157.82": {
+    "city": "Honolulu",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.41,-97.01": {
+    "city": "Lexington",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "36.12,-115.31": {
+    "city": "Clark County",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "32.79,-117.25": {
+    "city": "San Diego",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "36.16,-115.29": {
+    "city": "Las Vegas",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.52,-97.83": {
+    "city": "Cedar Park",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "37.77,-122.39": {
+    "city": "San Francisco",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "37.5,126.78": {
+    "city": "Bucheon-si",
+    "country": "South Korea",
+    "country_code": "KR"
+  },
+  "43.65,-79.38": {
+    "city": "Toronto",
+    "country": "Canada",
+    "country_code": "CA"
+  },
+  "31.19,121.42": {
+    "city": "Shanghai",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "30.19,-97.72": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.27,-97.74": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "21.53,-158.04": {
+    "city": "Waipahu",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "31.25,121.45": {
+    "city": "Shanghai",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "35.66,-106.0": {
+    "city": "Santa Fe",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "28.39,-80.6": {
+    "city": "Cape Canaveral",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "44.85,13.85": {
+    "city": "Grad Pula",
+    "country": "Croatia",
+    "country_code": "HR"
+  },
+  "31.23,121.44": {
+    "city": "Shanghai",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "32.32,-108.74": {
+    "city": "Hidalgo County",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "35.66,139.74": {
+    "city": "Minato",
+    "country": "Japan",
+    "country_code": "JP"
+  },
+  "32.5,-116.92": {
+    "city": "Tijuana",
+    "country": "Mexico",
+    "country_code": "MX"
+  },
+  "31.22,121.45": {
+    "city": "Shanghai",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "37.57,127.0": {
+    "city": "Seoul",
+    "country": "South Korea",
+    "country_code": "KR"
+  },
+  "30.22,-97.69": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "31.2,121.44": {
+    "city": "Shanghai",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "22.27,114.0": {
+    "city": "Hong Kong",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "30.58,-98.27": {
+    "city": "Marble Falls",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "51.51,-0.06": {
+    "city": "Greater London",
+    "country": "United Kingdom",
+    "country_code": "GB"
+  },
+  "10.38,-85.79": {
+    "city": "Cabo Velas",
+    "country": "Costa Rica",
+    "country_code": "CR"
+  },
+  "29.6,-82.35": {
+    "city": "Alachua County",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "11.18,119.39": {
+    "city": "El Nido",
+    "country": "Philippines",
+    "country_code": "PH"
+  },
+  "30.2,-97.67": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "29.73,-95.48": {
+    "city": "Houston",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "37.55,126.91": {
+    "city": "Seoul",
+    "country": "South Korea",
+    "country_code": "KR"
+  },
+  "30.37,-97.7": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.34,-97.74": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "32.75,-117.13": {
+    "city": "San Diego",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "21.03,105.85": {
+    "city": "Hà Nội",
+    "country": "Vietnam",
+    "country_code": "VN"
+  },
+  "30.25,-97.77": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "22.26,113.9": {
+    "city": "Hong Kong",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "40.78,-73.97": {
+    "city": "New York",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "31.23,121.42": {
+    "city": "Fahua",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "30.31,-97.74": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "31.21,121.41": {
+    "city": "Shanghai",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "29.8,-90.13": {
+    "city": "Jefferson Parish",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "28.48,-81.47": {
+    "city": "Orlando",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "29.73,-95.38": {
+    "city": "Houston",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "39.95,-75.17": {
+    "city": "Philadelphia",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "41.7,44.8": {
+    "city": "Tbilisi",
+    "country": "Georgia",
+    "country_code": "GE"
+  },
+  "40.75,-73.97": {
+    "city": "New York",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "31.2,121.42": {
+    "city": "Fahua",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "28.54,-81.44": {
+    "city": "Orlando",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "20.63,-87.08": {
+    "city": "Playa del Carmen",
+    "country": "Mexico",
+    "country_code": "MX"
+  },
+  "38.55,-121.43": {
+    "city": "Sacramento",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "19.68,-98.85": {
+    "city": "Teotihuacán",
+    "country": "Mexico",
+    "country_code": "MX"
+  },
+  "29.32,-99.47": {
+    "city": "Sabinal",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "22.34,103.84": {
+    "city": "Sa Pa",
+    "country": "Vietnam",
+    "country_code": "VN"
+  },
+  "36.14,-115.27": {
+    "city": "Clark County",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "27.84,-97.06": {
+    "city": "Port Aransas",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "40.67,-73.98": {
+    "city": "New York",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "29.87,-97.94": {
+    "city": "San Marcos",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "29.39,-96.08": {
+    "city": "Wharton County",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "37.49,126.72": {
+    "city": "Incheon",
+    "country": "South Korea",
+    "country_code": "KR"
+  },
+  "42.64,18.11": {
+    "city": "Dubrovnik",
+    "country": "Croatia",
+    "country_code": "HR"
+  },
+  "38.58,-121.48": {
+    "city": "Sacramento",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "31.24,121.47": {
+    "city": "Shanghai",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "30.37,-97.72": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "19.43,-99.08": {
+    "city": "Mexico City",
+    "country": "Mexico",
+    "country_code": "MX"
+  },
+  "30.26,-97.8": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "40.76,-73.92": {
+    "city": "New York",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "1.36,103.99": {
+    "city": "Singapore",
+    "country": "Singapore",
+    "country_code": "SG"
+  },
+  "30.23,-97.8": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "37.6,126.65": {
+    "city": "Incheon",
+    "country": "South Korea",
+    "country_code": "KR"
+  },
+  "32.79,-117.26": {
+    "city": "San Diego County",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "60.16,24.94": {
+    "city": "Helsinki",
+    "country": "Finland",
+    "country_code": "FI"
+  },
+  "25.78,-80.24": {
+    "city": "Miami",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "25.76,-80.25": {
+    "city": "Miami",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "51.5,-0.12": {
+    "city": "Greater London",
+    "country": "United Kingdom",
+    "country_code": "GB"
+  },
+  "30.09,-97.82": {
+    "city": "Buda",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "41.95,-87.66": {
+    "city": "Chicago",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "43.65,-79.39": {
+    "city": "Toronto",
+    "country": "Canada",
+    "country_code": "CA"
+  },
+  "27.96,-82.44": {
+    "city": "Tampa",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "29.96,-90.03": {
+    "city": "New Orleans",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "29.8,121.79": {
+    "city": "Yinzhou District",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "40.74,-73.98": {
+    "city": "New York",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "41.92,-87.66": {
+    "city": "Chicago",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "28.46,-81.47": {
+    "city": "Orlando",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.38,120.24": {
+    "city": "Linping District",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "31.25,121.44": {
+    "city": "Shanghai",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "54.68,25.29": {
+    "city": "Vilnius",
+    "country": "Lithuania",
+    "country_code": "LT"
+  },
+  "30.29,120.21": {
+    "city": "Shangcheng District",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "29.77,-95.35": {
+    "city": "Houston",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.26,-97.82": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "31.22,121.44": {
+    "city": "Shanghai",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "50.85,4.35": {
+    "city": "Brussels",
+    "country": "Belgium",
+    "country_code": "BE"
+  },
+  "29.88,-97.94": {
+    "city": "San Marcos",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "38.53,-121.44": {
+    "city": "Sacramento",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "40.65,-73.77": {
+    "city": "New York",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.23,-97.82": {
+    "city": "Sunset Valley",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "50.94,6.94": {
+    "city": "Cologne",
+    "country": "Germany",
+    "country_code": "DE"
+  },
+  "30.58,-98.28": {
+    "city": "Marble Falls",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "41.68,44.83": {
+    "city": "Tbilisi",
+    "country": "Georgia",
+    "country_code": "GE"
+  },
+  "10.32,-84.82": {
+    "city": "Monteverde",
+    "country": "Costa Rica",
+    "country_code": "CR"
+  },
+  "31.22,121.54": {
+    "city": "Yanqiao",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "39.74,-104.99": {
+    "city": "Denver",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "41.69,44.81": {
+    "city": "Tbilisi",
+    "country": "Georgia",
+    "country_code": "GE"
+  },
+  "38.96,-95.24": {
+    "city": "Lawrence",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "37.77,-122.42": {
+    "city": "San Francisco",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.41,-97.69": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "32.71,-117.16": {
+    "city": "San Diego",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "4.6,-74.07": {
+    "city": "Bogota",
+    "country": "Colombia",
+    "country_code": "CO"
+  },
+  "43.65,-79.41": {
+    "city": "Toronto",
+    "country": "Canada",
+    "country_code": "CA"
+  },
+  "38.76,-121.33": {
+    "city": "Roseville",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "28.36,-81.4": {
+    "city": "Orange County",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "31.3,120.62": {
+    "city": "Gusu District",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "30.19,-98.1": {
+    "city": "Dripping Springs",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.27,-97.77": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "52.2,-7.52": {
+    "city": "County Waterford",
+    "country": "Ireland",
+    "country_code": "IE"
+  },
+  "51.21,3.22": {
+    "city": "Bruges",
+    "country": "Belgium",
+    "country_code": "BE"
+  },
+  "30.25,-97.78": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "29.69,-95.41": {
+    "city": "Houston",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "50.84,4.34": {
+    "city": "Saint-Gilles - Sint-Gillis",
+    "country": "Belgium",
+    "country_code": "BE"
+  },
+  "30.33,-97.74": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.31,-97.75": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "1.26,103.82": {
+    "city": "Singapore",
+    "country": "Singapore",
+    "country_code": "SG"
+  },
+  "35.16,129.16": {
+    "city": "Busan",
+    "country": "South Korea",
+    "country_code": "KR"
+  },
+  "29.75,-95.38": {
+    "city": "Houston",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "32.73,-97.11": {
+    "city": "Arlington",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "40.75,-73.98": {
+    "city": "New York",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "40.83,-73.94": {
+    "city": "New York",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "50.92,2.92": {
+    "city": "Langemark",
+    "country": "Belgium",
+    "country_code": "BE"
+  },
+  "51.51,-0.09": {
+    "city": "City of London",
+    "country": "United Kingdom",
+    "country_code": "GB"
+  },
+  "4.66,-74.06": {
+    "city": "Bogota, Capital District",
+    "country": "Colombia",
+    "country_code": "CO"
+  },
+  "38.89,-121.29": {
+    "city": "Lincoln",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "27.83,-97.06": {
+    "city": "Port Aransas",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "36.08,-115.32": {
+    "city": "Clark County",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "38.06,-122.81": {
+    "city": "Marin County",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.37,-97.73": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.26,-97.81": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "32.75,-117.16": {
+    "city": "San Diego",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "38.53,-121.43": {
+    "city": "Sacramento",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "10.0,-84.21": {
+    "city": "Río Segundo",
+    "country": "Costa Rica",
+    "country_code": "CR"
+  },
+  "38.8,-121.33": {
+    "city": "Roseville",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "41.7,45.84": {
+    "city": "Gurjaani Municipality",
+    "country": "Georgia",
+    "country_code": "GE"
+  },
+  "30.49,-97.92": {
+    "city": "Jonestown",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "39.84,-105.02": {
+    "city": "Sherrelwood, Colorado",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "1.29,103.86": {
+    "city": "Singapore",
+    "country": "Singapore",
+    "country_code": "SG"
+  },
+  "29.73,-95.41": {
+    "city": "Houston",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "1.28,103.84": {
+    "city": "Singapore",
+    "country": "Singapore",
+    "country_code": "SG"
+  },
+  "39.77,-104.98": {
+    "city": "Denver",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "35.0,135.77": {
+    "city": "Kyoto",
+    "country": "Japan",
+    "country_code": "JP"
+  },
+  "22.33,114.17": {
+    "city": "Hong Kong",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "29.92,-96.85": {
+    "city": "Fayette County",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "29.86,-98.16": {
+    "city": "Comal County",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "39.74,-104.98": {
+    "city": "Denver",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "40.7,-73.94": {
+    "city": "New York",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "35.88,-97.4": {
+    "city": "Guthrie",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "41.92,45.48": {
+    "city": "Telavi",
+    "country": "Georgia",
+    "country_code": "GE"
+  },
+  "51.38,-0.09": {
+    "city": "Greater London",
+    "country": "United Kingdom",
+    "country_code": "GB"
+  },
+  "39.86,-104.67": {
+    "city": "Denver",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "32.72,-117.13": {
+    "city": "San Diego",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "43.66,-79.38": {
+    "city": "Toronto",
+    "country": "Canada",
+    "country_code": "CA"
+  },
+  "40.82,-73.95": {
+    "city": "New York",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "41.97,45.77": {
+    "city": "Kvareli Municipality",
+    "country": "Georgia",
+    "country_code": "GE"
+  },
+  "30.18,-97.73": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "38.62,-90.28": {
+    "city": "St. Louis",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "38.66,-121.53": {
+    "city": "Sacramento",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "29.77,-95.36": {
+    "city": "Houston",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "29.65,-98.45": {
+    "city": "San Antonio",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "38.77,-121.27": {
+    "city": "Roseville",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "31.24,121.44": {
+    "city": "Shanghai",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "38.57,-121.49": {
+    "city": "Sacramento",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.26,-97.83": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "17.72,-88.03": {
+    "city": "Belize District",
+    "country": "Belize",
+    "country_code": "BZ"
+  },
+  "30.11,-97.29": {
+    "city": "Bastrop",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "40.01,-89.85": {
+    "city": "Petersburg",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "40.83,-73.93": {
+    "city": "New York",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "40.65,-73.78": {
+    "city": "New York",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "32.05,118.79": {
+    "city": "Xuanwu District",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "38.15,-84.85": {
+    "city": "Franklin County",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "41.72,44.79": {
+    "city": "Tbilisi",
+    "country": "Georgia",
+    "country_code": "GE"
+  },
+  "34.0,-86.08": {
+    "city": "Gadsden",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "10.42,-75.55": {
+    "city": "",
+    "country": "Colombia",
+    "country_code": "CO"
+  },
+  "17.92,-87.96": {
+    "city": "Belize District",
+    "country": "Belize",
+    "country_code": "BZ"
+  },
+  "28.07,-82.41": {
+    "city": "Hillsborough County",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.24,-97.85": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "33.86,-118.4": {
+    "city": "Hermosa Beach",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "31.14,121.8": {
+    "city": "Zhuqiao",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "22.33,103.85": {
+    "city": "Sa Pa",
+    "country": "Vietnam",
+    "country_code": "VN"
+  },
+  "41.69,44.8": {
+    "city": "Tbilisi",
+    "country": "Georgia",
+    "country_code": "GE"
+  },
+  "30.35,-97.73": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "4.64,-74.06": {
+    "city": "Bogota, Capital District",
+    "country": "Colombia",
+    "country_code": "CO"
+  },
+  "17.16,-89.07": {
+    "city": "San Ignacio & Santa Elena",
+    "country": "Belize",
+    "country_code": "BZ"
+  },
+  "37.77,-122.43": {
+    "city": "San Francisco",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "29.65,-82.33": {
+    "city": "Gainesville",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "32.71,-117.17": {
+    "city": "San Diego",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "43.65,-79.42": {
+    "city": "Toronto",
+    "country": "Canada",
+    "country_code": "CA"
+  },
+  "30.24,-93.23": {
+    "city": "Lake Charles",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "29.96,-90.06": {
+    "city": "New Orleans",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "32.75,-117.15": {
+    "city": "San Diego",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.53,-97.78": {
+    "city": "Cedar Park",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "38.54,-121.4": {
+    "city": "Sacramento",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "51.53,-0.11": {
+    "city": "Greater London",
+    "country": "United Kingdom",
+    "country_code": "GB"
+  },
+  "29.77,-95.38": {
+    "city": "Houston",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "29.75,-95.39": {
+    "city": "Houston",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "29.68,-95.41": {
+    "city": "Houston",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.11,-97.31": {
+    "city": "Bastrop",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "38.94,-120.04": {
+    "city": "El Dorado County",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "29.74,-95.38": {
+    "city": "Houston",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "38.44,-122.71": {
+    "city": "Santa Rosa",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "40.83,-73.95": {
+    "city": "New York",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "38.89,-77.02": {
+    "city": "Washington",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "31.19,121.48": {
+    "city": "杨思",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "21.32,-157.87": {
+    "city": "Honolulu",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "37.8,-122.41": {
+    "city": "San Francisco",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "42.66,44.63": {
+    "city": "Kazbegi Municipality",
+    "country": "Georgia",
+    "country_code": "GE"
+  },
+  "30.13,-93.68": {
+    "city": "Calcasieu Parish",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "60.14,24.99": {
+    "city": "Helsinki",
+    "country": "Finland",
+    "country_code": "FI"
+  },
+  "5.42,100.34": {
+    "city": "George Town",
+    "country": "Malaysia",
+    "country_code": "MY"
+  },
+  "31.2,121.5": {
+    "city": "Liuli",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "28.39,-81.36": {
+    "city": "Orange County",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "51.51,-0.13": {
+    "city": "City of Westminster",
+    "country": "United Kingdom",
+    "country_code": "GB"
+  },
+  "41.93,-87.64": {
+    "city": "Chicago",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "39.29,-76.61": {
+    "city": "Baltimore",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "37.57,126.99": {
+    "city": "Seoul",
+    "country": "South Korea",
+    "country_code": "KR"
+  },
+  "17.93,-87.96": {
+    "city": "San Pedro Town",
+    "country": "Belize",
+    "country_code": "BZ"
+  },
+  "29.49,-98.53": {
+    "city": "San Antonio",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "9.68,100.07": {
+    "city": "Ban Tai",
+    "country": "Thailand",
+    "country_code": "TH"
+  },
+  "40.72,-74.0": {
+    "city": "New York",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "35.13,-89.99": {
+    "city": "Memphis",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "27.94,-82.5": {
+    "city": "Tampa",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "37.54,126.99": {
+    "city": "Seoul",
+    "country": "South Korea",
+    "country_code": "KR"
+  },
+  "30.25,-97.56": {
+    "city": "Travis County",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.14,-97.64": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "40.69,-74.0": {
+    "city": "New York",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "1.29,103.85": {
+    "city": "Singapore",
+    "country": "Singapore",
+    "country_code": "SG"
+  },
+  "41.01,28.97": {
+    "city": "Istanbul",
+    "country": "Turkey",
+    "country_code": "TR"
+  },
+  "29.73,-95.42": {
+    "city": "Houston",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.28,-97.71": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "31.26,121.48": {
+    "city": "Shanghai",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "30.25,-97.71": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "41.94,-87.71": {
+    "city": "Chicago",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "31.23,121.48": {
+    "city": "Shanghai",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "31.21,121.47": {
+    "city": "Shanghai",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "37.78,-122.4": {
+    "city": "San Francisco",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "-8.76,115.17": {
+    "city": "Kuta",
+    "country": "Indonesia",
+    "country_code": "ID"
+  },
+  "31.32,120.63": {
+    "city": "Gusu District",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "30.4,-97.68": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "31.18,121.43": {
+    "city": "Shanghai",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "32.81,-117.25": {
+    "city": "San Diego",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "43.66,-79.39": {
+    "city": "Toronto",
+    "country": "Canada",
+    "country_code": "CA"
+  },
+  "28.54,-81.38": {
+    "city": "Orlando",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "21.26,-157.82": {
+    "city": "East Honolulu",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "39.8,-89.65": {
+    "city": "Springfield",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "37.84,-122.26": {
+    "city": "Oakland",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "32.76,-117.12": {
+    "city": "San Diego",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "32.78,-117.25": {
+    "city": "San Diego",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "29.95,-97.65": {
+    "city": "Caldwell County",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "55.68,12.55": {
+    "city": "Frederiksberg Municipality",
+    "country": "Denmark",
+    "country_code": "DK"
+  },
+  "29.77,-95.37": {
+    "city": "Houston",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "29.68,-95.4": {
+    "city": "Houston",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "38.57,-121.5": {
+    "city": "Sacramento",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "37.76,-122.42": {
+    "city": "San Francisco",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "29.74,-95.37": {
+    "city": "Houston",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "49.28,-123.1": {
+    "city": "Vancouver",
+    "country": "Canada",
+    "country_code": "CA"
+  },
+  "31.3,121.32": {
+    "city": "Shanghai",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "33.64,-84.42": {
+    "city": "Clayton County",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "40.65,-73.79": {
+    "city": "New York",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "32.05,118.78": {
+    "city": "Xuanwu District",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "37.49,126.78": {
+    "city": "Bucheon-si",
+    "country": "South Korea",
+    "country_code": "KR"
+  },
+  "20.69,-88.2": {
+    "city": "Valladolid",
+    "country": "Mexico",
+    "country_code": "MX"
+  },
+  "39.97,-75.18": {
+    "city": "Philadelphia",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "43.64,-79.38": {
+    "city": "Toronto",
+    "country": "Canada",
+    "country_code": "CA"
+  },
+  "40.73,-74.0": {
+    "city": "New York",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.24,-97.86": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.26,-97.74": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "36.09,-115.18": {
+    "city": "Clark County",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "17.25,-88.76": {
+    "city": "Belmopan",
+    "country": "Belize",
+    "country_code": "BZ"
+  },
+  "28.06,-82.41": {
+    "city": "Tampa",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "36.17,-115.14": {
+    "city": "Las Vegas",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.32,-97.71": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "55.96,37.4": {
+    "city": "Khimki",
+    "country": "Russia",
+    "country_code": "RU"
+  },
+  "30.23,-97.74": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "42.58,44.75": {
+    "city": "Kazbegi Municipality",
+    "country": "Georgia",
+    "country_code": "GE"
+  },
+  "20.5,-87.73": {
+    "city": "Tulum",
+    "country": "Mexico",
+    "country_code": "MX"
+  },
+  "30.13,-98.01": {
+    "city": "Hays County",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "31.21,121.45": {
+    "city": "Shanghai",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "32.71,-117.18": {
+    "city": "San Diego",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.29,-97.71": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.18,-96.94": {
+    "city": "Giddings",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "31.27,121.48": {
+    "city": "Shanghai",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "29.99,-95.33": {
+    "city": "Houston",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "54.68,25.26": {
+    "city": "Vilnius",
+    "country": "Lithuania",
+    "country_code": "LT"
+  },
+  "52.51,13.38": {
+    "city": "Berlin",
+    "country": "Germany",
+    "country_code": "DE"
+  },
+  "37.53,127.0": {
+    "city": "Seoul",
+    "country": "South Korea",
+    "country_code": "KR"
+  },
+  "32.68,-117.18": {
+    "city": "Coronado",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "31.14,121.39": {
+    "city": "Meilong Town",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "36.15,-115.16": {
+    "city": "Las Vegas",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "51.52,-0.07": {
+    "city": "Greater London",
+    "country": "United Kingdom",
+    "country_code": "GB"
+  },
+  "32.78,-117.02": {
+    "city": "La Mesa",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "29.77,-95.39": {
+    "city": "Houston",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "40.68,-73.99": {
+    "city": "New York",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "51.5,-0.06": {
+    "city": "Greater London",
+    "country": "United Kingdom",
+    "country_code": "GB"
+  },
+  "41.96,-87.68": {
+    "city": "Chicago",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "38.77,-121.3": {
+    "city": "Roseville",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "38.64,-121.5": {
+    "city": "Sacramento",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "5.47,100.25": {
+    "city": "George Town",
+    "country": "Malaysia",
+    "country_code": "MY"
+  },
+  "13.35,103.86": {
+    "city": "Siem Reap",
+    "country": "Cambodia",
+    "country_code": "KH"
+  },
+  "29.74,-95.39": {
+    "city": "Houston",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.4,-97.85": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "31.26,121.49": {
+    "city": "Shanghai",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "28.92,-81.3": {
+    "city": "Volusia County",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "40.59,-105.08": {
+    "city": "Fort Collins",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "39.28,-76.57": {
+    "city": "Baltimore",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "36.05,120.32": {
+    "city": "Shinan District",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "39.75,-105.0": {
+    "city": "Denver",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "31.23,121.49": {
+    "city": "Shanghai",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "60.18,24.95": {
+    "city": "Helsinki",
+    "country": "Finland",
+    "country_code": "FI"
+  },
+  "31.24,121.51": {
+    "city": "Shanghai",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "31.29,121.52": {
+    "city": "Shanghai",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "5.42,100.33": {
+    "city": "George Town",
+    "country": "Malaysia",
+    "country_code": "MY"
+  },
+  "31.22,121.5": {
+    "city": "Shanghai",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "30.3,-97.74": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "41.93,-87.65": {
+    "city": "Chicago",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "22.28,114.18": {
+    "city": "Hong Kong",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "38.07,-122.81": {
+    "city": "Marin County",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "59.44,24.74": {
+    "city": "Tallinn",
+    "country": "Estonia",
+    "country_code": "EE"
+  },
+  "40.72,-74.01": {
+    "city": "New York",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "39.08,-94.6": {
+    "city": "Kansas City",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "36.18,-115.14": {
+    "city": "Las Vegas",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.2,-97.87": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "10.3,-85.84": {
+    "city": "Santa Cruz",
+    "country": "Costa Rica",
+    "country_code": "CR"
+  },
+  "32.54,-117.03": {
+    "city": "Tijuana",
+    "country": "Mexico",
+    "country_code": "MX"
+  },
+  "30.28,-89.76": {
+    "city": "Slidell",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "28.09,-82.4": {
+    "city": "Tampa",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "29.81,-95.39": {
+    "city": "Houston",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "33.44,-112.0": {
+    "city": "Phoenix",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "35.83,-114.56": {
+    "city": "Mohave County",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.28,-97.72": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.27,-97.71": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "19.44,-99.13": {
+    "city": "Mexico City",
+    "country": "Mexico",
+    "country_code": "MX"
+  },
+  "45.53,-122.69": {
+    "city": "Portland",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "38.97,-95.23": {
+    "city": "Lawrence",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "31.23,121.47": {
+    "city": "Shanghai",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "40.71,-73.94": {
+    "city": "New York",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "52.14,-10.27": {
+    "city": "County Kerry",
+    "country": "Ireland",
+    "country_code": "IE"
+  },
+  "31.21,121.46": {
+    "city": "Shanghai",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "30.05,-97.27": {
+    "city": "Bastrop County",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "10.78,106.7": {
+    "city": "Thủ Đức",
+    "country": "Vietnam",
+    "country_code": "VN"
+  },
+  "43.66,-79.4": {
+    "city": "Toronto",
+    "country": "Canada",
+    "country_code": "CA"
+  },
+  "31.01,121.41": {
+    "city": "Jiangchuanlu",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "39.28,-120.12": {
+    "city": "Placer County",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.31,-98.26": {
+    "city": "Blanco County",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "40.72,-73.96": {
+    "city": "New York",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "50.82,-0.14": {
+    "city": "Brighton",
+    "country": "United Kingdom",
+    "country_code": "GB"
+  },
+  "37.46,126.45": {
+    "city": "Incheon",
+    "country": "South Korea",
+    "country_code": "KR"
+  },
+  "1.3,103.81": {
+    "city": "Singapore",
+    "country": "Singapore",
+    "country_code": "SG"
+  },
+  "35.66,139.7": {
+    "city": "Shibuya",
+    "country": "Japan",
+    "country_code": "JP"
+  },
+  "39.67,-105.21": {
+    "city": "Jefferson County",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "38.69,-119.78": {
+    "city": "Alpine County",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "38.85,-77.04": {
+    "city": "Arlington",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "37.76,-122.43": {
+    "city": "San Francisco",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "20.26,-87.4": {
+    "city": "Tulum",
+    "country": "Mexico",
+    "country_code": "MX"
+  },
+  "33.77,-97.13": {
+    "city": "Love County",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "38.91,-121.04": {
+    "city": "El Dorado County",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "29.87,-97.89": {
+    "city": "Caldwell County",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.19,-93.22": {
+    "city": "Lake Charles",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "14.52,121.02": {
+    "city": "Pasay",
+    "country": "Philippines",
+    "country_code": "PH"
+  },
+  "37.55,126.94": {
+    "city": "Seoul",
+    "country": "South Korea",
+    "country_code": "KR"
+  },
+  "29.43,-98.49": {
+    "city": "San Antonio",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "21.31,-157.86": {
+    "city": "Honolulu",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "40.73,-74.01": {
+    "city": "New York",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "29.7,-95.55": {
+    "city": "Houston",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "50.85,4.36": {
+    "city": "Brussels",
+    "country": "Belgium",
+    "country_code": "BE"
+  },
+  "30.28,-97.74": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.26,-97.75": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.74,-98.37": {
+    "city": "Burnet County",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "28.06,-82.42": {
+    "city": "Tampa",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.34,-97.71": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "36.17,-115.15": {
+    "city": "Las Vegas",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "37.56,126.93": {
+    "city": "Seoul",
+    "country": "South Korea",
+    "country_code": "KR"
+  },
+  "50.82,4.36": {
+    "city": "Ixelles - Elsene",
+    "country": "Belgium",
+    "country_code": "BE"
+  },
+  "30.32,-97.72": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.25,-97.74": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "38.8,-121.27": {
+    "city": "Rocklin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.23,-97.75": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "19.42,-99.16": {
+    "city": "Mexico City",
+    "country": "Mexico",
+    "country_code": "MX"
+  },
+  "35.62,-119.66": {
+    "city": "Kern County",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.38,-97.69": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "51.21,3.23": {
+    "city": "Bruges",
+    "country": "Belgium",
+    "country_code": "BE"
+  },
+  "30.31,-97.71": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "31.21,121.44": {
+    "city": "Shanghai",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "50.84,4.35": {
+    "city": "Brussels",
+    "country": "Belgium",
+    "country_code": "BE"
+  },
+  "30.29,-97.72": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "31.32,120.6": {
+    "city": "Gusu District",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "39.95,-75.14": {
+    "city": "Philadelphia",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "50.83,2.94": {
+    "city": "Ypres",
+    "country": "Belgium",
+    "country_code": "BE"
+  },
+  "31.27,121.47": {
+    "city": "Shanghai",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "32.76,-117.15": {
+    "city": "San Diego",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.57,-98.28": {
+    "city": "Marble Falls",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "32.66,-97.13": {
+    "city": "Arlington",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "38.77,-121.31": {
+    "city": "Roseville",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "32.73,-117.15": {
+    "city": "San Diego",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "36.12,-115.17": {
+    "city": "Clark County",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "13.35,103.85": {
+    "city": "Siem Reap",
+    "country": "Cambodia",
+    "country_code": "KH"
+  },
+  "30.41,-97.87": {
+    "city": "Travis County",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "41.88,-87.63": {
+    "city": "Chicago",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "29.74,-95.4": {
+    "city": "Houston",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "49.28,-123.13": {
+    "city": "Vancouver",
+    "country": "Canada",
+    "country_code": "CA"
+  },
+  "30.21,-97.67": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.49,-98.08": {
+    "city": "Travis County",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "39.28,-76.58": {
+    "city": "Baltimore",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "15.88,108.33": {
+    "city": "Hội An Ward",
+    "country": "Vietnam",
+    "country_code": "VN"
+  },
+  "52.51,13.51": {
+    "city": "Berlin",
+    "country": "Germany",
+    "country_code": "DE"
+  },
+  "31.25,121.49": {
+    "city": "Shanghai",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "33.42,-111.94": {
+    "city": "Tempe",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "29.7,-95.57": {
+    "city": "Houston",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "31.24,121.5": {
+    "city": "Shanghai",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "30.52,-97.69": {
+    "city": "Round Rock",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.26,-97.77": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "31.22,121.49": {
+    "city": "Shanghai",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "35.7,139.77": {
+    "city": "Chiyoda",
+    "country": "Japan",
+    "country_code": "JP"
+  },
+  "30.32,-97.74": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "51.54,-0.14": {
+    "city": "Greater London",
+    "country": "United Kingdom",
+    "country_code": "GB"
+  },
+  "30.3,-97.75": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.23,-97.77": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.38,-97.71": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.36,-97.72": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.29,-97.74": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "25.1,121.55": {
+    "city": "Taipei",
+    "country": "Taiwan",
+    "country_code": "TW"
+  },
+  "38.24,-85.72": {
+    "city": "Louisville",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "25.8,-80.2": {
+    "city": "Miami",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "2.74,101.72": {
+    "city": "Sepang",
+    "country": "Malaysia",
+    "country_code": "MY"
+  },
+  "29.03,-82.15": {
+    "city": "Marion County",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "25.04,121.51": {
+    "city": "Taipei",
+    "country": "Taiwan",
+    "country_code": "TW"
+  },
+  "29.53,-98.47": {
+    "city": "San Antonio",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "30.27,-97.72": {
+    "city": "Austin",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "-8.72,115.17": {
+    "city": "Kuta",
+    "country": "Indonesia",
+    "country_code": "ID"
+  },
+  "31.23,121.46": {
+    "city": "Shanghai",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "38.75,-121.35": {
+    "city": "Placer County",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "29.89,-97.67": {
+    "city": "Lockhart",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "29.89,-97.92": {
+    "city": "San Marcos",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "31.18,121.41": {
+    "city": "Shanghai",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "32.74,-117.04": {
+    "city": "Lemon Grove",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "29.74,-95.57": {
+    "city": "Houston",
+    "country": "United States",
+    "country_code": "US"
+  }
+}

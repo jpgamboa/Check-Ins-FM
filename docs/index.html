@@ -137,6 +137,19 @@ h1 span { color: var(--accent); }
   color: var(--text-dim); line-height: 1.7; white-space: pre-wrap;
 }
 
+/* ── Geo facts ticker ──────────────────────────────────────────── */
+.geo-facts {
+  margin: 14px 0; padding: 12px 16px;
+  background: var(--card); border: 1px solid var(--border); border-radius: 10px;
+  font-size: 0.8rem; color: var(--text-dim); line-height: 1.5;
+  min-height: 42px;
+  transition: opacity .4s ease;
+}
+.geo-facts .fact-label {
+  color: var(--accent); font-family: var(--font-mono); font-size: 0.7rem;
+  text-transform: uppercase; letter-spacing: .05em; margin-bottom: 4px;
+}
+
 /* ── Result ─────────────────────────────────────────────────────── */
 .result-bar {
   display: flex; gap: 10px; margin-bottom: 14px;
@@ -187,6 +200,16 @@ iframe#dashboard-frame {
   background: var(--card2); padding: 1px 5px; border-radius: 3px;
 }
 
+.info-icon {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 16px; height: 16px; border-radius: 50%;
+  background: var(--card2); border: 1px solid var(--border);
+  font-family: var(--font-body); font-size: 0.6rem; font-style: italic;
+  color: var(--text-dim); cursor: pointer; vertical-align: middle;
+  margin-left: 4px; transition: border-color .2s, color .2s;
+}
+.info-icon:hover { border-color: var(--accent); color: var(--accent); }
+
 @media (max-width: 500px) { .info-row { grid-template-columns: 1fr; } }
 </style>
 </head>
@@ -203,14 +226,16 @@ iframe#dashboard-frame {
       Correlate your Last.fm listening history with Foursquare/Swarm checkins
       to discover where you listen to music.<br>
       Everything runs in your browser &mdash; your data never leaves your machine.
+      <a href="#" onclick="document.getElementById('privacy-modal').style.display='block';return false" style="color:var(--text-dim);font-size:.8rem;text-decoration:underline">Privacy details</a>
     </p>
 
     <div class="info-row">
       <div class="info-card">
-        <h3>Last.fm export</h3>
+        <h3>Last.fm or Spotify export</h3>
         <p>
-          Export your CSV from
+          <b>Last.fm:</b> Export CSV from
           <a href="https://lastfmstats.com/" target="_blank">lastfmstats.com</a><br>
+          <b>Spotify:</b> Request <a href="https://www.spotify.com/account/privacy/" target="_blank">Extended streaming history</a> (takes up to 30 days)<br>
           <span style="color:var(--text-faint);font-size:.75rem">
             Also accepts <a href="https://benjaminbenben.com/lastfm-to-csv/" target="_blank" style="color:var(--text-faint)">benjaminbenben</a>,
             GDPR exports &amp; pre-processed <code>scrobbles.json</code>
@@ -218,7 +243,7 @@ iframe#dashboard-frame {
         </p>
       </div>
       <div class="info-card">
-        <h3>Foursquare export</h3>
+        <h3>Foursquare export <span class="info-icon" onclick="document.getElementById('fs-export-modal').style.display='block'">i</span></h3>
         <p>
           Request your data at
           <a href="https://foursquare.com/settings" target="_blank">foursquare.com/settings</a><br>
@@ -253,6 +278,7 @@ iframe#dashboard-frame {
     <p class="subtitle">Processing your data&hellip;</p>
     <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
     <p class="progress-status" id="progress-status">Initializing&hellip;</p>
+    <div id="geo-facts" class="geo-facts" style="display:none"></div>
     <div class="log" id="log"></div>
   </div>
 
@@ -338,6 +364,8 @@ function detectType(name, content) {
   if (ext === 'json') {
     try {
       const d = JSON.parse(content);
+      // Spotify extended streaming history
+      if (Array.isArray(d) && d.length && d[0].ts && d[0].master_metadata_track_name !== undefined) return 'spotify';
       // Raw Foursquare: {items:[...]} or [...] with createdAt
       const items = d.items || (Array.isArray(d) ? d : null);
       if (items && items.length && items[0].createdAt) return 'foursquare_raw';
@@ -352,10 +380,10 @@ function detectType(name, content) {
 }
 
 const LABELS = {
-  lastfm: 'Last.fm CSV', foursquare_raw: 'Foursquare', checkins: 'Checkins JSON',
+  lastfm: 'Last.fm CSV', spotify: 'Spotify History', foursquare_raw: 'Foursquare', checkins: 'Checkins JSON',
   scrobbles: 'Scrobbles JSON', csv_unknown: 'Unknown CSV', json_unknown: 'Unknown JSON', unknown: '?',
 };
-const KNOWN = new Set(['lastfm','foursquare_raw','checkins','scrobbles']);
+const KNOWN = new Set(['lastfm','spotify','foursquare_raw','checkins','scrobbles']);
 
 // =====================================================================
 // File upload handling
@@ -393,7 +421,7 @@ function renderFiles() {
 
 function updateBtn() {
   const types = new Set([...uploadedFiles.values()].map(f => f.detectedType));
-  const hasScrobbles  = types.has('lastfm') || types.has('scrobbles');
+  const hasScrobbles  = types.has('lastfm') || types.has('spotify') || types.has('scrobbles');
   const hasCheckins   = types.has('foursquare_raw') || types.has('checkins');
   processBtn.disabled = !(pyodideReady && hasScrobbles && hasCheckins);
 }
@@ -410,9 +438,74 @@ function setProgress(pct, text) {
 // =====================================================================
 // Geocoding (JS fetch + localStorage cache)
 // =====================================================================
-async function geocodeCoords(coords) {
+let _geoSeed = null;
+async function _loadGeoSeed() {
+  if (_geoSeed !== null) return _geoSeed;
+  try {
+    const r = await fetch('geo_seed.json');
+    if (r.ok) _geoSeed = await r.json();
+    else _geoSeed = {};
+  } catch { _geoSeed = {}; }
+  return _geoSeed;
+}
+
+// ── Geo facts ticker ───────────────────────────────────────────────
+let _factsInterval = null;
+function _buildGeoFacts(seed) {
+  const entries = Object.values(seed);
+  if (!entries.length) return [];
+  const cities = new Set(), countries = new Set(), countryCounts = {};
+  for (const e of entries) {
+    if (e.city) cities.add(e.city);
+    if (e.country_code) {
+      countries.add(e.country_code);
+      countryCounts[e.country || e.country_code] = (countryCounts[e.country || e.country_code] || 0) + 1;
+    }
+  }
+  const topCountries = Object.entries(countryCounts).sort((a, b) => b[1] - a[1]);
+  const facts = [
+    `The location cache covers <b>${entries.length.toLocaleString()}</b> unique coordinates across <b>${countries.size}</b> countries`,
+    `<b>${cities.size.toLocaleString()}</b> distinct cities are already cached — most lookups won't need a network request`,
+  ];
+  if (topCountries.length >= 3) {
+    facts.push(`Top countries in cache: <b>${topCountries[0][0]}</b> (${topCountries[0][1]} locations), <b>${topCountries[1][0]}</b> (${topCountries[1][1]}), <b>${topCountries[2][0]}</b> (${topCountries[2][1]})`);
+  }
+  if (topCountries.length >= 6) {
+    const others = topCountries.slice(3, 8).map(([c]) => c);
+    facts.push(`Also cached: ${others.map(c => `<b>${c}</b>`).join(', ')} and more`);
+  }
+  facts.push(`Nominatim rate limit is 1 request/sec — the cache lets us skip most of those`);
+  return facts;
+}
+
+function startGeoFacts(seed) {
+  const factsEl = document.getElementById('geo-facts');
+  const facts = _buildGeoFacts(seed);
+  if (!facts.length) return;
+  factsEl.style.display = 'block';
+  let idx = 0;
+  function show() {
+    factsEl.style.opacity = '0';
+    setTimeout(() => {
+      factsEl.innerHTML = `<div class="fact-label">Did you know?</div>${facts[idx % facts.length]}`;
+      factsEl.style.opacity = '1';
+      idx++;
+    }, 300);
+  }
+  show();
+  _factsInterval = setInterval(show, 8000);
+}
+
+function stopGeoFacts() {
+  if (_factsInterval) { clearInterval(_factsInterval); _factsInterval = null; }
+  const el = document.getElementById('geo-facts');
+  if (el) el.style.display = 'none';
+}
+
+async function geocodeCoords(coords, airportVenues = {}) {
   const CACHE_KEY = 'swarmfm_geo';
-  const cache = JSON.parse(localStorage.getItem(CACHE_KEY) || '{}');
+  const seed = await _loadGeoSeed();
+  const cache = { ...seed, ...JSON.parse(localStorage.getItem(CACHE_KEY) || '{}') };
   const results = {};
   const toFetch = [];
 
@@ -430,6 +523,11 @@ async function geocodeCoords(coords) {
     log(`Running locally skips this step entirely if you have a geo_cache.json.`);
   }
 
+  function extractCity(a) {
+    return a.city || a.town || a.township || a.village || a.suburb
+        || a.municipality || a.county || a.state_district || a.state || '';
+  }
+
   const geoStart = Date.now();
   for (let i = 0; i < toFetch.length; i++) {
     const { lat, lng, key } = toFetch[i];
@@ -442,12 +540,33 @@ async function geocodeCoords(coords) {
       `Geocoding ${i + 1}/${toFetch.length} \u2014 ~${timeStr} remaining`);
 
     try {
+      // For airports, search by name to get the served city
+      const airportName = airportVenues[key];
+      if (airportName) {
+        const searchUrl = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(airportName)}&format=jsonv2&limit=1&addressdetails=1`;
+        const sr = await fetch(searchUrl, { headers: { 'User-Agent': 'swarmfm/1.0' } });
+        const sd = await sr.json();
+        if (sd.length > 0 && sd[0].address) {
+          const sa = sd[0].address;
+          const city = extractCity(sa);
+          if (city) {
+            const country = sa.country || '';
+            const cc = (sa.country_code || '').toUpperCase();
+            results[key] = { city, country, country_code: cc };
+            cache[key] = results[key];
+            if (i < toFetch.length - 1) await new Promise(r => setTimeout(r, 1100));
+            continue;
+          }
+        }
+        // Search failed — fall through to reverse geocode after rate limit
+        await new Promise(r => setTimeout(r, 1100));
+      }
+
       const url = `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=jsonv2&zoom=10&addressdetails=1`;
       const r = await fetch(url, { headers: { 'User-Agent': 'swarmfm/1.0' } });
       const d = await r.json();
       const a = d.address || {};
-      const city = a.city || a.town || a.township || a.village || a.suburb
-                || a.municipality || a.county || a.state_district || a.state || '';
+      const city = extractCity(a);
       const country = a.country || '';
       const cc = (a.country_code || '').toUpperCase();
       results[key] = { city, country, country_code: cc };
@@ -468,8 +587,14 @@ async function geocodeCoords(coords) {
 // Python scripts (embedded)
 // =====================================================================
 const PY_PARSE_FOURSQUARE = `
-import json, os
+import json, os, re
 from datetime import datetime, timezone, timedelta
+
+def _is_airport_venue(name):
+    nl = name.lower()
+    return ('airport' in nl or 'aeropuerto' in nl or 'aéroport' in nl
+            or (re.search(r'\\b[A-Z]{3}\\b', name) is not None
+                and ('terminal' in nl or 'gate' in nl)))
 
 with open('/data/raw_foursquare.json', encoding='utf-8') as f:
     raw = json.load(f)
@@ -480,6 +605,7 @@ if not isinstance(items, list):
 
 checkins = []
 needs_geo = set()
+airport_venues = {}
 
 for item in items:
     created = item.get('createdAt', '')
@@ -503,6 +629,8 @@ for item in items:
     country = loc.get('country', '')
     cc = (loc.get('cc', '') or loc.get('country_code', '')).upper()
 
+    venue_name = venue.get('name', '')
+
     local_time = None
     try:
         offset = timedelta(minutes=tz_min)
@@ -517,14 +645,17 @@ for item in items:
         'timestamp': timestamp,
         'local_time': local_time,
         'tz_offset_min': tz_min,
-        'venue_name': venue.get('name', ''),
+        'venue_name': venue_name,
         'venue_id': venue.get('id', ''),
         'lat': lat, 'lng': lng,
         'city': city, 'country': country, 'country_code': cc,
     })
 
     if lat and lng and not city:
+        key = f"{round(float(lat), 1)},{round(float(lng), 1)}"
         needs_geo.add((round(float(lat), 1), round(float(lng), 1)))
+        if venue_name and _is_airport_venue(venue_name):
+            airport_venues[key] = venue_name
 
 checkins.sort(key=lambda c: c['timestamp'])
 
@@ -534,9 +665,14 @@ with open('/data/checkins.json', 'w', encoding='utf-8') as f:
 with open('/data/needs_geocoding.json', 'w', encoding='utf-8') as f:
     json.dump(list(needs_geo), f)
 
+with open('/data/airport_venues.json', 'w', encoding='utf-8') as f:
+    json.dump(airport_venues, f, ensure_ascii=False)
+
 city_count = sum(1 for c in checkins if c.get('city'))
 print(f'Parsed {len(checkins):,} Foursquare checkins')
 print(f'  {city_count:,} have city from venue data, {len(needs_geo)} locations need geocoding')
+if airport_venues:
+    print(f'  {len(airport_venues)} airport locations will be searched by name')
 `;
 
 const PY_APPLY_GEOCODING = `
@@ -567,6 +703,90 @@ with open('/data/checkins.json', 'w', encoding='utf-8') as f:
 geocoded = sum(1 for c in checkins if c.get('country_code'))
 print(f'Geocoded {updated:,} additional checkins')
 print(f'Total with location: {geocoded:,}/{len(checkins):,}')
+`;
+
+const PY_PARSE_SPOTIFY = `
+import json
+from datetime import datetime, timezone, timedelta
+
+MIN_PLAY_MS = 30000
+
+with open('/data/raw_spotify.json', encoding='utf-8') as f:
+    entries = json.load(f)
+
+scrobbles = []
+podcasts = []
+skipped_short = 0
+
+for entry in entries:
+    ts_raw = entry.get('ts', '')
+    if not ts_raw:
+        continue
+    try:
+        dt_end = datetime.strptime(ts_raw, '%Y-%m-%dT%H:%M:%SZ').replace(tzinfo=timezone.utc)
+    except ValueError:
+        try:
+            dt_end = datetime.strptime(ts_raw, '%Y-%m-%d %H:%M').replace(tzinfo=timezone.utc)
+        except ValueError:
+            continue
+
+    ms_played = entry.get('ms_played', 0) or 0
+    dt_start = dt_end - timedelta(milliseconds=ms_played)
+    timestamp = dt_start.strftime('%Y-%m-%dT%H:%M:%SZ')
+
+    episode_name = entry.get('episode_name')
+    episode_show = entry.get('episode_show_name')
+    if episode_name and episode_show:
+        if ms_played >= MIN_PLAY_MS:
+            podcasts.append({
+                'timestamp': timestamp,
+                'show': episode_show,
+                'episode': episode_name,
+                'ms_played': ms_played,
+            })
+        continue
+
+    artist = (entry.get('master_metadata_album_artist_name') or '').strip()
+    track = (entry.get('master_metadata_track_name') or '').strip()
+    album = (entry.get('master_metadata_album_album_name') or '').strip()
+
+    if not artist or not track:
+        continue
+
+    is_skipped = entry.get('skipped') or ms_played < MIN_PLAY_MS
+    if ms_played < MIN_PLAY_MS:
+        skipped_short += 1
+
+    scrobbles.append({
+        'timestamp': timestamp,
+        'artist': artist,
+        'track': track,
+        'album': album,
+        'ms_played': ms_played,
+        'skipped': bool(is_skipped),
+        'platform': entry.get('platform', ''),
+        'shuffle': bool(entry.get('shuffle')),
+        'offline': bool(entry.get('offline')),
+        'reason_start': entry.get('reason_start', ''),
+        'reason_end': entry.get('reason_end', ''),
+    })
+
+scrobbles.sort(key=lambda s: s['timestamp'])
+
+with open('/data/scrobbles.json', 'w', encoding='utf-8') as f:
+    json.dump(scrobbles, f, ensure_ascii=False)
+
+total_ms = sum(s['ms_played'] for s in scrobbles)
+total_hours = total_ms / 3600000
+actual_plays = sum(1 for s in scrobbles if not s['skipped'])
+skip_count = sum(1 for s in scrobbles if s['skipped'])
+
+print(f'Parsed {len(scrobbles):,} Spotify tracks ({actual_plays:,} played, {skip_count:,} skipped)')
+print(f'  {total_hours:,.0f} hours of music')
+if scrobbles:
+    print(f'  {scrobbles[0]["timestamp"][:10]} to {scrobbles[-1]["timestamp"][:10]}')
+if podcasts:
+    print(f'  {len(podcasts):,} podcast episodes separated')
 `;
 
 const PY_PARSE_LASTFM = `
@@ -696,6 +916,8 @@ async function runPipeline() {
   uploadSection.style.display = 'none';
   progressSection.style.display = 'block';
   logEl.textContent = '';
+  // Pre-load seed and start facts while pipeline runs
+  _loadGeoSeed().then(seed => { if (Object.keys(seed).length) startGeoFacts(seed); });
 
   try {
     pyodide.setStdout({ batched: msg => log(msg) });
@@ -711,6 +933,7 @@ async function runPipeline() {
     const files = [...uploadedFiles.entries()];
     const fsFiles = files.filter(([, f]) => f.detectedType === 'foursquare_raw' || f.detectedType === 'checkins');
     const lfFile = files.find(([, f]) => f.detectedType === 'lastfm' || f.detectedType === 'scrobbles');
+    const spFiles = files.filter(([, f]) => f.detectedType === 'spotify');
 
     // ── Foursquare ─────────────────────────────────────────────────
     setProgress(10, 'Processing Foursquare data\u2026');
@@ -741,19 +964,35 @@ async function runPipeline() {
       );
       if (needsGeo.length > 0) {
         setProgress(15, `Geocoding ${needsGeo.length} locations\u2026`);
-        const geoResults = await geocodeCoords(needsGeo);
+        const airportVenues = JSON.parse(
+          pyodide.FS.readFile('/data/airport_venues.json', { encoding: 'utf8' })
+        );
+        startGeoFacts(await _loadGeoSeed());
+        const geoResults = await geocodeCoords(needsGeo, airportVenues);
+        stopGeoFacts();
         pyodide.FS.writeFile('/data/geo_results.json', JSON.stringify(geoResults));
         pyodide.runPython(PY_APPLY_GEOCODING);
       }
     }
 
-    // ── Last.fm ────────────────────────────────────────────────────
-    setProgress(45, 'Processing Last.fm data\u2026');
-
-    if (lfFile[1].detectedType === 'scrobbles') {
+    // ── Music data (Last.fm or Spotify) ───────────────────────────
+    if (spFiles.length > 0) {
+      setProgress(45, 'Processing Spotify data\u2026');
+      // Merge all Spotify history files
+      const allEntries = [];
+      for (const [name, f] of spFiles) {
+        const entries = JSON.parse(f.content);
+        allEntries.push(...entries);
+        log(`  ${name}: ${entries.length.toLocaleString()} entries`);
+      }
+      pyodide.FS.writeFile('/data/raw_spotify.json', JSON.stringify(allEntries));
+      pyodide.runPython(PY_PARSE_SPOTIFY);
+    } else if (lfFile[1].detectedType === 'scrobbles') {
+      setProgress(45, 'Processing scrobble data\u2026');
       pyodide.FS.writeFile('/data/scrobbles.json', lfFile[1].content);
       log('Loaded pre-processed scrobbles.json');
     } else {
+      setProgress(45, 'Processing Last.fm data\u2026');
       pyodide.FS.writeFile('/data/lastfm_export.csv', lfFile[1].content);
       pyodide.runPython(PY_PARSE_LASTFM);
     }
@@ -803,12 +1042,14 @@ generate_dashboard.run('/data', '/app/foursquare_template.html')
     window._dashboardBlob = blob;
     dashboardFrame.src = URL.createObjectURL(blob);
 
+    stopGeoFacts();
     setProgress(100, 'Done!');
     await new Promise(r => setTimeout(r, 600));
     progressSection.style.display = 'none';
     resultSection.style.display = 'block';
 
   } catch (e) {
+    stopGeoFacts();
     setProgress(0, 'Error \u2014 see log');
     log(`\nERROR: ${e.message}\n${e.stack || ''}`);
     console.error(e);
@@ -836,6 +1077,61 @@ $('restart-btn').addEventListener('click', () => {
   updateBtn();
 });
 </script>
+
+<!-- Foursquare export help modal -->
+<div id="fs-export-modal" style="display:none;position:fixed;inset:0;z-index:999;background:rgba(0,0,0,.7);backdrop-filter:blur(6px);overflow-y:auto">
+<div style="max-width:560px;margin:60px auto;padding:32px;background:var(--card);border:1px solid var(--border);border-radius:14px;color:var(--text);font-family:var(--font-body);line-height:1.6">
+  <h2 style="font-family:var(--font-display);font-size:1.5rem;margin-bottom:16px">How to get your Foursquare data</h2>
+
+  <p style="font-size:.85rem;color:var(--text-dim);margin-bottom:16px">There are two ways to export your Foursquare/Swarm checkin history. Either method produces JSON files that work with Swarm-FM.</p>
+
+  <h3 style="font-size:.85rem;color:var(--accent);margin:16px 0 6px">Option 1: Privacy data request</h3>
+  <p style="font-size:.85rem">The official way. No coding required, but it can take several days to receive your data.</p>
+  <ol style="font-size:.85rem;margin:8px 0 8px 20px;color:var(--text-dim)">
+    <li>Go to <a href="https://foursquare.com/city-guide-sunset/#accordion_v2-0825c858-5e57-4566-8cc9-86dd86731d88" target="_blank" style="color:var(--accent)">Foursquare's data request page</a></li>
+    <li>Follow the instructions to request your data export</li>
+    <li>You'll receive an email with a download link when ready (up to 7 days)</li>
+    <li>Extract the zip &mdash; upload the <code style="font-family:var(--font-mono);font-size:.75rem;background:var(--card2);padding:1px 5px;border-radius:3px">checkins*.json</code> files</li>
+  </ol>
+
+  <h3 style="font-size:.85rem;color:var(--accent);margin:16px 0 6px">Option 2: API export via Pinback</h3>
+  <p style="font-size:.85rem">Faster and immediate, but requires a Foursquare developer account.</p>
+  <ol style="font-size:.85rem;margin:8px 0 8px 20px;color:var(--text-dim)">
+    <li>Visit <a href="https://github.com/lokesh/pinback" target="_blank" style="color:var(--accent)">github.com/lokesh/pinback</a></li>
+    <li>Follow the setup instructions to create a Foursquare API app and get an OAuth token</li>
+    <li>Run Pinback to export your checkins as JSON</li>
+    <li>Upload the resulting file here</li>
+  </ol>
+
+  <p style="font-size:.8rem;color:var(--text-faint);margin-top:16px">Note: Foursquare is sunsetting City Guide, so the privacy request process may change. The API method via Pinback is a reliable alternative.</p>
+
+  <button onclick="document.getElementById('fs-export-modal').style.display='none'" style="margin-top:20px;padding:8px 20px;background:var(--card2);color:var(--text);border:1px solid var(--border);border-radius:8px;cursor:pointer;font-family:var(--font-body);font-size:.85rem">Close</button>
+</div>
+</div>
+
+<!-- Privacy modal -->
+<div id="privacy-modal" style="display:none;position:fixed;inset:0;z-index:999;background:rgba(0,0,0,.7);backdrop-filter:blur(6px);overflow-y:auto">
+<div style="max-width:560px;margin:60px auto;padding:32px;background:var(--card);border:1px solid var(--border);border-radius:14px;color:var(--text);font-family:var(--font-body);line-height:1.6">
+  <h2 style="font-family:var(--font-display);font-size:1.5rem;margin-bottom:16px">Privacy</h2>
+
+  <h3 style="font-size:.85rem;color:var(--accent);margin:16px 0 6px">Your data stays in your browser</h3>
+  <p style="font-size:.85rem">All processing runs client-side via Pyodide (Python in WebAssembly). Your Last.fm and Foursquare files are never uploaded to any server.</p>
+
+  <h3 style="font-size:.85rem;color:var(--accent);margin:16px 0 6px">Geocoding via Nominatim</h3>
+  <p style="font-size:.85rem">For checkins that don't already have city data, coordinates rounded to ~10 km are sent to <a href="https://nominatim.openstreetmap.org" target="_blank" style="color:var(--accent)">OpenStreetMap's Nominatim</a> service to resolve city and country names. This is the only network request that includes any location information. See the <a href="https://osmfoundation.org/wiki/Privacy_Policy" target="_blank" style="color:var(--accent)">OSM Foundation privacy policy</a>.</p>
+
+  <h3 style="font-size:.85rem;color:var(--accent);margin:16px 0 6px">Pre-built location cache</h3>
+  <p style="font-size:.85rem">A <code style="font-family:var(--font-mono);font-size:.75rem;background:var(--card2);padding:1px 5px;border-radius:3px">geo_seed.json</code> file is loaded to speed up geocoding. It contains only coordinate-to-city mappings (e.g. <code style="font-family:var(--font-mono);font-size:.75rem;background:var(--card2);padding:1px 5px;border-radius:3px">"40.1,-74.2" &rarr; "New York, US"</code>) at ~10 km grid resolution, derived from the developer's own checkin data. It contains no venue names, timestamps, or personally identifying information. When this cache already has a match, no Nominatim request is made.</p>
+
+  <h3 style="font-size:.85rem;color:var(--accent);margin:16px 0 6px">Local storage</h3>
+  <p style="font-size:.85rem">Geocoding results are cached in your browser's <code style="font-family:var(--font-mono);font-size:.75rem;background:var(--card2);padding:1px 5px;border-radius:3px">localStorage</code> so subsequent runs don't repeat lookups. You can clear this anytime via your browser's developer tools.</p>
+
+  <h3 style="font-size:.85rem;color:var(--accent);margin:16px 0 6px">No analytics or tracking</h3>
+  <p style="font-size:.85rem">This site does not use cookies, analytics, or any third-party tracking scripts.</p>
+
+  <button onclick="document.getElementById('privacy-modal').style.display='none'" style="margin-top:20px;padding:8px 20px;background:var(--card2);color:var(--text);border:1px solid var(--border);border-radius:8px;cursor:pointer;font-family:var(--font-body);font-size:.85rem">Close</button>
+</div>
+</div>
 
 </body>
 </html>

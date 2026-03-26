@@ -12,5 +12,11 @@ cp "$DIR/correlate.py"            "$DOCS/correlate.py"
 cp "$DIR/generate_dashboard.py"   "$DOCS/generate_dashboard.py"
 cp "$DIR/foursquare_template.html" "$DOCS/template.html"
 
+# Publish geo cache as seed for web version (skips Nominatim for known locations)
+if [ -f "$DIR/data/geo_cache.json" ]; then
+  cp "$DIR/data/geo_cache.json" "$DOCS/geo_seed.json"
+  echo "Published geo_seed.json ($(wc -c < "$DOCS/geo_seed.json" | tr -d ' ') bytes)"
+fi
+
 echo "Synced to docs/:"
 ls -lh "$DOCS"

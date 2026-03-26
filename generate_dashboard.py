@@ -26,6 +26,38 @@ def _load(path, default):
     return default
 
 
+def _normalize_platform(platform):
+    """Normalize Spotify platform strings to readable labels."""
+    p = platform.lower()
+    if "iphone" in p or "ios" in p:
+        return "iPhone"
+    if "ipad" in p:
+        return "iPad"
+    if "android" in p:
+        return "Android"
+    if "mac" in p or "osx" in p:
+        return "Mac"
+    if "windows" in p:
+        return "Windows"
+    if "linux" in p:
+        return "Linux"
+    if "web" in p or "browser" in p:
+        return "Web"
+    if "cast" in p or "chromecast" in p:
+        return "Chromecast"
+    if "sonos" in p:
+        return "Sonos"
+    if "alexa" in p or "echo" in p:
+        return "Alexa"
+    if "ps4" in p or "ps5" in p or "playstation" in p:
+        return "PlayStation"
+    if "xbox" in p:
+        return "Xbox"
+    if "car" in p:
+        return "Car"
+    return platform[:20] if platform else "Unknown"
+
+
 def _parse_ts(ts):
     """Parse 'YYYY-MM-DDTHH:MM:SSZ' to datetime."""
     return datetime.strptime(ts, "%Y-%m-%dT%H:%M:%SZ")
@@ -331,6 +363,74 @@ def run(data_dir="./data", template_path=None):
                 run = 1
         all_best_str = max(all_best_str, run)
 
+    # ── Spotify-specific stats (only if ms_played present) ───────────────────
+    has_spotify = any(r.get("ms_played") is not None for r in rows[:100])
+    spotify_stats = None
+    if has_spotify:
+        total_ms = sum(r.get("ms_played", 0) for r in rows)
+        total_hours = round(total_ms / 3_600_000, 1)
+        skip_count = sum(1 for r in rows if r.get("skipped"))
+        actual_plays = sum(1 for r in rows if not r.get("skipped"))
+        skip_rate = round(skip_count / max(len(rows), 1) * 100, 1)
+
+        # Listening hours by month
+        hours_by_month = defaultdict(float)
+        for r in rows:
+            hours_by_month[r["_month"]] += r.get("ms_played", 0) / 3_600_000
+        listening_hours_by_month = [
+            {"month": m, "hours": round(h, 1)}
+            for m, h in sorted(hours_by_month.items())
+        ]
+
+        # Platform breakdown
+        platform_counts = Counter(
+            _normalize_platform(r.get("platform", ""))
+            for r in rows if r.get("platform")
+        )
+        platforms = [{"platform": p, "count": c}
+                     for p, c in platform_counts.most_common(8)]
+
+        # Shuffle rate
+        shuffle_count = sum(1 for r in rows if r.get("shuffle"))
+        shuffle_rate = round(shuffle_count / max(len(rows), 1) * 100, 1)
+
+        # Skip rate by hour
+        skip_by_hour_total = Counter()
+        skip_by_hour_skipped = Counter()
+        for r in rows:
+            skip_by_hour_total[r["_hour"]] += 1
+            if r.get("skipped"):
+                skip_by_hour_skipped[r["_hour"]] += 1
+        skip_rate_by_hour = [
+            round(skip_by_hour_skipped.get(h, 0) / max(skip_by_hour_total.get(h, 1), 1) * 100, 1)
+            for h in range(24)
+        ]
+
+        # Average track duration (non-skipped)
+        played_ms = [r.get("ms_played", 0) for r in rows if not r.get("skipped")]
+        avg_track_min = round(sum(played_ms) / max(len(played_ms), 1) / 60_000, 1)
+
+        # Listening hours by year
+        hours_by_year = defaultdict(float)
+        for r in rows:
+            hours_by_year[r["_year"]] += r.get("ms_played", 0) / 3_600_000
+        listening_hours_by_year = {yr: round(hours_by_year.get(yr, 0), 1) for yr in years}
+
+        spotify_stats = {
+            "total_hours": total_hours,
+            "actual_plays": actual_plays,
+            "skip_count": skip_count,
+            "skip_rate": skip_rate,
+            "shuffle_rate": shuffle_rate,
+            "avg_track_min": avg_track_min,
+            "listening_hours_by_month": listening_hours_by_month,
+            "listening_hours_by_year": listening_hours_by_year,
+            "platforms": platforms,
+            "skip_rate_by_hour": skip_rate_by_hour,
+        }
+        print(f"  Spotify data: {total_hours:,.0f} hours, {skip_rate}% skip rate, "
+              f"{len(platform_counts)} platforms")
+
     listening_history = {
         "meta": {
             "total_plays": total_plays,
@@ -342,6 +442,7 @@ def run(data_dir="./data", template_path=None):
             "most_plays_day": top_days[0] if top_days else None,
             "longest_session": top_sessions[0] if top_sessions else None,
         },
+        "spotify": spotify_stats,
         "top_artists_all": top_artists_all,
         "top_artists_by_year": top_artists_by_year,
         "top_albums_all": top_albums_all,
@@ -408,10 +509,17 @@ def run(data_dir="./data", template_path=None):
             print(f"  \u2717  Could not run correlate.run(): {e}")
     correlated = _load(correlated_path, {})
 
-    home_obj   = correlated.get("home", {})
-    home_city  = home_obj.get("city", "")
-    home_cc    = home_obj.get("country_code", "")
-    home_label = f"{home_city}, {home_cc}" if home_city and home_cc else home_city or home_cc or "unknown"
+    home_periods = correlated.get("home", [])
+    if isinstance(home_periods, dict):
+        # Legacy single-home format
+        home_periods = [home_periods] if home_periods.get("city") else []
+    if len(home_periods) == 1:
+        p = home_periods[0]
+        home_label = f"{p['city']}, {p['country_code']}"
+    elif home_periods:
+        home_label = " → ".join(f"{p['city']}, {p['country_code']}" for p in home_periods)
+    else:
+        home_label = "unknown"
     print(f"  Home: {home_label}")
 
     attributed_plays = correlated.get("attributed", 0)

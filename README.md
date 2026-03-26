@@ -37,7 +37,7 @@ A scrobble is attributed to a venue if it occurred within a **per-category time 
 
 The most recent matching checkin wins if windows overlap.
 
-**Home city** is inferred automatically as the most frequently checked-in `(city, country)` pair — no manual configuration needed.
+**Home city** is inferred automatically from your checkin patterns. If you moved during the period covered by your data, Swarm-FM detects the transition using a rolling 90-day window and tracks multiple home periods (e.g. Shanghai 2011–2013 → Austin 2013–2023). Lunch suppression, trip detection, and travel artist analysis all respect the home city that was active at each point in time.
 
 **Trips** are detected by finding consecutive days where all checkins are outside your home city. Gaps of up to 7 days are tolerated. Trips must be at least 2 days and have at least 5 scrobbles to appear in the dashboard. Trip type (flight, train, or road) is inferred from venue names during the trip.
 
@@ -115,4 +115,10 @@ Step 2 reverse-geocodes every checkin's lat/lng coordinates to city + country us
 
 ## Data privacy
 
-All data stays on your machine. The CLI version's only network calls are to Nominatim (for reverse geocoding, ~25 min on first run). The web version also uses Nominatim for checkins missing city data, with results cached in your browser's localStorage. Your config and data files are gitignored by default.
+All data stays on your machine. No tracking, cookies, or analytics.
+
+- **Client-side processing** — both the CLI and web versions process your data locally. The web app runs entirely in your browser via Pyodide (Python in WebAssembly). Your Last.fm and Foursquare files are never uploaded to any server.
+- **Nominatim geocoding** — the only network requests containing location data are to [OpenStreetMap's Nominatim](https://nominatim.openstreetmap.org) service, used to resolve coordinates to city/country names. Coordinates are rounded to ~1 km (CLI) or ~10 km (web) before lookup. See the [OSM Foundation privacy policy](https://osmfoundation.org/wiki/Privacy_Policy).
+- **Pre-built location cache** — the web version ships a `geo_seed.json` file to reduce Nominatim requests. It contains only coordinate-to-city mappings (e.g. `"40.1,-74.2" → "New York, US"`) at ~10 km grid resolution. No venue names, timestamps, or personally identifying information.
+- **Browser localStorage** — geocoding results are cached in your browser's `localStorage` for faster subsequent runs. You can clear this anytime via your browser's developer tools.
+- **Config and data files** — `config.py` and the `data/` directory are gitignored by default.

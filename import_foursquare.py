@@ -100,20 +100,37 @@ def parse(export_dir, data_dir="./data"):
     # Reverse-geocode all coordinates
     coords_with_latlon = [(c, c["lat"], c["lng"]) for c in checkins if c.get("lat") and c.get("lng")]
     if coords_with_latlon:
-        print(f"Reverse geocoding {len(coords_with_latlon):,} checkins "
-              f"(~{len(set((round(lat,2),round(lng,2)) for _,lat,lng in coords_with_latlon)):,} "
-              f"unique locations)...")
-        from geocode import Geocoder
+        from geocode import Geocoder, _is_airport_venue
         gc = Geocoder(data_dir)
-        unique_coords = list(set((round(float(lat), 2), round(float(lng), 2))
-                                 for _, lat, lng in coords_with_latlon))
-        gc.batch(unique_coords, progress=True)  # warm the cache
 
-        for checkin, lat, lng in coords_with_latlon:
+        # Separate airports from non-airports for batch processing
+        airport_checkins = [(c, lat, lng) for c, lat, lng in coords_with_latlon
+                           if _is_airport_venue(c["venue_name"])]
+        non_airport_checkins = [(c, lat, lng) for c, lat, lng in coords_with_latlon
+                                if not _is_airport_venue(c["venue_name"])]
+
+        # Batch-geocode non-airport locations (coordinate-only, cacheable)
+        unique_coords = list(set((round(float(lat), 2), round(float(lng), 2))
+                                 for _, lat, lng in non_airport_checkins))
+        print(f"Reverse geocoding {len(coords_with_latlon):,} checkins "
+              f"(~{len(unique_coords):,} unique locations, "
+              f"{len(airport_checkins):,} airports)...")
+        gc.batch(unique_coords, progress=True)
+
+        for checkin, lat, lng in non_airport_checkins:
             geo = gc.lookup(lat, lng)
             checkin["city"]         = geo.get("city", "")
             checkin["country"]      = geo.get("country", "")
             checkin["country_code"] = geo.get("country_code", "")
+
+        # Geocode airports by name (searches for the served city)
+        for checkin, lat, lng in airport_checkins:
+            geo = gc.lookup(lat, lng, venue_name=checkin["venue_name"])
+            checkin["city"]         = geo.get("city", "")
+            checkin["country"]      = geo.get("country", "")
+            checkin["country_code"] = geo.get("country_code", "")
+
+        gc.save_cache()
 
     out_path = os.path.join(data_dir, "checkins.json")
     with open(out_path, "w", encoding="utf-8") as f:

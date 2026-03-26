@@ -18,11 +18,21 @@ Usage:
 
 import json
 import os
+import re
 import time
 import urllib.parse
 import urllib.request
 
-NOMINATIM_URL = "https://nominatim.openstreetmap.org/reverse"
+
+def _is_airport_venue(name):
+    """Check if a venue name looks like an airport."""
+    nl = name.lower()
+    return ("airport" in nl or "aeropuerto" in nl or "aéroport" in nl
+            or (re.search(r'\b[A-Z]{3}\b', name) is not None
+                and ("terminal" in nl or "gate" in nl)))
+
+NOMINATIM_REVERSE_URL = "https://nominatim.openstreetmap.org/reverse"
+NOMINATIM_SEARCH_URL  = "https://nominatim.openstreetmap.org/search"
 RATE_LIMIT     = 1.1    # seconds between requests
 COORD_DECIMALS = 2      # round to ~1 km precision for cache key
 USER_AGENT     = "musicbrain/1.0 (https://github.com/yourusername/musicbrain)"
@@ -74,44 +84,89 @@ class Geocoder:
         lat_r, lng_r = _round_coord(lat, lng)
         return f"{lat_r},{lng_r}"
 
-    def lookup(self, lat, lng):
+    def _nominatim_reverse(self, lat_r, lng_r):
+        """Raw Nominatim reverse geocode (no cache, no rate-limit guard)."""
+        params = urllib.parse.urlencode({
+            "lat":    lat_r,
+            "lon":    lng_r,
+            "format": "jsonv2",
+            "zoom":   10,
+            "addressdetails": 1,
+        })
+        url = f"{NOMINATIM_REVERSE_URL}?{params}"
+        req = urllib.request.Request(url, headers={
+            "User-Agent":      USER_AGENT,
+            "Accept-Language": "en",
+        })
+        with urllib.request.urlopen(req, timeout=10) as resp:
+            data = json.loads(resp.read().decode("utf-8"))
+        address = data.get("address", {})
+        return {
+            "city":         _extract_city(address),
+            "country":      _extract_country(address),
+            "country_code": _extract_country_code(address),
+        }
+
+    def _nominatim_search(self, query):
+        """Search Nominatim by name and return the city from the first result."""
+        params = urllib.parse.urlencode({
+            "q":      query,
+            "format": "jsonv2",
+            "limit":  1,
+            "addressdetails": 1,
+        })
+        url = f"{NOMINATIM_SEARCH_URL}?{params}"
+        req = urllib.request.Request(url, headers={
+            "User-Agent":      USER_AGENT,
+            "Accept-Language": "en",
+        })
+        with urllib.request.urlopen(req, timeout=10) as resp:
+            data = json.loads(resp.read().decode("utf-8"))
+        if data:
+            address = data[0].get("address", {})
+            city = _extract_city(address)
+            if city:
+                return {
+                    "city":         city,
+                    "country":      _extract_country(address),
+                    "country_code": _extract_country_code(address),
+                }
+        return None
+
+    def _rate_wait(self):
+        elapsed = time.time() - self._last_req
+        if elapsed < RATE_LIMIT:
+            time.sleep(RATE_LIMIT - elapsed)
+
+    def lookup(self, lat, lng, venue_name=""):
         """
         Return {"city": ..., "country": ..., "country_code": ...} for
-        the given coordinates. Returns a dict with empty strings on failure.
+        the given coordinates. For airport venues, searches by name to
+        get the correct city instead of the small municipality at the
+        airport's coordinates. Returns a dict with empty strings on failure.
         """
         key = self._cache_key(lat, lng)
         if key in self._cache:
             return self._cache[key]
 
-        # Rate limiting
-        elapsed = time.time() - self._last_req
-        if elapsed < RATE_LIMIT:
-            time.sleep(RATE_LIMIT - elapsed)
-
+        self._rate_wait()
         lat_r, lng_r = _round_coord(lat, lng)
-        params = urllib.parse.urlencode({
-            "lat":    lat_r,
-            "lon":    lng_r,
-            "format": "jsonv2",
-            "zoom":   10,          # city level
-            "addressdetails": 1,
-        })
-        url = f"{NOMINATIM_URL}?{params}"
-        req = urllib.request.Request(url, headers={
-            "User-Agent":      USER_AGENT,
-            "Accept-Language": "en",
-        })
-
         result = {"city": "", "country": "", "country_code": ""}
+
         try:
-            with urllib.request.urlopen(req, timeout=10) as resp:
-                data = json.loads(resp.read().decode("utf-8"))
-            address = data.get("address", {})
-            result = {
-                "city":         _extract_city(address),
-                "country":      _extract_country(address),
-                "country_code": _extract_country_code(address),
-            }
+            # For airports, search by venue name to get the served city
+            if venue_name and _is_airport_venue(venue_name):
+                searched = self._nominatim_search(venue_name)
+                if searched:
+                    result = searched
+                    self._last_req = time.time()
+                    self._cache[key] = result
+                    return result
+                # If search failed, fall through to reverse geocode
+                self._last_req = time.time()
+                self._rate_wait()
+
+            result = self._nominatim_reverse(lat_r, lng_r)
         except Exception as e:
             print(f"    ⚠  Geocode error ({lat_r},{lng_r}): {e}")
 

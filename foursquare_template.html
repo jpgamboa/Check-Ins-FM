@@ -240,6 +240,34 @@
   <div class="section-sub">Heard in 3+ years — your most loyal listens</div>
   <div class="records-grid" id="lh-loyalty"></div>
 
+  <!-- ═══════ SPOTIFY-SPECIFIC (hidden when no Spotify data) ════════════ -->
+  <div id="spotify-section" style="display:none">
+    <div style="border-top:1px solid var(--border);margin:48px 0 0"></div>
+
+    <div class="section-title">Spotify Insights</div>
+    <div class="section-sub">Stats from Spotify's extended streaming history</div>
+    <div class="records-grid" id="spotify-records"></div>
+
+    <div class="section-title">Listening Time</div>
+    <div class="section-sub">Hours of music per month</div>
+    <div class="chart-card" style="margin-bottom:16px">
+      <div id="chart-sp-hours-timeline" style="height:260px"></div>
+    </div>
+
+    <div class="chart-row">
+      <div>
+        <div class="section-title">Platforms</div>
+        <div class="section-sub">Where you listen</div>
+        <div class="chart-card"><div id="chart-sp-platforms" style="height:280px"></div></div>
+      </div>
+      <div>
+        <div class="section-title">Skip Rate by Hour</div>
+        <div class="section-sub">How often you skip by time of day</div>
+        <div class="chart-card"><div id="chart-sp-skip-hour" style="height:280px"></div></div>
+      </div>
+    </div>
+  </div>
+
   <!-- ═══════ FOURSQUARE ═════════════════════════════════════════════════ -->
   <div style="border-top:1px solid var(--border);margin:48px 0 0"></div>
 
@@ -556,6 +584,68 @@ function renderListeningHistory() {
   }).join('');
 }
 
+// ── Spotify-specific charts (only when Spotify data is present) ──────────────
+function renderSpotify() {
+  const LH = D.listening_history || {};
+  const SP = LH.spotify;
+  if (!SP) return;
+
+  document.getElementById('spotify-section').style.display = 'block';
+
+  // Record cards
+  document.getElementById('spotify-records').innerHTML = [
+    `<div class="record-card"><div class="rc-label">Listening Time</div><div class="rc-value">${SP.total_hours.toLocaleString()}h</div></div>`,
+    `<div class="record-card"><div class="rc-label">Tracks Played</div><div class="rc-value">${SP.actual_plays.toLocaleString()}</div></div>`,
+    `<div class="record-card"><div class="rc-label">Skip Rate</div><div class="rc-value">${SP.skip_rate}%</div><div class="rc-sub">${SP.skip_count.toLocaleString()} skipped</div></div>`,
+    `<div class="record-card"><div class="rc-label">Shuffle Rate</div><div class="rc-value">${SP.shuffle_rate}%</div></div>`,
+    `<div class="record-card"><div class="rc-label">Avg Track Length</div><div class="rc-value">${SP.avg_track_min} min</div></div>`,
+  ].join('');
+
+  // Listening hours timeline
+  const hm = SP.listening_hours_by_month || [];
+  if (hm.length) {
+    Plotly.newPlot('chart-sp-hours-timeline', [{
+      x: hm.map(d => d.month), y: hm.map(d => d.hours),
+      type: 'scatter', mode: 'lines', fill: 'tozeroy',
+      line: { color: '#1db954', width: 1.5 },
+      fillcolor: 'rgba(29,185,84,.1)',
+      hovertemplate: '%{x}: %{y:.1f} hours<extra></extra>',
+    }], L({ margin: { t: 8, r: 16, b: 32, l: 50 },
+      xaxis: { gridcolor: GRID, type: 'category', dtick: 12 },
+      yaxis: { gridcolor: GRID, title: { text: 'hours', font: { color: DIM, size: 11 } } },
+    }), CFG);
+  }
+
+  // Platforms donut
+  const plat = (SP.platforms || []).slice(0, 8);
+  if (plat.length) {
+    Plotly.newPlot('chart-sp-platforms', [{
+      labels: plat.map(d => d.platform),
+      values: plat.map(d => d.count),
+      type: 'pie', hole: 0.5,
+      marker: { colors: ['#1db954', ACCENT, '#ff6b35', '#60a5fa', '#a78bfa', '#fbbf24', '#f472b6', '#34d399'] },
+      textinfo: 'label+percent',
+      textfont: { color: '#fff', family: FONT, size: 11 },
+      hovertemplate: '<b>%{label}</b><br>%{value:,} plays (%{percent})<extra></extra>',
+    }], L({ margin: { t: 8, r: 8, b: 8, l: 8 }, showlegend: false }), CFG);
+  }
+
+  // Skip rate by hour
+  const skipHour = SP.skip_rate_by_hour || [];
+  if (skipHour.length) {
+    Plotly.newPlot('chart-sp-skip-hour', [{
+      x: Array.from({length: 24}, (_, i) => i),
+      y: skipHour,
+      type: 'bar',
+      marker: { color: skipHour.map(v => v > 30 ? '#ff6b35' : v > 20 ? '#fbbf24' : '#1db954') },
+      hovertemplate: '%{x}:00 — %{y:.1f}% skipped<extra></extra>',
+    }], L({ margin: { t: 8, r: 16, b: 32, l: 40 },
+      xaxis: { gridcolor: GRID, dtick: 3, title: { text: 'hour', font: { color: DIM, size: 11 } } },
+      yaxis: { gridcolor: GRID, title: { text: 'skip %', font: { color: DIM, size: 11 } } },
+    }), CFG);
+  }
+}
+
 // ── Main render ────────────────────────────────────────────────────────────────
 function renderFoursquare() {
   const FS = D.foursquare || {};
@@ -669,7 +759,7 @@ function renderFoursquare() {
   }), CFG);
 
   // 5a. By Category
-  const byCat = (FS.by_category || []).slice(0, 14);
+  const byCat = (FS.by_category || []).slice(0, 14).reverse();
   const catLabels = byCat.map(d => CAT_LABELS[d.cat] || d.cat);
   Plotly.newPlot('chart-fs-category', [
     {
@@ -685,7 +775,7 @@ function renderFoursquare() {
   }), CFG);
 
   // 5b. By Country
-  const byCountry = (FS.by_country || []).slice(0, 15);
+  const byCountry = (FS.by_country || []).slice(0, 15).reverse();
   Plotly.newPlot('chart-fs-country', [
     {
       x: byCountry.map(d => d.plays),
@@ -701,7 +791,7 @@ function renderFoursquare() {
   }), CFG);
 
   // 6a. By City bar
-  const byCity = (FS.by_city || []).slice(0, 20);
+  const byCity = (FS.by_city || []).slice(0, 20).reverse();
   Plotly.newPlot('chart-fs-city', [
     {
       x: byCity.map(d => d.plays), y: byCity.map(d => d.city),
@@ -772,7 +862,7 @@ function renderFoursquare() {
   }, CFG);
 
   // 7. Venue plays (attributed scrobbles)
-  const vp = (FS.venue_plays || []).slice(0, 20);
+  const vp = (FS.venue_plays || []).slice(0, 20).reverse();
   Plotly.newPlot('chart-fs-venue-plays', [
     {
       x: vp.map(d => d.plays), y: vp.map(d => d.name),
@@ -810,7 +900,7 @@ function renderFoursquare() {
   }
 
   // 9. Top venues by checkin count
-  const tv = (FS.top_venues || []).slice(0, 30);
+  const tv = (FS.top_venues || []).slice(0, 30).reverse();
   Plotly.newPlot('chart-fs-venues', [
     {
       x: tv.map(d => d.count), y: tv.map(d => d.name),
@@ -890,7 +980,7 @@ function renderFoursquare() {
   }
 
   // 11. Travel artists lift
-  const ta = (FS.travel_artists || []).slice(0, 20);
+  const ta = (FS.travel_artists || []).slice(0, 20).reverse();
   if (ta.length) {
     Plotly.newPlot('chart-fs-travel-artists', [
       {
@@ -925,6 +1015,7 @@ if (D) {
     `<div class="stat-card"><span class="value">${FS.home||'—'}</span><span class="label">Home City</span></div>`,
   ].join('');
   renderListeningHistory();
+  renderSpotify();
   renderFoursquare();
 }
 </script>

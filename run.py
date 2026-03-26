@@ -30,7 +30,7 @@ Requirements:
 import sys
 import os
 
-STEPS = ["lastfm", "foursquare", "correlate", "dashboard"]
+STEPS = ["lastfm", "spotify", "foursquare", "correlate", "dashboard"]
 
 
 def load_config():
@@ -51,6 +51,15 @@ def step_lastfm(cfg):
         return
     from import_lastfm import parse
     parse(export_file, cfg.DATA_DIR)
+
+
+def step_spotify(cfg):
+    export_dir = getattr(cfg, "SPOTIFY_EXPORT_DIR", "")
+    if not export_dir:
+        print("SPOTIFY_EXPORT_DIR not set — skipping Spotify import.")
+        return
+    from import_spotify import parse
+    parse(export_dir, cfg.DATA_DIR)
 
 
 def step_foursquare(cfg):
@@ -74,6 +83,7 @@ def step_dashboard(cfg):
 
 STEP_FNS = {
     "lastfm":     step_lastfm,
+    "spotify":    step_spotify,
     "foursquare": step_foursquare,
     "correlate":  step_correlate,
     "dashboard":  step_dashboard,
@@ -81,6 +91,7 @@ STEP_FNS = {
 
 STEP_DESCRIPTIONS = {
     "lastfm":     "Import Last.fm CSV export",
+    "spotify":    "Import Spotify extended streaming history",
     "foursquare": "Import Foursquare checkin export + geocode",
     "correlate":  "Correlate scrobbles with checkins",
     "dashboard":  "Generate HTML dashboard",
