@@ -1,4 +1,4 @@
-# swarmfm
+# Swarm-FM
 
 Compare your Last.fm scrobble history against your Foursquare/Swarm checkins — generates a self-contained HTML dashboard with no database, no server, just Python and a browser.
 
