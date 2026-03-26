@@ -472,6 +472,7 @@ def _detect_trips(checkins, home_periods):
 def run(data_dir="./data"):
     checkins_path  = os.path.join(data_dir, "checkins.json")
     scrobbles_path = os.path.join(data_dir, "scrobbles.json")
+    manual_home_path = os.path.join(data_dir, "manual_home.json")
 
     checkins  = _load(checkins_path, [])
     scrobbles = _load(scrobbles_path, [])
@@ -482,16 +483,24 @@ def run(data_dir="./data"):
 
     print(f"Correlating {len(scrobbles):,} scrobbles with {len(checkins):,} checkins...")
 
-    # ── Infer home periods ──────────────────────────────────────────────────
-    home_periods = _infer_home_periods(checkins)
-    if len(home_periods) == 1:
-        p = home_periods[0]
-        print(f"  Inferred home: {p['city']}, {p['country_code']}")
-    else:
-        print(f"  Inferred {len(home_periods)} home periods:")
+    # ── Home periods: manual override or auto-infer ─────────────────────────
+    manual_home = _load(manual_home_path, None)
+    if manual_home and isinstance(manual_home, list) and len(manual_home) > 0:
+        home_periods = manual_home
+        print(f"  Using {len(home_periods)} manual home period(s):")
         for p in home_periods:
             print(f"    {p['city']}, {p['country_code']}  "
                   f"({p['start'][:7]} → {p['end'][:7]})")
+    else:
+        home_periods = _infer_home_periods(checkins)
+        if len(home_periods) == 1:
+            p = home_periods[0]
+            print(f"  Inferred home: {p['city']}, {p['country_code']}")
+        else:
+            print(f"  Inferred {len(home_periods)} home periods:")
+            for p in home_periods:
+                print(f"    {p['city']}, {p['country_code']}  "
+                      f"({p['start'][:7]} → {p['end'][:7]})")
 
     # ── Attribute scrobbles to venues ─────────────────────────────────────────
     attributed = _attribute_scrobbles(checkins, scrobbles, home_periods)

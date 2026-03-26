@@ -137,6 +137,43 @@ h1 span { color: var(--accent); }
   color: var(--text-dim); line-height: 1.7; white-space: pre-wrap;
 }
 
+/* ── Home cities panel ─────────────────────────────────────────── */
+.home-panel {
+  margin: 14px 0; padding: 16px;
+  background: var(--card); border: 1px solid var(--border); border-radius: 10px;
+}
+.home-panel-header h3 {
+  font-family: var(--font-display); font-size: 1.1rem; font-weight: 400; margin-bottom: 4px;
+}
+.home-panel-header p {
+  font-size: .8rem; color: var(--text-dim); margin-bottom: 12px;
+}
+.home-toggle {
+  display: flex; gap: 12px; margin-bottom: 12px;
+}
+.toggle-option {
+  display: flex; align-items: center; gap: 6px;
+  font-size: .82rem; color: var(--text-dim); cursor: pointer;
+}
+.toggle-option input[type="radio"] {
+  accent-color: var(--accent);
+}
+.home-row {
+  display: grid; grid-template-columns: 1fr 80px 110px 110px 28px;
+  gap: 6px; margin-bottom: 6px; align-items: center;
+}
+.home-row input {
+  background: var(--card2); border: 1px solid var(--border); border-radius: 6px;
+  padding: 6px 8px; color: var(--text); font-family: var(--font-body); font-size: .8rem;
+}
+.home-row input:focus { outline: none; border-color: var(--accent); }
+.home-row input::placeholder { color: var(--text-faint); }
+.home-row .remove-btn {
+  background: none; border: none; color: var(--text-faint); cursor: pointer;
+  font-size: 1rem; padding: 0; line-height: 1;
+}
+.home-row .remove-btn:hover { color: var(--warm); }
+
 /* ── Geo facts ticker ──────────────────────────────────────────── */
 .geo-facts {
   margin: 14px 0; padding: 12px 16px;
@@ -279,6 +316,29 @@ iframe#dashboard-frame {
     <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
     <p class="progress-status" id="progress-status">Initializing&hellip;</p>
     <div id="geo-facts" class="geo-facts" style="display:none"></div>
+
+    <!-- Home cities questionnaire (shown during geocoding) -->
+    <div id="home-panel" class="home-panel" style="display:none">
+      <div class="home-panel-header">
+        <h3>Where have you lived?</h3>
+        <p>This helps distinguish trips from home. You can auto-detect or enter manually.</p>
+      </div>
+      <div class="home-toggle">
+        <label class="toggle-option">
+          <input type="radio" name="home-mode" value="auto" checked>
+          <span>Auto-detect from checkins</span>
+        </label>
+        <label class="toggle-option">
+          <input type="radio" name="home-mode" value="manual">
+          <span>I'll enter my cities</span>
+        </label>
+      </div>
+      <div id="home-manual" style="display:none">
+        <div id="home-rows"></div>
+        <button class="btn btn-secondary" id="home-add-btn" style="font-size:.8rem;padding:6px 12px;margin-top:8px">+ Add city</button>
+      </div>
+    </div>
+
     <div class="log" id="log"></div>
   </div>
 
@@ -447,6 +507,58 @@ async function _loadGeoSeed() {
     else _geoSeed = {};
   } catch { _geoSeed = {}; }
   return _geoSeed;
+}
+
+// ── Home cities panel ──────────────────────────────────────────────
+function _addHomeRow(city = '', cc = '', start = '', end = '') {
+  const rows = document.getElementById('home-rows');
+  const row = document.createElement('div');
+  row.className = 'home-row';
+  row.innerHTML = `
+    <input type="text" placeholder="City" value="${city}">
+    <input type="text" placeholder="CC" maxlength="2" value="${cc}" style="text-transform:uppercase">
+    <input type="month" value="${start}">
+    <input type="month" value="${end}">
+    <button class="remove-btn" title="Remove">&times;</button>`;
+  row.querySelector('.remove-btn').addEventListener('click', () => row.remove());
+  rows.appendChild(row);
+}
+
+function showHomePanel() {
+  const panel = document.getElementById('home-panel');
+  panel.style.display = 'block';
+  // Wire up toggle
+  document.querySelectorAll('input[name="home-mode"]').forEach(r => {
+    r.addEventListener('change', () => {
+      document.getElementById('home-manual').style.display =
+        r.value === 'manual' && r.checked ? 'block' : 'none';
+    });
+  });
+  document.getElementById('home-add-btn').addEventListener('click', () => _addHomeRow());
+  // Start with one empty row
+  _addHomeRow();
+}
+
+function getManualHomePeriods() {
+  const mode = document.querySelector('input[name="home-mode"]:checked');
+  if (!mode || mode.value === 'auto') return null;
+  const rows = document.querySelectorAll('#home-rows .home-row');
+  const periods = [];
+  for (const row of rows) {
+    const inputs = row.querySelectorAll('input');
+    const city = inputs[0].value.trim();
+    const cc = inputs[1].value.trim().toUpperCase();
+    const start = inputs[2].value; // "YYYY-MM"
+    const end = inputs[3].value;
+    if (city && cc && start && end) {
+      periods.push({ city, country_code: cc, start: start + '-01', end: end + '-28' });
+    }
+  }
+  return periods.length > 0 ? periods : null;
+}
+
+function hideHomePanel() {
+  document.getElementById('home-panel').style.display = 'none';
 }
 
 // ── Geo facts ticker ───────────────────────────────────────────────
@@ -941,6 +1053,7 @@ async function runPipeline() {
   logEl.textContent = '';
   // Pre-load seed and start facts while pipeline runs
   _loadGeoSeed().then(seed => { if (Object.keys(seed).length) startGeoFacts(seed); });
+  showHomePanel();
 
   try {
     pyodide.setStdout({ batched: msg => log(msg) });
@@ -1036,6 +1149,18 @@ async function runPipeline() {
 
     // ── Correlation ────────────────────────────────────────────────
     setProgress(60, 'Correlating scrobbles with checkins\u2026');
+
+    // Write manual home periods if user provided them
+    const manualPeriods = getManualHomePeriods();
+    if (manualPeriods) {
+      pyodide.FS.writeFile('/data/manual_home.json', JSON.stringify(manualPeriods));
+      log(`Using ${manualPeriods.length} manual home period(s)`);
+    } else {
+      // Remove any stale manual_home.json so auto-inference runs
+      try { pyodide.FS.unlink('/data/manual_home.json'); } catch {}
+    }
+    hideHomePanel();
+    stopGeoFacts();
 
     const correlateCode = await fetch('correlate.py').then(r => r.text());
     pyodide.FS.writeFile('/app/correlate.py', correlateCode);
