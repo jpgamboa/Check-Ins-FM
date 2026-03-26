@@ -10,8 +10,8 @@ Compare your Last.fm scrobble history against your Foursquare/Swarm checkins —
 
 A browser-based version is available at the project's GitHub Pages site — no Python install needed. Everything runs client-side via [Pyodide](https://pyodide.org/) (Python compiled to WebAssembly).
 
-1. Visit the hosted page (or serve `docs/` locally: `cd docs && python3 -m http.server 8765`)
-2. Drop your Last.fm CSV + Foursquare JSON export
+1. Visit the [hosted page](https://jpgamboa.github.io/Swarm-FM/) (or serve `docs/` locally: `cd docs && python3 -m http.server 8765`)
+2. Drop your Last.fm CSV + Foursquare JSON exports
 3. Files are parsed and correlated in your browser
 4. Download the generated dashboard HTML
 
@@ -43,7 +43,7 @@ The most recent matching checkin wins if windows overlap.
 
 **Map:** the dashboard map shows two layers — green dots for cities with attributed music plays, and gray dots for all other visited cities.
 
-## Run Locally
+## Run App Locally
 
 ## Requirements
 
