@@ -156,18 +156,23 @@ def _infer_home_city(checkins):
 
 # ── Attribution ───────────────────────────────────────────────────────────────
 
-def _attribute_scrobbles(checkins, scrobbles):
+def _attribute_scrobbles(checkins, scrobbles, home_city="", home_cc=""):
     """
     For each scrobble, find the most recent checkin within a per-category
     attribution window. Returns a list of (scrobble, checkin | None) pairs.
 
-    Weekday lunches (M-F 10am–4pm) suppress restaurant attribution to
-    avoid false positives from work-adjacent dining.
+    Weekday lunches (M-F 10am–4pm) suppress restaurant attribution only
+    when in the home city — you're likely at work. When traveling, keep
+    restaurant attribution active.
     """
     sorted_checkins = sorted(checkins, key=lambda c: c["timestamp"])
     checkin_ts = [_parse_ts(c["timestamp"]) for c in sorted_checkins]
-    # Pre-compute categories
+    # Pre-compute categories and home-city flags
     checkin_cats = [_categorize_venue(c.get("venue_name", "")) for c in sorted_checkins]
+    checkin_is_home = [
+        (c.get("city", "") == home_city and c.get("country_code", "") == home_cc)
+        for c in sorted_checkins
+    ]
 
     attributed = []
 
@@ -184,8 +189,9 @@ def _attribute_scrobbles(checkins, scrobbles):
 
             cat = checkin_cats[idx]
 
-            # Determine window — suppress restaurants during weekday lunch
-            is_weekday_lunch = (ck_ts.weekday() < 5
+            # Suppress restaurants during weekday lunch ONLY in home city
+            is_weekday_lunch = (checkin_is_home[idx]
+                                and ck_ts.weekday() < 5
                                 and 10 <= ck_ts.hour < 16)
             if is_weekday_lunch and cat in _CAT_WINDOW_WEEKDAY_LUNCH:
                 window_sec = _CAT_WINDOW_WEEKDAY_LUNCH[cat]
@@ -324,7 +330,7 @@ def run(data_dir="./data"):
           f"(from most frequent checkin city)")
 
     # ── Attribute scrobbles to venues ─────────────────────────────────────────
-    attributed = _attribute_scrobbles(checkins, scrobbles)
+    attributed = _attribute_scrobbles(checkins, scrobbles, home_city, home_cc)
     attributed_count = sum(1 for _, ck in attributed if ck)
     print(f"  Attributed {attributed_count:,}/{len(scrobbles):,} scrobbles to venues "
           f"({attributed_count/max(len(scrobbles),1)*100:.1f}%)")

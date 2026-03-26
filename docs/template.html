@@ -163,8 +163,88 @@
 <main>
   <div class="stats-row" id="fs-top-stats"></div>
 
+  <!-- ═══════ LISTENING HISTORY ═══════════════════════════════════════════ -->
+  <div class="section-title">Personal Records</div>
+  <div class="section-sub" id="lh-records-sub">Your listening history at a glance</div>
+  <div class="records-grid" id="lh-records"></div>
+
+  <div class="section-title">Listening Over Time</div>
+  <div class="section-sub">Monthly scrobble count</div>
+  <div class="chart-card" style="margin-bottom:16px">
+    <div id="chart-lh-timeline" style="height:260px"></div>
+  </div>
+
+  <div class="section-title">Top Artists</div>
+  <div class="section-sub">All-time most played artists</div>
+  <div class="chart-card" style="margin-bottom:16px">
+    <div id="chart-lh-top-artists" style="height:400px"></div>
+  </div>
+
+  <div class="section-title">Top Albums</div>
+  <div class="section-sub">All-time most played albums</div>
+  <div class="chart-card" style="margin-bottom:16px">
+    <div id="chart-lh-top-albums" style="height:400px"></div>
+  </div>
+
+  <div class="chart-row">
+    <div>
+      <div class="section-title">When Do You Listen?</div>
+      <div class="section-sub">Plays by hour of day</div>
+      <div class="chart-card"><div id="chart-lh-hour" style="height:260px"></div></div>
+    </div>
+    <div>
+      <div class="section-title">Day of Week</div>
+      <div class="section-sub">Plays by day of week</div>
+      <div class="chart-card"><div id="chart-lh-dow" style="height:260px"></div></div>
+    </div>
+  </div>
+
+  <div class="section-title">Biggest Listening Days</div>
+  <div class="section-sub">Top 15 days by play count</div>
+  <div class="chart-card" style="margin-bottom:16px; overflow-x:auto">
+    <div id="lh-top-days-table"></div>
+  </div>
+
+  <div class="section-title">Marathon Sessions</div>
+  <div class="section-sub">Top 15 longest sessions (30-min gap threshold)</div>
+  <div class="chart-card" style="margin-bottom:16px; overflow-x:auto">
+    <div id="lh-sessions-table"></div>
+  </div>
+
+  <div class="section-title">Average Session Length</div>
+  <div class="section-sub">Tracks per session by year</div>
+  <div class="chart-card" style="margin-bottom:16px">
+    <div id="chart-lh-avg-session" style="height:260px"></div>
+  </div>
+
+  <div class="section-title">New Artist Discoveries</div>
+  <div class="section-sub">First time you heard an artist, by year</div>
+  <div class="chart-card" style="margin-bottom:16px">
+    <div id="chart-lh-new-artists" style="height:260px"></div>
+  </div>
+
+  <div class="chart-row">
+    <div>
+      <div class="section-title">Faded Out</div>
+      <div class="section-sub">Artists with strong peaks, now quiet</div>
+      <div class="chart-card" style="min-height:200px"><div id="lh-faded"></div></div>
+    </div>
+    <div>
+      <div class="section-title">Rising</div>
+      <div class="section-sub">Artists gaining momentum recently</div>
+      <div class="chart-card" style="min-height:200px"><div id="lh-rising"></div></div>
+    </div>
+  </div>
+
+  <div class="section-title">Artists You Keep Coming Back To</div>
+  <div class="section-sub">Heard in 3+ years — your most loyal listens</div>
+  <div class="records-grid" id="lh-loyalty"></div>
+
+  <!-- ═══════ FOURSQUARE ═════════════════════════════════════════════════ -->
+  <div style="border-top:1px solid var(--border);margin:48px 0 0"></div>
+
   <!-- 1. Stats overview -->
-  <div class="section-title">Overview</div>
+  <div class="section-title">Foursquare Overview</div>
   <div class="section-sub">Your Foursquare history at a glance</div>
   <div class="records-grid" id="fs-stats"></div>
 
@@ -283,6 +363,197 @@ function _pearson(xs, ys) {
     num += ex * ey; dx += ex * ex; dy += ey * ey;
   }
   return dx && dy ? num / Math.sqrt(dx * dy) : 0;
+}
+
+// ── Listening History render ──────────────────────────────────────────────────
+function renderListeningHistory() {
+  const LH = D.listening_history || {};
+  const M = LH.meta || {};
+  const DOW_LABELS = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+
+  // Personal records
+  const topDay = M.most_plays_day || {};
+  const topSess = M.longest_session || {};
+  document.getElementById('lh-records').innerHTML = [
+    `<div class="record-card"><div class="rc-label">Total Plays</div><div class="rc-value">${(M.total_plays||0).toLocaleString()}</div></div>`,
+    `<div class="record-card"><div class="rc-label">Unique Artists</div><div class="rc-value">${(M.unique_artists||0).toLocaleString()}</div></div>`,
+    `<div class="record-card"><div class="rc-label">Unique Albums</div><div class="rc-value">${(M.unique_albums||0).toLocaleString()}</div></div>`,
+    `<div class="record-card"><div class="rc-label">Years of History</div><div class="rc-value">${(M.years||[]).length}</div><div class="rc-sub">${(M.date_range||[])[0]||''} to ${(M.date_range||[])[1]||''}</div></div>`,
+    `<div class="record-card"><div class="rc-label">Most Plays in a Day</div><div class="rc-value">${(topDay.count||0).toLocaleString()}</div><div class="rc-sub">${topDay.date||''} &mdash; ${topDay.top_artist||''}</div></div>`,
+    `<div class="record-card"><div class="rc-label">Day Listening Streak</div><div class="rc-value">${M.longest_streak||0} days</div></div>`,
+    `<div class="record-card"><div class="rc-label">Longest Session</div><div class="rc-value">${topSess.tracks||0} tracks</div><div class="rc-sub">${topSess.hours||0}h &mdash; ${(topSess.top_artists||[]).join(', ')}</div></div>`,
+  ].join('');
+  document.getElementById('lh-records-sub').textContent =
+    `${(M.total_plays||0).toLocaleString()} plays across ${(M.years||[]).length} years`;
+
+  // Timeline
+  const months = D.plays_by_month || [];
+  if (months.length) {
+    Plotly.newPlot('chart-lh-timeline', [{
+      x: months.map(d => d.month), y: months.map(d => d.count),
+      type: 'scatter', mode: 'lines', fill: 'tozeroy',
+      line: { color: ACCENT, width: 1.5 },
+      fillcolor: 'rgba(200,255,0,.08)',
+      hovertemplate: '%{x}: %{y:,} plays<extra></extra>',
+    }], L({ margin: { t: 8, r: 16, b: 32, l: 50 },
+      xaxis: { gridcolor: GRID, type: 'category', dtick: 12 },
+      yaxis: { gridcolor: GRID },
+    }), CFG);
+  }
+
+  // Top artists
+  const topA = (LH.top_artists_all || []).slice(0, 20).reverse();
+  if (topA.length) {
+    Plotly.newPlot('chart-lh-top-artists', [{
+      x: topA.map(d => d.total), y: topA.map(d => d.artist),
+      type: 'bar', orientation: 'h',
+      marker: { color: ACCENT },
+      hovertemplate: '<b>%{y}</b>: %{x:,} plays<extra></extra>',
+    }], L({ margin: { t: 8, r: 16, b: 32, l: 160 },
+      xaxis: { gridcolor: GRID },
+      yaxis: { gridcolor: GRID, automargin: true },
+    }), CFG);
+  }
+
+  // Top albums
+  const topAl = (LH.top_albums_all || []).slice(0, 20).reverse();
+  if (topAl.length) {
+    Plotly.newPlot('chart-lh-top-albums', [{
+      x: topAl.map(d => d.count), y: topAl.map(d => `${d.artist} \u2014 ${d.album}`),
+      type: 'bar', orientation: 'h',
+      marker: { color: '#ff6b35' },
+      hovertemplate: '<b>%{y}</b>: %{x:,} plays<extra></extra>',
+    }], L({ margin: { t: 8, r: 16, b: 32, l: 240 },
+      xaxis: { gridcolor: GRID },
+      yaxis: { gridcolor: GRID, automargin: true },
+    }), CFG);
+  }
+
+  // Hour of day
+  Plotly.newPlot('chart-lh-hour', [{
+    x: Array.from({length: 24}, (_, i) => i),
+    y: LH.plays_by_hour || [],
+    type: 'bar', marker: { color: ACCENT },
+    hovertemplate: '%{x}:00 \u2014 %{y:,} plays<extra></extra>',
+  }], L({ margin: { t: 8, r: 16, b: 32, l: 50 },
+    xaxis: { gridcolor: GRID, dtick: 2, title: { text: 'Hour', font: { color: DIM, size: 11 } } },
+    yaxis: { gridcolor: GRID },
+  }), CFG);
+
+  // Day of week
+  const dow = D.plays_by_dow || [];
+  Plotly.newPlot('chart-lh-dow', [{
+    x: DOW_LABELS, y: dow,
+    type: 'bar', marker: { color: '#ff6b35' },
+    hovertemplate: '%{x}: %{y:,} plays<extra></extra>',
+  }], L({ margin: { t: 8, r: 16, b: 32, l: 50 },
+    xaxis: { gridcolor: GRID },
+    yaxis: { gridcolor: GRID },
+  }), CFG);
+
+  // Top days table
+  const topDays = LH.top_days || [];
+  if (topDays.length) {
+    let html = `<table class="sessions-table"><thead><tr>
+      <th>Date</th><th>Plays</th><th>Top Artist</th>
+    </tr></thead><tbody>`;
+    for (const d of topDays) {
+      html += `<tr>
+        <td style="color:#fff;white-space:nowrap">${d.date}</td>
+        <td>${(d.count||0).toLocaleString()}</td>
+        <td><span class="plays-pill">${d.top_artist}</span> <small style="color:var(--text-faint)">${d.top_artist_count}</small></td>
+      </tr>`;
+    }
+    html += '</tbody></table>';
+    document.getElementById('lh-top-days-table').innerHTML = html;
+  }
+
+  // Sessions table
+  const sess = LH.top_sessions || [];
+  if (sess.length) {
+    let html = `<table class="sessions-table"><thead><tr>
+      <th>Date</th><th>Start</th><th>Tracks</th><th>Duration</th><th>Playing</th>
+    </tr></thead><tbody>`;
+    for (const s of sess) {
+      const artists = (s.top_artists||[]).map(a => `<span class="plays-pill">${a}</span>`).join('');
+      html += `<tr>
+        <td style="color:#fff;white-space:nowrap">${s.date}</td>
+        <td>${s.start}</td>
+        <td>${s.tracks}</td>
+        <td>${s.hours}h</td>
+        <td>${artists}</td>
+      </tr>`;
+    }
+    html += '</tbody></table>';
+    document.getElementById('lh-sessions-table').innerHTML = html;
+  }
+
+  // Avg session by year
+  const avgSess = LH.avg_session_by_year || {};
+  const avgYears = Object.keys(avgSess).sort();
+  if (avgYears.length) {
+    Plotly.newPlot('chart-lh-avg-session', [{
+      x: avgYears, y: avgYears.map(yr => avgSess[yr]),
+      type: 'bar', marker: { color: ACCENT },
+      hovertemplate: '%{x}: %{y:.1f} tracks/session<extra></extra>',
+    }], L({ margin: { t: 8, r: 16, b: 32, l: 50 },
+      xaxis: { gridcolor: GRID },
+      yaxis: { gridcolor: GRID, title: { text: 'Tracks per session', font: { color: DIM, size: 11 } } },
+    }), CFG);
+  }
+
+  // New artist discoveries
+  const newA = LH.new_artists_per_year || [];
+  if (newA.length) {
+    Plotly.newPlot('chart-lh-new-artists', [{
+      x: newA.map(d => d.year), y: newA.map(d => d.count),
+      type: 'bar', marker: { color: '#ff6b35' },
+      hovertemplate: '%{x}: %{y:,} new artists<extra></extra>',
+    }], L({ margin: { t: 8, r: 16, b: 32, l: 50 },
+      xaxis: { gridcolor: GRID },
+      yaxis: { gridcolor: GRID },
+    }), CFG);
+  }
+
+  // Faded / Rising
+  const trends = LH.trends || {};
+  function renderTrendList(elId, items, ratioKey) {
+    const el = document.getElementById(elId);
+    if (!items || !items.length) { el.innerHTML = '<p style="color:var(--text-dim);padding:12px">None detected</p>'; return; }
+    el.innerHTML = items.slice(0, 10).map(d => {
+      const ratio = d[ratioKey] || 0;
+      const sparkYears = Object.keys(d.by_year || {}).sort();
+      const sparkVals = sparkYears.map(y => d.by_year[y]);
+      const maxV = Math.max(...sparkVals, 0.001);
+      const bars = sparkVals.map(v => {
+        const h = Math.max(1, Math.round(v / maxV * 20));
+        return `<span style="display:inline-block;width:3px;height:${h}px;background:${ACCENT};margin-right:1px;vertical-align:bottom;opacity:.6"></span>`;
+      }).join('');
+      return `<div style="display:flex;align-items:center;gap:10px;padding:8px 12px;border-bottom:1px solid var(--border)">
+        <span style="flex:1;color:var(--text);font-size:.85rem">${d.artist}</span>
+        <span style="font-family:var(--font-mono);font-size:.7rem;color:var(--text-dim)">${d.total_plays} plays</span>
+        <span style="display:flex;align-items:flex-end;height:20px">${bars}</span>
+        <span style="font-family:var(--font-mono);font-size:.72rem;color:${ratio >= 5 ? '#ff6b35' : ACCENT}">${ratio.toFixed(1)}x</span>
+      </div>`;
+    }).join('');
+  }
+  renderTrendList('lh-faded', trends.faded, 'fade_ratio');
+  renderTrendList('lh-rising', trends.rising, 'rise_ratio');
+
+  // Loyalty
+  const loyalty = LH.loyalty || [];
+  const allYears = M.years || [];
+  document.getElementById('lh-loyalty').innerHTML = loyalty.map(d => {
+    const dots = allYears.map(yr => {
+      const active = d.years.includes(yr);
+      return `<span style="display:inline-block;width:5px;height:5px;border-radius:50%;margin:0 1px;background:${active ? ACCENT : 'var(--border)'}"></span>`;
+    }).join('');
+    return `<div class="record-card" style="padding:12px 14px">
+      <div class="rc-label">${d.years_count} years &middot; ${d.total_plays.toLocaleString()} plays</div>
+      <div class="rc-value" style="font-size:.9rem;margin-bottom:4px">${d.artist}</div>
+      <div style="line-height:1">${dots}</div>
+    </div>`;
+  }).join('');
 }
 
 // ── Main render ────────────────────────────────────────────────────────────────
@@ -653,6 +924,7 @@ if (D) {
     `<div class="stat-card"><span class="value">${(FS.attributed_plays||0).toLocaleString()} <small style="font-size:.6em;font-weight:400">${FS.attributed_pct||0}%</small></span><span class="label">Attributed Scrobbles</span></div>`,
     `<div class="stat-card"><span class="value">${FS.home||'—'}</span><span class="label">Home City</span></div>`,
   ].join('');
+  renderListeningHistory();
   renderFoursquare();
 }
 </script>

@@ -22,7 +22,9 @@ cd swarmfm
 
 **2. Export your Last.fm history**
 
-Go to https://benjaminbenben.com/lastfm-to-csv/, enter your username, and download the CSV. Save it somewhere on your machine.
+Go to https://lastfmstats.com/, enter your username, and export your scrobble history as CSV. Save it somewhere on your machine.
+
+Also accepts CSVs from [benjaminbenben.com/lastfm-to-csv](https://benjaminbenben.com/lastfm-to-csv/) and the official Last.fm GDPR export.
 
 **3. Export your Foursquare/Swarm history**
 

@@ -209,10 +209,11 @@ iframe#dashboard-frame {
       <div class="info-card">
         <h3>Last.fm export</h3>
         <p>
-          Get your CSV from
-          <a href="https://benjaminbenben.com/lastfm-to-csv/" target="_blank">benjaminbenben.com/lastfm-to-csv</a><br>
+          Export your CSV from
+          <a href="https://lastfmstats.com/" target="_blank">lastfmstats.com</a><br>
           <span style="color:var(--text-faint);font-size:.75rem">
-            Also accepts GDPR exports &amp; pre-processed <code>scrobbles.json</code>
+            Also accepts <a href="https://benjaminbenben.com/lastfm-to-csv/" target="_blank" style="color:var(--text-faint)">benjaminbenben</a>,
+            GDPR exports &amp; pre-processed <code>scrobbles.json</code>
           </span>
         </p>
       </div>
@@ -231,7 +232,7 @@ iframe#dashboard-frame {
     <div class="drop-zone" id="drop-zone">
       <div class="icon"></div>
       <p>Drop your files here, or click to browse</p>
-      <p class="hint">Last.fm CSV + Foursquare JSON &mdash; or pre-processed .json files</p>
+      <p class="hint">Last.fm CSV + Foursquare JSON(s) &mdash; multiple checkins files supported</p>
       <input type="file" id="file-input" multiple accept=".csv,.json">
     </div>
 
@@ -318,8 +319,18 @@ function detectType(name, content) {
   const ext = name.split('.').pop().toLowerCase();
 
   if (ext === 'csv') {
-    const hdr = content.split('\n')[0].toLowerCase();
-    if (hdr.includes('artist') && (hdr.includes('name') || hdr.includes('track') || hdr.includes('uts')))
+    const firstLine = content.replace(/^\uFEFF/, '').split('\n')[0];
+    const fl = firstLine.toLowerCase();
+    // lastfmstats: "Artist;Album;AlbumId;Track;Date#username"
+    if (fl.startsWith('artist;') || fl.startsWith('artist\t'))
+      return 'lastfm';
+    // benjaminbenben with header or GDPR
+    if (fl.includes('artist') && (fl.includes('name') || fl.includes('track') || fl.includes('uts')))
+      return 'lastfm';
+    // benjaminbenben headerless: first line is data (no known header keyword)
+    // Heuristic: 4 comma-separated fields, last looks like a date
+    const parts = firstLine.split(',');
+    if (parts.length >= 4 && /\d{1,2}\s\w{3}\s\d{4}/.test(parts[parts.length - 1]))
       return 'lastfm';
     return 'csv_unknown';
   }
@@ -411,12 +422,24 @@ async function geocodeCoords(coords) {
     else toFetch.push({ lat, lng, key: k });
   }
 
-  log(`Geocoding: ${Object.keys(results).length} cached, ${toFetch.length} to look up`);
+  const estSec = toFetch.length * 1.1;
+  const estMin = Math.ceil(estSec / 60);
+  if (toFetch.length > 0) {
+    log(`Geocoding: ${Object.keys(results).length} cached, ${toFetch.length} to look up`);
+    log(`Estimated time: ~${estMin} min (1 req/sec Nominatim rate limit)`);
+    log(`Running locally skips this step entirely if you have a geo_cache.json.`);
+  }
 
+  const geoStart = Date.now();
   for (let i = 0; i < toFetch.length; i++) {
     const { lat, lng, key } = toFetch[i];
+    const elapsed = Math.round((Date.now() - geoStart) / 1000);
+    const remaining = Math.max(0, Math.round((toFetch.length - i) * 1.1));
+    const remMin = Math.floor(remaining / 60);
+    const remSec = remaining % 60;
+    const timeStr = remMin > 0 ? `${remMin}m ${remSec}s` : `${remSec}s`;
     setProgress(15 + (i / toFetch.length) * 25,
-      `Geocoding ${i + 1}/${toFetch.length}\u2026`);
+      `Geocoding ${i + 1}/${toFetch.length} \u2014 ~${timeStr} remaining`);
 
     try {
       const url = `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=jsonv2&zoom=10&addressdetails=1`;
@@ -547,7 +570,7 @@ print(f'Total with location: {geocoded:,}/{len(checkins):,}')
 `;
 
 const PY_PARSE_LASTFM = `
-import csv, json, io
+import csv, json, io, re
 from datetime import datetime, timezone
 
 FMTS = ['%d %b %Y, %H:%M', '%d %b %Y %H:%M', '%Y-%m-%dT%H:%M:%SZ', '%Y-%m-%d %H:%M:%S']
@@ -559,14 +582,65 @@ def parse_date(s):
         except ValueError: pass
     return None
 
-with open('/data/lastfm_export.csv', encoding='utf-8', newline='') as f:
-    reader = csv.DictReader(f)
+def find_date_key(row):
+    for key in row:
+        if key and key.startswith('Date'):
+            return key
+    return None
+
+# Detect format from first line
+with open('/data/lastfm_export.csv', encoding='utf-8-sig', newline='') as f:
+    first_line = f.readline().strip()
+
+fl = first_line.lower()
+if fl.startswith('artist;') or fl.startswith('artist\\t'):
+    delim = ';' if ';' in first_line else '\\t'
+    has_header = True
+    fmt_name = 'lastfmstats'
+elif fl.startswith('uts,'):
+    delim = ','
+    has_header = True
+    fmt_name = 'gdpr'
+elif fl.startswith('artist,') and 'name' in fl:
+    delim = ','
+    has_header = True
+    fmt_name = 'benjaminbenben'
+elif fl.startswith('timestamp,'):
+    delim = ','
+    has_header = True
+    fmt_name = 'iso'
+else:
+    delim = ','
+    has_header = False
+    fmt_name = 'benjaminbenben_headerless'
+
+print(f'Detected format: {fmt_name}')
+
+with open('/data/lastfm_export.csv', encoding='utf-8-sig', newline='') as f:
+    if has_header:
+        reader = csv.DictReader(f, delimiter=delim)
+    else:
+        reader = csv.DictReader(f, fieldnames=['artist', 'album', 'name', 'date'], delimiter=delim)
+
     scrobbles = []
     skipped = 0
     for row in reader:
         try:
             ts = artist = track = album = None
-            if 'name' in row:
+
+            # lastfmstats: Artist;Album;AlbumId;Track;Date#user (epoch ms)
+            if 'Artist' in row and 'Track' in row:
+                date_key = find_date_key(row)
+                ms_raw = (row.get(date_key, '') if date_key else '').strip().strip('"')
+                if not ms_raw: skipped += 1; continue
+                dt = datetime.fromtimestamp(int(ms_raw) / 1000, tz=timezone.utc)
+                ts = dt.strftime('%Y-%m-%dT%H:%M:%SZ')
+                artist = (row.get('Artist') or '').strip()
+                track = (row.get('Track') or '').strip()
+                album = (row.get('Album') or '').strip()
+
+            # benjaminbenben: artist, album, name, date
+            elif 'name' in row:
                 d = (row.get('date') or '').strip()
                 if not d: skipped += 1; continue
                 ts = parse_date(d)
@@ -574,6 +648,8 @@ with open('/data/lastfm_export.csv', encoding='utf-8', newline='') as f:
                 artist = (row.get('artist') or '').strip()
                 track = (row.get('name') or '').strip()
                 album = (row.get('album') or '').strip()
+
+            # ISO format
             elif 'timestamp' in row:
                 tr = (row.get('timestamp') or '').strip()
                 if not tr: skipped += 1; continue
@@ -581,6 +657,8 @@ with open('/data/lastfm_export.csv', encoding='utf-8', newline='') as f:
                 artist = (row.get('artist') or '').strip()
                 track = (row.get('track') or '').strip()
                 album = (row.get('album') or '').strip()
+
+            # GDPR: uts (epoch seconds)
             elif 'uts' in row:
                 u = (row.get('uts') or '').strip()
                 if not u: skipped += 1; continue
@@ -591,6 +669,7 @@ with open('/data/lastfm_export.csv', encoding='utf-8', newline='') as f:
                 album = (row.get('album') or '').strip()
             else:
                 skipped += 1; continue
+
             if artist and track:
                 scrobbles.append({'timestamp': ts, 'artist': artist, 'track': track, 'album': album})
             else:
@@ -630,17 +709,30 @@ async function runPipeline() {
     }
 
     const files = [...uploadedFiles.entries()];
-    const fsFile = files.find(([, f]) => f.detectedType === 'foursquare_raw' || f.detectedType === 'checkins');
+    const fsFiles = files.filter(([, f]) => f.detectedType === 'foursquare_raw' || f.detectedType === 'checkins');
     const lfFile = files.find(([, f]) => f.detectedType === 'lastfm' || f.detectedType === 'scrobbles');
 
     // ── Foursquare ─────────────────────────────────────────────────
     setProgress(10, 'Processing Foursquare data\u2026');
 
-    if (fsFile[1].detectedType === 'checkins') {
-      pyodide.FS.writeFile('/data/checkins.json', fsFile[1].content);
-      log('Loaded pre-processed checkins.json');
+    const fsTypes = new Set(fsFiles.map(([, f]) => f.detectedType));
+    if (fsTypes.has('checkins') && !fsTypes.has('foursquare_raw')) {
+      // All pre-processed — merge if multiple
+      const allCheckins = fsFiles.flatMap(([, f]) => JSON.parse(f.content));
+      pyodide.FS.writeFile('/data/checkins.json', JSON.stringify(allCheckins));
+      log(`Loaded ${allCheckins.length.toLocaleString()} pre-processed checkins from ${fsFiles.length} file(s)`);
     } else {
-      pyodide.FS.writeFile('/data/raw_foursquare.json', fsFile[1].content);
+      // Raw Foursquare export — merge items from all files
+      const allItems = [];
+      for (const [name, f] of fsFiles.filter(([, f]) => f.detectedType === 'foursquare_raw')) {
+        const d = JSON.parse(f.content);
+        const items = d.items || (Array.isArray(d) ? d : []);
+        allItems.push(...items);
+        log(`  ${name}: ${items.length.toLocaleString()} checkins`);
+      }
+      const merged = JSON.stringify({ items: allItems });
+      log(`Merged ${allItems.toLocaleString ? allItems.length.toLocaleString() : allItems.length} checkins from ${fsFiles.length} file(s)`);
+      pyodide.FS.writeFile('/data/raw_foursquare.json', merged);
       pyodide.runPython(PY_PARSE_FOURSQUARE);
 
       // Geocode if needed

@@ -2,16 +2,20 @@
 """
 Import Last.fm scrobble data from a local CSV export
 =====================================================
-Reads a CSV exported from https://benjaminbenben.com/lastfm-to-csv/
-and saves the result as data/scrobbles.json.
+Reads a CSV exported from one of several sources and saves as
+data/scrobbles.json.
 
-Expected columns (benjaminbenben format):
-    artist, album, name, date
+Supported formats:
+  1. lastfmstats (https://lastfmstats.com/) — recommended
+     Columns: Artist;Album;AlbumId;Track;Date#username
+     Semicolon-delimited, dates as epoch milliseconds, BOM-prefixed.
 
-Where `date` is formatted as "15 Mar 2025, 14:30" (UTC).
+  2. benjaminbenben (https://benjaminbenben.com/lastfm-to-csv/)
+     Columns: artist,album,name,date  (no header row)
+     Comma-delimited, dates as "15 Mar 2025, 14:30" (UTC).
 
-Also accepts the official Last.fm GDPR export format:
-    uts, utc_time, artist, artist_mbid, album, album_mbid, track, track_mbid
+  3. Official Last.fm GDPR export
+     Columns: uts,utc_time,artist,artist_mbid,album,album_mbid,track,track_mbid
 
 Usage:
     from import_lastfm import parse
@@ -48,16 +52,41 @@ def _parse_date(date_str):
     return None
 
 
+def _find_date_key(row):
+    """Find the Date column in lastfmstats exports (header may end with #username)."""
+    for key in row:
+        if key and key.startswith("Date"):
+            return key
+    return None
+
+
 def _parse_row(row):
     """
     Parse one CSV row. Returns {timestamp, artist, track, album} or None.
 
     Supports:
+      - lastfmstats format: Artist;Album;AlbumId;Track;Date#username
       - benjaminbenben format: artist, album, name, date
+      - ISO timestamp format: timestamp, artist, track, album
       - Official Last.fm GDPR format: uts, utc_time, artist, ..., track, ...
     """
+    # ── lastfmstats format (semicolon-delimited, epoch millis) ───────────────
+    if "Artist" in row and "Track" in row:
+        date_key = _find_date_key(row)
+        ms_raw = (row.get(date_key, "") if date_key else "").strip().strip('"')
+        if not ms_raw:
+            return None
+        try:
+            dt = datetime.fromtimestamp(int(ms_raw) / 1000, tz=timezone.utc)
+            timestamp = dt.strftime("%Y-%m-%dT%H:%M:%SZ")
+        except (ValueError, OSError, OverflowError):
+            return None
+        artist = (row.get("Artist") or "").strip()
+        track  = (row.get("Track") or "").strip()
+        album  = (row.get("Album") or "").strip()
+
     # ── benjaminbenben format ────────────────────────────────────────────────
-    if "name" in row:
+    elif "name" in row:
         date_raw = (row.get("date") or "").strip()
         if not date_raw:
             return None  # now-playing marker
@@ -101,9 +130,34 @@ def _parse_row(row):
     return {"timestamp": timestamp, "artist": artist, "track": track, "album": album}
 
 
+def _detect_format(filepath):
+    """Detect CSV format by sniffing the first line. Returns (delimiter, has_header, format_name)."""
+    with open(filepath, encoding="utf-8-sig", newline="") as f:
+        first_line = f.readline().strip()
+
+    # lastfmstats: semicolon-delimited, header starts with "Artist;Album"
+    if first_line.startswith("Artist;") or first_line.startswith("Artist\t"):
+        delim = ";" if ";" in first_line else "\t"
+        return delim, True, "lastfmstats"
+
+    # GDPR or other headed CSVs
+    fl = first_line.lower()
+    if fl.startswith("uts,") or fl.startswith("uts\t"):
+        return ",", True, "gdpr"
+    if fl.startswith("artist,") and "name" in fl:
+        return ",", True, "benjaminbenben"
+    if fl.startswith("timestamp,") or fl.startswith('"timestamp",'):
+        return ",", True, "iso"
+
+    # benjaminbenben headerless: first line looks like data (no "Artist" keyword)
+    # Columns are: artist, album, name, date
+    return ",", False, "benjaminbenben_headerless"
+
+
 def parse(export_file, data_dir="./data"):
     """
     Read a Last.fm CSV export and write data/scrobbles.json.
+    Auto-detects format (lastfmstats, benjaminbenben, GDPR).
     """
     out_path = os.path.join(data_dir, "scrobbles.json")
 
@@ -111,13 +165,19 @@ def parse(export_file, data_dir="./data"):
         print(f"  ✗  Last.fm export not found: {export_file}")
         return
 
-    print(f"Reading Last.fm export: {export_file}")
+    delim, has_header, fmt_name = _detect_format(export_file)
+    print(f"Reading Last.fm export: {export_file}  (detected: {fmt_name})")
 
     scrobbles = []
     skipped = 0
 
-    with open(export_file, encoding="utf-8", newline="") as f:
-        reader = csv.DictReader(f)
+    with open(export_file, encoding="utf-8-sig", newline="") as f:
+        if has_header:
+            reader = csv.DictReader(f, delimiter=delim)
+        else:
+            # benjaminbenben headerless: artist, album, name, date
+            reader = csv.DictReader(f, fieldnames=["artist", "album", "name", "date"],
+                                    delimiter=delim)
         for row in reader:
             try:
                 record = _parse_row(row)
@@ -130,8 +190,8 @@ def parse(export_file, data_dir="./data"):
 
     if not scrobbles:
         print(f"  ✗  No valid scrobbles found in {export_file}")
-        print(f"     Expected columns: artist, album, name, date")
-        print(f"     Export your history at: https://benjaminbenben.com/lastfm-to-csv/")
+        print(f"     Export your history from https://lastfmstats.com/")
+        print(f"     or https://benjaminbenben.com/lastfm-to-csv/")
         return
 
     scrobbles.sort(key=lambda s: s["timestamp"])
