@@ -139,8 +139,9 @@ def _load(path, default):
 
 # ── Home city detection ────────────────────────────────────────────────────────
 
-_HOME_WINDOW_DAYS = 90   # rolling window to detect dominant city
-_HOME_MIN_SHARE   = 0.40 # city must be ≥40% of window's checkins to count
+_HOME_WINDOW_DAYS = 120  # rolling window to detect dominant city
+_HOME_MIN_SHARE   = 0.45 # city must be ≥45% of window's checkins to count
+_HOME_MIN_MONTHS  = 4    # minimum months for a period to count as "home"
 
 
 def _infer_home_city(checkins):
@@ -235,22 +236,48 @@ def _infer_home_periods(checkins):
                  "end": last.isoformat()}]
 
     # Collapse consecutive months with the same dominant city into periods
-    periods = []
+    raw_periods = []
     cur_city, cur_cc = monthly_dominant[0][1], monthly_dominant[0][2]
     cur_start = monthly_dominant[0][0]
 
     for dt, city, cc in monthly_dominant[1:]:
         if city != cur_city or cc != cur_cc:
-            periods.append({
+            raw_periods.append({
                 "city": cur_city, "country_code": cur_cc,
-                "start": cur_start.isoformat(), "end": dt.isoformat(),
+                "start": cur_start, "end": dt,
             })
             cur_city, cur_cc, cur_start = city, cc, dt
 
-    periods.append({
+    raw_periods.append({
         "city": cur_city, "country_code": cur_cc,
-        "start": cur_start.isoformat(), "end": last.isoformat(),
+        "start": cur_start, "end": last,
     })
+
+    # Filter out short periods (likely trips, not moves) and merge neighbors
+    periods = []
+    for p in raw_periods:
+        months = (p["end"].year - p["start"].year) * 12 + (p["end"].month - p["start"].month)
+        if months >= _HOME_MIN_MONTHS:
+            # Merge with previous if same city
+            if periods and periods[-1]["city"] == p["city"] and periods[-1]["country_code"] == p["country_code"]:
+                periods[-1]["end"] = p["end"]
+            else:
+                periods.append(dict(p))
+
+    # If everything got filtered, fall back to overall most common
+    if not periods:
+        overall = Counter((city, cc) for _, city, cc in dated).most_common(1)[0][0]
+        periods = [{"city": overall[0], "country_code": overall[1],
+                     "start": all_dates[0], "end": last}]
+
+    # Extend first period to cover all data before it, last to cover all after
+    periods[0]["start"] = all_dates[0]
+    periods[-1]["end"] = last
+
+    # Convert dates to ISO strings
+    for p in periods:
+        p["start"] = p["start"].isoformat()
+        p["end"] = p["end"].isoformat()
 
     return periods
 
