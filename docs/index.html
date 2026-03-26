@@ -705,6 +705,29 @@ print(f'Geocoded {updated:,} additional checkins')
 print(f'Total with location: {geocoded:,}/{len(checkins):,}')
 `;
 
+const PY_MERGE_SOURCES = `
+import json
+
+with open('/data/lastfm_scrobbles.json', encoding='utf-8') as f:
+    lastfm = json.load(f)
+with open('/data/scrobbles.json', encoding='utf-8') as f:
+    spotify = json.load(f)
+
+if spotify and lastfm:
+    sp_start = spotify[0]['timestamp']
+    pre_spotify = [s for s in lastfm if s['timestamp'] < sp_start]
+    if pre_spotify:
+        merged = pre_spotify + spotify
+        merged.sort(key=lambda s: s['timestamp'])
+        with open('/data/scrobbles.json', 'w', encoding='utf-8') as f:
+            json.dump(merged, f, ensure_ascii=False)
+        print(f'Merged {len(pre_spotify):,} Last.fm scrobbles (pre-Spotify) + {len(spotify):,} Spotify = {len(merged):,} total')
+    else:
+        print(f'Spotify covers full date range, using {len(spotify):,} Spotify scrobbles')
+else:
+    print('Using single source')
+`;
+
 const PY_PARSE_SPOTIFY = `
 import json
 from datetime import datetime, timezone, timedelta
@@ -975,10 +998,23 @@ async function runPipeline() {
       }
     }
 
-    // ── Music data (Last.fm or Spotify) ───────────────────────────
-    if (spFiles.length > 0) {
+    // ── Music data (Last.fm, Spotify, or both) ────────────────────
+    const hasLastfm = lfFile && (lfFile[1].detectedType === 'lastfm' || lfFile[1].detectedType === 'scrobbles');
+    const hasSpotify = spFiles.length > 0;
+
+    if (hasLastfm) {
+      setProgress(42, 'Processing Last.fm data\u2026');
+      if (lfFile[1].detectedType === 'scrobbles') {
+        pyodide.FS.writeFile('/data/scrobbles.json', lfFile[1].content);
+        log('Loaded pre-processed scrobbles.json');
+      } else {
+        pyodide.FS.writeFile('/data/lastfm_export.csv', lfFile[1].content);
+        pyodide.runPython(PY_PARSE_LASTFM);
+      }
+    }
+
+    if (hasSpotify) {
       setProgress(45, 'Processing Spotify data\u2026');
-      // Merge all Spotify history files
       const allEntries = [];
       for (const [name, f] of spFiles) {
         const entries = JSON.parse(f.content);
@@ -986,15 +1022,16 @@ async function runPipeline() {
         log(`  ${name}: ${entries.length.toLocaleString()} entries`);
       }
       pyodide.FS.writeFile('/data/raw_spotify.json', JSON.stringify(allEntries));
+      // If Last.fm was also loaded, save it aside before Spotify overwrites
+      if (hasLastfm) {
+        pyodide.FS.writeFile('/data/lastfm_scrobbles.json',
+          pyodide.FS.readFile('/data/scrobbles.json', { encoding: 'utf8' }));
+      }
       pyodide.runPython(PY_PARSE_SPOTIFY);
-    } else if (lfFile[1].detectedType === 'scrobbles') {
-      setProgress(45, 'Processing scrobble data\u2026');
-      pyodide.FS.writeFile('/data/scrobbles.json', lfFile[1].content);
-      log('Loaded pre-processed scrobbles.json');
-    } else {
-      setProgress(45, 'Processing Last.fm data\u2026');
-      pyodide.FS.writeFile('/data/lastfm_export.csv', lfFile[1].content);
-      pyodide.runPython(PY_PARSE_LASTFM);
+      // Merge Last.fm + Spotify if both present
+      if (hasLastfm) {
+        pyodide.runPython(PY_MERGE_SOURCES);
+      }
     }
 
     // ── Correlation ────────────────────────────────────────────────

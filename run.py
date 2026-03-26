@@ -59,7 +59,29 @@ def step_spotify(cfg):
         print("SPOTIFY_EXPORT_DIR not set — skipping Spotify import.")
         return
     from import_spotify import parse
+    scrobbles_path = os.path.join(cfg.DATA_DIR, "scrobbles.json")
+    had_lastfm = os.path.exists(scrobbles_path)
+    if had_lastfm:
+        import json
+        with open(scrobbles_path, encoding="utf-8") as f:
+            lastfm_scrobbles = json.load(f)
     parse(export_dir, cfg.DATA_DIR)
+    # Merge with Last.fm if both exist
+    if had_lastfm and os.path.exists(scrobbles_path):
+        with open(scrobbles_path, encoding="utf-8") as f:
+            spotify_scrobbles = json.load(f)
+        # Use Spotify for overlapping periods (richer data), Last.fm for the rest
+        if spotify_scrobbles and lastfm_scrobbles:
+            sp_start = spotify_scrobbles[0]["timestamp"]
+            # Keep Last.fm scrobbles from before Spotify data begins
+            pre_spotify = [s for s in lastfm_scrobbles if s["timestamp"] < sp_start]
+            if pre_spotify:
+                merged = pre_spotify + spotify_scrobbles
+                merged.sort(key=lambda s: s["timestamp"])
+                with open(scrobbles_path, "w", encoding="utf-8") as f:
+                    json.dump(merged, f, ensure_ascii=False, indent=2)
+                print(f"  Merged {len(pre_spotify):,} Last.fm scrobbles (pre-Spotify) "
+                      f"+ {len(spotify_scrobbles):,} Spotify = {len(merged):,} total")
 
 
 def step_foursquare(cfg):
