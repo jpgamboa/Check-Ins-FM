@@ -85,7 +85,9 @@ class Geocoder:
         return f"{lat_r},{lng_r}"
 
     def _nominatim_reverse(self, lat_r, lng_r):
-        """Raw Nominatim reverse geocode (no cache, no rate-limit guard)."""
+        """Raw Nominatim reverse geocode (no cache, no rate-limit guard).
+        If the result is a village/town/suburb, attempts to find the parent
+        city in the same county (e.g. West Lake Hills → Austin)."""
         params = urllib.parse.urlencode({
             "lat":    lat_r,
             "lon":    lng_r,
@@ -101,11 +103,62 @@ class Geocoder:
         with urllib.request.urlopen(req, timeout=10) as resp:
             data = json.loads(resp.read().decode("utf-8"))
         address = data.get("address", {})
-        return {
-            "city":         _extract_city(address),
+        city = _extract_city(address)
+        result = {
+            "city":         city,
             "country":      _extract_country(address),
             "country_code": _extract_country_code(address),
         }
+
+        # If result is a village/town/suburb (not a city), try to find the
+        # parent city by searching the county. This consolidates small
+        # municipalities (e.g. West Lake Hills) into their metro area (Austin).
+        if not address.get("city") and address.get("county") and address.get("state"):
+            parent = self._find_parent_city(
+                address["county"], address["state"],
+                address.get("country", ""), lat_r, lng_r
+            )
+            if parent:
+                result["city"] = parent
+        return result
+
+    def _find_parent_city(self, county, state, country, lat, lng):
+        """Search for the main city in a county and return its name if the
+        given coordinates fall within its bounding box."""
+        self._last_req = time.time()
+        self._rate_wait()
+        query = f"city in {county} {state}"
+        params = urllib.parse.urlencode({
+            "q":      query,
+            "format": "jsonv2",
+            "limit":  1,
+            "addressdetails": 1,
+        })
+        url = f"{NOMINATIM_SEARCH_URL}?{params}"
+        req = urllib.request.Request(url, headers={
+            "User-Agent":      USER_AGENT,
+            "Accept-Language": "en",
+        })
+        try:
+            with urllib.request.urlopen(req, timeout=10) as resp:
+                data = json.loads(resp.read().decode("utf-8"))
+            self._last_req = time.time()
+            if not data:
+                return None
+            hit = data[0]
+            addr = hit.get("address", {})
+            city = addr.get("city", "")
+            if not city:
+                return None
+            # Check if coordinates fall within the city's bounding box
+            bbox = hit.get("boundingbox")
+            if bbox:
+                south, north, west, east = (float(b) for b in bbox)
+                if south <= float(lat) <= north and west <= float(lng) <= east:
+                    return city
+        except Exception:
+            pass
+        return None
 
     def _nominatim_search(self, query):
         """Search Nominatim by name and return the city from the first result."""

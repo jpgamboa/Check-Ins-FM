@@ -6,7 +6,7 @@
 <title>swarmfm — Generate Your Listening Map</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300..700;1,9..40,300..700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&family=Inter:wght@300..700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root {
   --bg: #0c0c10;
@@ -20,9 +20,9 @@
   --text-faint: #3a3a42;
   --border: #1e1e24;
   --border-light: #2a2a32;
-  --font-display: 'Instrument Serif', Georgia, serif;
-  --font-body: 'DM Sans', system-ui, -apple-system, sans-serif;
-  --font-mono: 'JetBrains Mono', 'SF Mono', monospace;
+  --font-display: 'Space Grotesk', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono: 'IBM Plex Mono', 'SF Mono', monospace;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -47,8 +47,8 @@ body {
 }
 
 h1 {
-  font-family: var(--font-display); font-size: 3rem; font-weight: 400;
-  letter-spacing: -0.02em; margin-bottom: 8px;
+  font-family: var(--font-display); font-size: 3rem; font-weight: 600;
+  letter-spacing: -0.03em; margin-bottom: 8px;
   animation: fadeUp .6s ease-out;
 }
 h1 span { color: var(--accent); }
@@ -117,6 +117,15 @@ h1 span { color: var(--accent); }
   background: var(--card); border: 1px solid var(--border); color: var(--text);
 }
 
+/* ── Clear cache button ────────────────────────────────────────── */
+.btn-clear-cache {
+  display: block; width: auto; margin: 10px auto 0; padding: 6px 14px;
+  background: none; border: 1px solid var(--border); border-radius: 8px;
+  font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-faint);
+  cursor: pointer; transition: color .2s, border-color .2s;
+}
+.btn-clear-cache:hover { color: var(--text-dim); border-color: var(--border-light); }
+
 /* ── Progress ───────────────────────────────────────────────────── */
 @keyframes progressPulse {
   0%, 100% { opacity: 1; }
@@ -148,7 +157,7 @@ h1 span { color: var(--accent); }
   background: #1a1a24; border: 1px solid #2e2e3a; border-radius: 10px;
 }
 .home-panel-header h3 {
-  font-family: var(--font-display); font-size: 1.1rem; font-weight: 400; margin-bottom: 4px;
+  font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; margin-bottom: 4px;
 }
 .home-panel-header p {
   font-size: .8rem; color: var(--text-dim); margin-bottom: 12px;
@@ -204,7 +213,7 @@ h1 span { color: var(--accent); }
   padding: 14px 16px;
 }
 .preview-title {
-  font-family: var(--font-display); font-size: 0.88rem; font-weight: 400;
+  font-family: var(--font-display); font-size: 0.88rem; font-weight: 600;
   margin-bottom: 10px; color: var(--text);
 }
 .preview-timeline {
@@ -414,6 +423,7 @@ iframe#dashboard-frame {
     <div class="file-list" id="file-list"></div>
 
     <button class="btn btn-primary" id="process-btn" disabled>Generate Dashboard</button>
+    <button class="btn-clear-cache" id="clear-cache-btn">Clear local geo cache</button>
 
     <div class="engine-status" id="engine-status">
       <span class="dot loading"></span> Loading Python runtime&hellip;
@@ -520,6 +530,19 @@ const progressFill   = $('progress-fill');
 const progressStatus = $('progress-status');
 const logEl          = $('log');
 const dashboardFrame = $('dashboard-frame');
+const clearCacheBtn  = $('clear-cache-btn');
+
+clearCacheBtn.addEventListener('click', () => {
+  try { localStorage.removeItem('swarmfm_geo'); } catch {}
+  clearCacheBtn.textContent = 'Cache cleared!';
+  clearCacheBtn.style.color = 'var(--accent)';
+  clearCacheBtn.style.borderColor = 'var(--accent)';
+  setTimeout(() => {
+    clearCacheBtn.textContent = 'Clear local geo cache';
+    clearCacheBtn.style.color = '';
+    clearCacheBtn.style.borderColor = '';
+  }, 2000);
+});
 
 // =====================================================================
 // Pyodide init (starts immediately)
@@ -925,9 +948,28 @@ async function geocodeCoords(coords, airportVenues = {}) {
       const r = await fetch(url, { headers: { 'User-Agent': 'swarmfm/1.0' } });
       const d = await r.json();
       const a = d.address || {};
-      const city = extractCity(a);
+      let city = extractCity(a);
       const country = a.country || '';
       const cc = (a.country_code || '').toUpperCase();
+
+      // If result is a village/town/suburb (no "city" key), try to find the
+      // parent city in the same county (e.g. West Lake Hills → Austin)
+      if (!a.city && a.county && a.state) {
+        try {
+          await new Promise(r => setTimeout(r, 1100));
+          const pq = encodeURIComponent(`city in ${a.county} ${a.state}`);
+          const pUrl = `https://nominatim.openstreetmap.org/search?q=${pq}&format=jsonv2&limit=1&addressdetails=1`;
+          const pr = await fetch(pUrl, { headers: { 'User-Agent': 'swarmfm/1.0' } });
+          const pd = await pr.json();
+          if (pd.length > 0 && pd[0].address && pd[0].address.city && pd[0].boundingbox) {
+            const [south, north, west, east] = pd[0].boundingbox.map(Number);
+            if (lat >= south && lat <= north && lng >= west && lng <= east) {
+              city = pd[0].address.city;
+            }
+          }
+        } catch {}
+      }
+
       results[key] = { city, country, country_code: cc };
       cache[key] = results[key];
     } catch {
