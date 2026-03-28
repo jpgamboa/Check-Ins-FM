@@ -6898,5 +6898,460 @@
     "city": "",
     "country": "",
     "country_code": ""
+  },
+  "37.7,-122.4": {
+    "city": "San Francisco",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "37.8,-122.4": {
+    "city": "San Francisco",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "37.8,-122.5": {
+    "city": "San Francisco",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "37.7,-122.5": {
+    "city": "San Francisco",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "34.0,-118.2": {
+    "city": "Los Angeles",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "34.1,-118.2": {
+    "city": "Los Angeles",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "34.0,-118.3": {
+    "city": "Los Angeles",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "34.1,-118.3": {
+    "city": "Los Angeles",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "47.6,-122.3": {
+    "city": "Seattle",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "47.6,-122.4": {
+    "city": "Seattle",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "47.7,-122.3": {
+    "city": "Seattle",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "40.7,-74.0": {
+    "city": "New York",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "40.8,-74.0": {
+    "city": "New York",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "40.7,-73.9": {
+    "city": "New York",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "40.8,-73.9": {
+    "city": "New York",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "40.7,-73.8": {
+    "city": "New York",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "51.5,-0.1": {
+    "city": "London",
+    "country": "United Kingdom",
+    "country_code": "GB"
+  },
+  "51.5,0.0": {
+    "city": "London",
+    "country": "United Kingdom",
+    "country_code": "GB"
+  },
+  "51.5,-0.2": {
+    "city": "London",
+    "country": "United Kingdom",
+    "country_code": "GB"
+  },
+  "51.4,-0.1": {
+    "city": "London",
+    "country": "United Kingdom",
+    "country_code": "GB"
+  },
+  "48.9,2.3": {
+    "city": "Paris",
+    "country": "France",
+    "country_code": "FR"
+  },
+  "48.8,2.3": {
+    "city": "Paris",
+    "country": "France",
+    "country_code": "FR"
+  },
+  "48.9,2.4": {
+    "city": "Paris",
+    "country": "France",
+    "country_code": "FR"
+  },
+  "48.8,2.4": {
+    "city": "Paris",
+    "country": "France",
+    "country_code": "FR"
+  },
+  "35.7,139.7": {
+    "city": "Tokyo",
+    "country": "Japan",
+    "country_code": "JP"
+  },
+  "35.7,139.8": {
+    "city": "Tokyo",
+    "country": "Japan",
+    "country_code": "JP"
+  },
+  "35.6,139.7": {
+    "city": "Tokyo",
+    "country": "Japan",
+    "country_code": "JP"
+  },
+  "35.6,139.8": {
+    "city": "Tokyo",
+    "country": "Japan",
+    "country_code": "JP"
+  },
+  "34.7,135.5": {
+    "city": "Osaka",
+    "country": "Japan",
+    "country_code": "JP"
+  },
+  "34.7,135.4": {
+    "city": "Osaka",
+    "country": "Japan",
+    "country_code": "JP"
+  },
+  "34.6,135.5": {
+    "city": "Osaka",
+    "country": "Japan",
+    "country_code": "JP"
+  },
+  "35.0,135.8": {
+    "city": "Kyoto",
+    "country": "Japan",
+    "country_code": "JP"
+  },
+  "35.0,135.7": {
+    "city": "Kyoto",
+    "country": "Japan",
+    "country_code": "JP"
+  },
+  "34.9,135.8": {
+    "city": "Kyoto",
+    "country": "Japan",
+    "country_code": "JP"
+  },
+  "-23.5,-46.6": {
+    "city": "São Paulo",
+    "country": "Brazil",
+    "country_code": "BR"
+  },
+  "-23.6,-46.6": {
+    "city": "São Paulo",
+    "country": "Brazil",
+    "country_code": "BR"
+  },
+  "-23.5,-46.7": {
+    "city": "São Paulo",
+    "country": "Brazil",
+    "country_code": "BR"
+  },
+  "-15.8,-47.9": {
+    "city": "Brasília",
+    "country": "Brazil",
+    "country_code": "BR"
+  },
+  "-15.8,-47.8": {
+    "city": "Brasília",
+    "country": "Brazil",
+    "country_code": "BR"
+  },
+  "-22.9,-43.2": {
+    "city": "Rio de Janeiro",
+    "country": "Brazil",
+    "country_code": "BR"
+  },
+  "-22.9,-43.1": {
+    "city": "Rio de Janeiro",
+    "country": "Brazil",
+    "country_code": "BR"
+  },
+  "-23.0,-43.2": {
+    "city": "Rio de Janeiro",
+    "country": "Brazil",
+    "country_code": "BR"
+  },
+  "41.0,29.0": {
+    "city": "Istanbul",
+    "country": "Turkey",
+    "country_code": "TR"
+  },
+  "41.0,28.9": {
+    "city": "Istanbul",
+    "country": "Turkey",
+    "country_code": "TR"
+  },
+  "41.1,29.0": {
+    "city": "Istanbul",
+    "country": "Turkey",
+    "country_code": "TR"
+  },
+  "41.0,29.1": {
+    "city": "Istanbul",
+    "country": "Turkey",
+    "country_code": "TR"
+  },
+  "29.4,48.0": {
+    "city": "Kuwait City",
+    "country": "Kuwait",
+    "country_code": "KW"
+  },
+  "29.3,48.0": {
+    "city": "Kuwait City",
+    "country": "Kuwait",
+    "country_code": "KW"
+  },
+  "29.4,47.9": {
+    "city": "Kuwait City",
+    "country": "Kuwait",
+    "country_code": "KW"
+  },
+  "-6.2,106.8": {
+    "city": "Jakarta",
+    "country": "Indonesia",
+    "country_code": "ID"
+  },
+  "-6.2,106.9": {
+    "city": "Jakarta",
+    "country": "Indonesia",
+    "country_code": "ID"
+  },
+  "-6.1,106.8": {
+    "city": "Jakarta",
+    "country": "Indonesia",
+    "country_code": "ID"
+  },
+  "25.0,121.5": {
+    "city": "Taipei",
+    "country": "Taiwan",
+    "country_code": "TW"
+  },
+  "25.1,121.5": {
+    "city": "Taipei",
+    "country": "Taiwan",
+    "country_code": "TW"
+  },
+  "25.0,121.6": {
+    "city": "Taipei",
+    "country": "Taiwan",
+    "country_code": "TW"
+  },
+  "1.3,103.8": {
+    "city": "Singapore",
+    "country": "Singapore",
+    "country_code": "SG"
+  },
+  "1.3,103.9": {
+    "city": "Singapore",
+    "country": "Singapore",
+    "country_code": "SG"
+  },
+  "1.4,103.8": {
+    "city": "Singapore",
+    "country": "Singapore",
+    "country_code": "SG"
+  },
+  "1.4,103.9": {
+    "city": "Singapore",
+    "country": "Singapore",
+    "country_code": "SG"
+  },
+  "52.5,13.4": {
+    "city": "Berlin",
+    "country": "Germany",
+    "country_code": "DE"
+  },
+  "52.5,13.3": {
+    "city": "Berlin",
+    "country": "Germany",
+    "country_code": "DE"
+  },
+  "52.5,13.5": {
+    "city": "Berlin",
+    "country": "Germany",
+    "country_code": "DE"
+  },
+  "52.4,13.4": {
+    "city": "Berlin",
+    "country": "Germany",
+    "country_code": "DE"
+  },
+  "39.9,116.4": {
+    "city": "Beijing",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "39.9,116.3": {
+    "city": "Beijing",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "40.0,116.4": {
+    "city": "Beijing",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "39.9,116.5": {
+    "city": "Beijing",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "-37.8,145.0": {
+    "city": "Melbourne",
+    "country": "Australia",
+    "country_code": "AU"
+  },
+  "-37.8,144.9": {
+    "city": "Melbourne",
+    "country": "Australia",
+    "country_code": "AU"
+  },
+  "-37.8,145.1": {
+    "city": "Melbourne",
+    "country": "Australia",
+    "country_code": "AU"
+  },
+  "-37.9,145.0": {
+    "city": "Melbourne",
+    "country": "Australia",
+    "country_code": "AU"
+  },
+  "-33.9,151.2": {
+    "city": "Sydney",
+    "country": "Australia",
+    "country_code": "AU"
+  },
+  "-33.8,151.2": {
+    "city": "Sydney",
+    "country": "Australia",
+    "country_code": "AU"
+  },
+  "-33.9,151.1": {
+    "city": "Sydney",
+    "country": "Australia",
+    "country_code": "AU"
+  },
+  "-33.9,151.3": {
+    "city": "Sydney",
+    "country": "Australia",
+    "country_code": "AU"
+  },
+  "55.8,37.6": {
+    "city": "Moscow",
+    "country": "Russia",
+    "country_code": "RU"
+  },
+  "55.7,37.6": {
+    "city": "Moscow",
+    "country": "Russia",
+    "country_code": "RU"
+  },
+  "55.8,37.5": {
+    "city": "Moscow",
+    "country": "Russia",
+    "country_code": "RU"
+  },
+  "55.7,37.7": {
+    "city": "Moscow",
+    "country": "Russia",
+    "country_code": "RU"
+  },
+  "3.1,101.6": {
+    "city": "Petaling Jaya",
+    "country": "Malaysia",
+    "country_code": "MY"
+  },
+  "3.1,101.7": {
+    "city": "Petaling Jaya",
+    "country": "Malaysia",
+    "country_code": "MY"
+  },
+  "3.2,101.6": {
+    "city": "Petaling Jaya",
+    "country": "Malaysia",
+    "country_code": "MY"
+  },
+  "-3.0,104.8": {
+    "city": "Palembang",
+    "country": "Indonesia",
+    "country_code": "ID"
+  },
+  "-2.9,104.8": {
+    "city": "Palembang",
+    "country": "Indonesia",
+    "country_code": "ID"
+  },
+  "-3.0,104.7": {
+    "city": "Palembang",
+    "country": "Indonesia",
+    "country_code": "ID"
+  },
+  "-6.9,107.6": {
+    "city": "Bandung",
+    "country": "Indonesia",
+    "country_code": "ID"
+  },
+  "-6.9,107.7": {
+    "city": "Bandung",
+    "country": "Indonesia",
+    "country_code": "ID"
+  },
+  "-7.0,107.6": {
+    "city": "Bandung",
+    "country": "Indonesia",
+    "country_code": "ID"
+  },
+  "-7.0,107.7": {
+    "city": "Bandung",
+    "country": "Indonesia",
+    "country_code": "ID"
+  },
+  "-6.8,107.6": {
+    "city": "Bandung",
+    "country": "Indonesia",
+    "country_code": "ID"
+  },
+  "-6.6,107.7": {
+    "city": "Bandung",
+    "country": "Indonesia",
+    "country_code": "ID"
   }
 }

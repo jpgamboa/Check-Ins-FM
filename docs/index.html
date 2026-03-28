@@ -54,6 +54,10 @@ h1 {
 h1 span { color: var(--accent); }
 
 .header-links a:hover { color: var(--text-dim) !important; }
+.dep-item { cursor: default; transition: color .2s; }
+.dep-item:hover { color: var(--text-dim); }
+@keyframes dep-pulse { 0%,100% { opacity: .4; } 50% { opacity: 1; } }
+.dep-dot[data-checking] { animation: dep-pulse 1.2s ease-in-out infinite; }
 
 .subtitle {
   color: var(--text-dim); font-size: 0.92rem; margin-bottom: 36px;
@@ -119,14 +123,22 @@ h1 span { color: var(--accent); }
   background: var(--card); border: 1px solid var(--border); color: var(--text);
 }
 
-/* ── Clear cache button ────────────────────────────────────────── */
-.btn-clear-cache {
-  display: block; width: auto; margin: 10px auto 0; padding: 6px 14px;
+/* ── Cache buttons ────────────────────────────────────────────── */
+.cache-controls {
+  display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;
+  margin-top: 18px;
+}
+.btn-cache {
+  display: inline-block; padding: 6px 14px;
   background: none; border: 1px solid var(--border); border-radius: 8px;
   font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-faint);
   cursor: pointer; transition: color .2s, border-color .2s;
+  text-decoration: none;
 }
-.btn-clear-cache:hover { color: var(--text-dim); border-color: var(--border-light); }
+.btn-cache:hover { color: var(--text-dim); border-color: var(--border-light); }
+.btn-cache input[type="file"] {
+  position: absolute; width: 0; height: 0; opacity: 0; overflow: hidden;
+}
 
 /* ── Progress ───────────────────────────────────────────────────── */
 @keyframes progressPulse {
@@ -433,7 +445,12 @@ iframe#dashboard-frame {
     <div class="file-list" id="file-list"></div>
 
     <button class="btn btn-primary" id="process-btn" disabled>Generate Dashboard</button>
-    <button class="btn-clear-cache" id="clear-cache-btn">Clear local geo cache</button>
+
+    <div class="cache-controls">
+      <button class="btn-cache" id="download-cache-btn">Download geo cache</button>
+      <label class="btn-cache" id="import-cache-label">Import geo cache<input type="file" id="import-cache-input" accept=".json"></label>
+      <button class="btn-cache" id="clear-cache-btn">Clear geo cache</button>
+    </div>
 
     <div class="engine-status" id="engine-status">
       <span class="dot loading"></span> Loading Python runtime&hellip;
@@ -546,10 +563,42 @@ iframe#dashboard-frame {
     <iframe id="dashboard-frame" sandbox="allow-scripts allow-same-origin"></iframe>
   </div>
 
+  <!-- Dependency status bar -->
+  <div id="dep-status" style="display:flex;align-items:center;justify-content:center;gap:18px;padding:14px 0 8px;font-family:var(--font-mono);font-size:.68rem;color:var(--text-faint)">
+    <span class="dep-item" id="dep-pyodide" title="Pyodide (Python in browser)">
+      <span class="dep-dot" style="display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--text-faint);margin-right:4px;vertical-align:middle"></span>Pyodide
+    </span>
+    <span class="dep-item" id="dep-geocoder" title="Offline geocoder (offline-geocode-city)">
+      <span class="dep-dot" style="display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--text-faint);margin-right:4px;vertical-align:middle"></span>Geocoder
+    </span>
+    <span class="dep-item" id="dep-nominatim" title="Nominatim (OpenStreetMap reverse geocoding)">
+      <span class="dep-dot" style="display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--text-faint);margin-right:4px;vertical-align:middle"></span>Nominatim
+    </span>
+    <span class="dep-item" id="dep-seed" title="Geo seed cache (pre-built city data)">
+      <span class="dep-dot" style="display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--text-faint);margin-right:4px;vertical-align:middle"></span>Geo Seed
+    </span>
+  </div>
+
 </div>
 
 <!-- Pyodide -->
 <script src="https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js"></script>
+
+<script>
+// Offline geocoder — loaded lazily on first use
+let _offlineGeocoder = null;
+async function _getOfflineGeocoder() {
+  if (_offlineGeocoder) return _offlineGeocoder;
+  try {
+    const mod = await import('https://esm.sh/offline-geocode-city');
+    _offlineGeocoder = mod.getNearestCity;
+    return _offlineGeocoder;
+  } catch (e) {
+    console.warn('offline-geocode-city failed to load, using Nominatim only:', e);
+    return null;
+  }
+}
+</script>
 
 <script>
 // =====================================================================
@@ -577,17 +626,114 @@ const progressStatus = $('progress-status');
 const logEl          = $('log');
 const dashboardFrame = $('dashboard-frame');
 const clearCacheBtn  = $('clear-cache-btn');
+const CACHE_KEY = 'swarmfm_geo';
 
-clearCacheBtn.addEventListener('click', () => {
-  try { localStorage.removeItem('swarmfm_geo'); } catch {}
-  clearCacheBtn.textContent = 'Cache cleared!';
-  clearCacheBtn.style.color = 'var(--accent)';
-  clearCacheBtn.style.borderColor = 'var(--accent)';
+function _getCacheEntryCount() {
+  try {
+    const raw = localStorage.getItem(CACHE_KEY);
+    if (!raw) return 0;
+    return Object.keys(JSON.parse(raw)).length;
+  } catch { return 0; }
+}
+
+// ── Download geo cache ──
+$('download-cache-btn').addEventListener('click', async () => {
+  const seed = await _loadGeoSeed();
+  const local = JSON.parse(localStorage.getItem(CACHE_KEY) || '{}');
+  const merged = { ...seed, ...local };
+  const count = Object.keys(merged).length;
+  if (count === 0) {
+    $('download-cache-btn').textContent = 'Cache is empty';
+    setTimeout(() => { $('download-cache-btn').textContent = 'Download geo cache'; }, 2000);
+    return;
+  }
+  const blob = new Blob([JSON.stringify(merged, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'swarmfm_geo_cache.json';
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  $('download-cache-btn').textContent = `Downloaded (${count.toLocaleString()} locations)`;
+  $('download-cache-btn').style.color = 'var(--accent)';
   setTimeout(() => {
-    clearCacheBtn.textContent = 'Clear local geo cache';
-    clearCacheBtn.style.color = '';
-    clearCacheBtn.style.borderColor = '';
-  }, 2000);
+    $('download-cache-btn').textContent = 'Download geo cache';
+    $('download-cache-btn').style.color = '';
+  }, 2500);
+});
+
+// ── Import geo cache ──
+$('import-cache-input').addEventListener('change', (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (ev) => {
+    try {
+      const imported = JSON.parse(ev.target.result);
+      const count = Object.keys(imported).length;
+      if (count === 0) throw new Error('Empty');
+      const existing = JSON.parse(localStorage.getItem(CACHE_KEY) || '{}');
+      const merged = { ...existing, ...imported };
+      localStorage.setItem(CACHE_KEY, JSON.stringify(merged));
+      const added = Object.keys(merged).length - Object.keys(existing).length;
+      const label = $('import-cache-label');
+      label.childNodes[0].textContent = `Imported ${count.toLocaleString()} locations (+${added} new) `;
+      label.style.color = 'var(--accent)';
+      label.style.borderColor = 'var(--accent)';
+      setTimeout(() => {
+        label.childNodes[0].textContent = 'Import geo cache';
+        label.style.color = '';
+        label.style.borderColor = '';
+      }, 3000);
+    } catch {
+      const label = $('import-cache-label');
+      label.childNodes[0].textContent = 'Invalid cache file ';
+      label.style.color = 'var(--warm)';
+      setTimeout(() => {
+        label.childNodes[0].textContent = 'Import geo cache';
+        label.style.color = '';
+      }, 2500);
+    }
+    e.target.value = '';
+  };
+  reader.readAsText(file);
+});
+
+// ── Clear geo cache (with confirmation) ──
+clearCacheBtn.addEventListener('click', () => {
+  const count = _getCacheEntryCount();
+  if (count === 0) {
+    clearCacheBtn.textContent = 'Cache is already empty';
+    setTimeout(() => { clearCacheBtn.textContent = 'Clear geo cache'; }, 2000);
+    return;
+  }
+  if (clearCacheBtn.dataset.confirming === 'true') {
+    // Second click — actually clear
+    try { localStorage.removeItem(CACHE_KEY); } catch {}
+    clearCacheBtn.textContent = 'Cleared!';
+    clearCacheBtn.style.color = 'var(--accent)';
+    clearCacheBtn.style.borderColor = 'var(--accent)';
+    clearCacheBtn.dataset.confirming = '';
+    setTimeout(() => {
+      clearCacheBtn.textContent = 'Clear geo cache';
+      clearCacheBtn.style.color = '';
+      clearCacheBtn.style.borderColor = '';
+    }, 2000);
+  } else {
+    // First click — ask for confirmation
+    clearCacheBtn.textContent = `Delete ${count.toLocaleString()} cached locations? Click again to confirm`;
+    clearCacheBtn.style.color = 'var(--warm)';
+    clearCacheBtn.style.borderColor = 'var(--warm)';
+    clearCacheBtn.dataset.confirming = 'true';
+    setTimeout(() => {
+      if (clearCacheBtn.dataset.confirming === 'true') {
+        clearCacheBtn.textContent = 'Clear geo cache';
+        clearCacheBtn.style.color = '';
+        clearCacheBtn.style.borderColor = '';
+        clearCacheBtn.dataset.confirming = '';
+      }
+    }, 5000);
+  }
 });
 
 // =====================================================================
@@ -695,25 +841,54 @@ function updateBtn() {
   // Show geocoding time estimate for raw Foursquare files
   let existingNote = document.getElementById('geo-time-note');
   if (types.has('foursquare_raw')) {
+    // Count unique locations that need geocoding vs cached
+    const uniqueCoords = new Set();
     let totalItems = 0;
+    let missingCity = 0;
     for (const [, f] of uploadedFiles) {
       if (f.detectedType === 'foursquare_raw') {
         try {
           const d = JSON.parse(f.content);
           const items = d.items || (Array.isArray(d) ? d : []);
           totalItems += items.length;
+          for (const item of items) {
+            const venue = item.venue || {};
+            const loc = venue.location || {};
+            const city = loc.city || loc.town || '';
+            const lat = item.lat || loc.lat;
+            const lng = item.lng || loc.lng;
+            if (lat && lng && !city) {
+              const key = `${Math.round(parseFloat(lat)*10)/10},${Math.round(parseFloat(lng)*10)/10}`;
+              uniqueCoords.add(key);
+              missingCity++;
+            }
+          }
         } catch {}
       }
     }
-    if (totalItems > 500) {
-      const estMin = Math.ceil(totalItems * 0.3 * 1.1 / 60); // ~30% need geocoding
-      if (!existingNote) {
-        existingNote = document.createElement('div');
-        existingNote.id = 'geo-time-note';
-        existingNote.style.cssText = 'font-size:.78rem;color:var(--text-dim);margin:8px 0;padding:10px 14px;background:var(--card);border:1px solid var(--border);border-radius:8px;line-height:1.5';
-        fileListEl.after(existingNote);
-      }
-      existingNote.innerHTML = `<span style="color:var(--warm)">&#9201;</span> <b>${totalItems.toLocaleString()}</b> checkins detected. Geocoding may take <b>~${estMin} min</b> if locations aren't cached (1 req/sec Nominatim rate limit). Cached locations are instant.`;
+    const needsGeo = uniqueCoords.size;
+    if (!existingNote) {
+      existingNote = document.createElement('div');
+      existingNote.id = 'geo-time-note';
+      existingNote.style.cssText = 'font-size:.78rem;color:var(--text-dim);margin:8px 0;padding:10px 14px;background:var(--card);border:1px solid var(--border);border-radius:8px;line-height:1.5';
+      fileListEl.after(existingNote);
+    }
+    if (needsGeo > 0) {
+      // Check how many are already in geo_seed
+      _loadGeoSeed().then(seed => {
+        const cached = [...uniqueCoords].filter(k => seed[k]).length;
+        const uncached = needsGeo - cached;
+        const estMin = Math.ceil(uncached * 1.1 / 60);
+        if (uncached > 0 && estMin >= 1) {
+          existingNote.innerHTML = `<b>${totalItems.toLocaleString()}</b> checkins &mdash; <b>${needsGeo}</b> unique locations need geocoding (${cached} cached, <b>${uncached} uncached</b>). Estimated time: <b>~${estMin} min</b> at 1 req/sec.`;
+        } else if (uncached > 0) {
+          existingNote.innerHTML = `<b>${totalItems.toLocaleString()}</b> checkins &mdash; ${needsGeo} locations need geocoding (${cached} already cached, ${uncached} new). Should be quick.`;
+        } else {
+          existingNote.innerHTML = `<b>${totalItems.toLocaleString()}</b> checkins &mdash; all ${needsGeo} locations are already cached. Geocoding will be instant.`;
+        }
+      });
+    } else {
+      existingNote.innerHTML = `<b>${totalItems.toLocaleString()}</b> checkins &mdash; all have city data from Foursquare. No geocoding needed.`;
     }
   } else if (existingNote) {
     existingNote.remove();
@@ -1081,12 +1256,48 @@ async function geocodeCoords(coords, airportVenues = {}) {
     else toFetch.push({ lat, lng, key: k });
   }
 
-  const estSec = toFetch.length * 1.1;
-  const estMin = Math.ceil(estSec / 60);
-  if (toFetch.length > 0) {
-    log(`Geocoding: ${Object.keys(results).length} cached, ${toFetch.length} to look up`);
-    log(`Estimated time: ~${estMin} min (1 req/sec Nominatim rate limit)`);
-    log(`Running locally skips this step entirely if you have a geo_cache.json.`);
+  if (toFetch.length === 0) return results;
+
+  // Try offline geocoder first for non-airport coordinates
+  const getNearestCity = await _getOfflineGeocoder();
+  let offlineHits = 0;
+  const stillNeedNominatim = [];
+
+  for (const item of toFetch) {
+    const airportName = airportVenues[item.key];
+    if (airportName) {
+      // Airports need Nominatim search to resolve served city
+      stillNeedNominatim.push(item);
+      continue;
+    }
+    if (getNearestCity) {
+      try {
+        const r = getNearestCity(item.lat, item.lng);
+        if (r && r.cityName) {
+          const entry = {
+            city: r.cityName,
+            country: r.countryName || '',
+            country_code: (r.countryIso2 || '').toUpperCase(),
+          };
+          results[item.key] = entry;
+          cache[item.key] = entry;
+          offlineHits++;
+          continue;
+        }
+      } catch {}
+    }
+    stillNeedNominatim.push(item);
+  }
+
+  if (offlineHits > 0) {
+    log(`Offline geocoder resolved ${offlineHits}/${toFetch.length} locations instantly`);
+  }
+
+  if (stillNeedNominatim.length > 0) {
+    const estSec = stillNeedNominatim.length * 1.1;
+    const estMin = Math.ceil(estSec / 60);
+    log(`Nominatim lookup needed for ${stillNeedNominatim.length} remaining (airports/edge cases)`);
+    log(`Estimated time: ~${estMin} min (1 req/sec rate limit)`);
   }
 
   function extractCity(a) {
@@ -1095,15 +1306,15 @@ async function geocodeCoords(coords, airportVenues = {}) {
   }
 
   const geoStart = Date.now();
-  for (let i = 0; i < toFetch.length; i++) {
-    const { lat, lng, key } = toFetch[i];
+  for (let i = 0; i < stillNeedNominatim.length; i++) {
+    const { lat, lng, key } = stillNeedNominatim[i];
     const elapsed = Math.round((Date.now() - geoStart) / 1000);
-    const remaining = Math.max(0, Math.round((toFetch.length - i) * 1.1));
+    const remaining = Math.max(0, Math.round((stillNeedNominatim.length - i) * 1.1));
     const remMin = Math.floor(remaining / 60);
     const remSec = remaining % 60;
     const timeStr = remMin > 0 ? `${remMin}m ${remSec}s` : `${remSec}s`;
-    setProgress(10 + (i / toFetch.length) * 70,
-      `Geocoding ${i + 1}/${toFetch.length} \u2014 ~${timeStr} remaining`);
+    setProgress(10 + (i / stillNeedNominatim.length) * 70,
+      `Geocoding ${i + 1}/${stillNeedNominatim.length} \u2014 ~${timeStr} remaining`);
 
     try {
       // For airports, search by name to get the served city
@@ -1120,7 +1331,7 @@ async function geocodeCoords(coords, airportVenues = {}) {
             const cc = (sa.country_code || '').toUpperCase();
             results[key] = { city, country, country_code: cc };
             cache[key] = results[key];
-            if (i < toFetch.length - 1) await new Promise(r => setTimeout(r, 1100));
+            if (i < stillNeedNominatim.length - 1) await new Promise(r => setTimeout(r, 1100));
             continue;
           }
         }
@@ -1171,7 +1382,7 @@ async function geocodeCoords(coords, airportVenues = {}) {
     }
 
     // Nominatim rate limit: 1 req/sec
-    if (i < toFetch.length - 1) await new Promise(r => setTimeout(r, 1100));
+    if (i < stillNeedNominatim.length - 1) await new Promise(r => setTimeout(r, 1100));
   }
 
   try { localStorage.setItem(CACHE_KEY, JSON.stringify(cache)); } catch {}
@@ -1860,6 +2071,74 @@ generate_dashboard.run('/data', '/app/foursquare_template.html')
 
 $('edit-home-apply-btn').addEventListener('click', () => _rerunCorrelation('manual'));
 $('edit-home-auto-btn').addEventListener('click', () => _rerunCorrelation('auto'));
+
+// ── Dependency health checks ──────────────────────────────────────────
+function _setDepStatus(id, status, detail) {
+  // status: 'ok' | 'warn' | 'down' | 'checking'
+  const el = document.getElementById(id);
+  if (!el) return;
+  const dot = el.querySelector('.dep-dot');
+  const colors = { ok: '#4caf50', warn: '#ff9800', down: '#f44336', checking: 'var(--text-faint)' };
+  dot.style.background = colors[status] || colors.checking;
+  if (status === 'checking') dot.setAttribute('data-checking', '');
+  else dot.removeAttribute('data-checking');
+  if (detail) el.title = detail;
+}
+
+async function _checkDependencies() {
+  // Pyodide — check if the CDN script loaded the global
+  _setDepStatus('dep-pyodide', 'checking', 'Checking Pyodide...');
+  if (typeof loadPyodide === 'function') {
+    _setDepStatus('dep-pyodide', 'ok', 'Pyodide loaded (cdn.jsdelivr.net)');
+  } else {
+    _setDepStatus('dep-pyodide', 'down', 'Pyodide failed to load from cdn.jsdelivr.net');
+  }
+
+  // Offline geocoder — try loading the ESM module
+  _setDepStatus('dep-geocoder', 'checking', 'Checking offline geocoder...');
+  try {
+    const mod = await import('https://esm.sh/offline-geocode-city');
+    if (mod && mod.getNearestCity) {
+      _offlineGeocoder = mod.getNearestCity;
+      _setDepStatus('dep-geocoder', 'ok', 'Offline geocoder loaded (esm.sh)');
+    } else {
+      _setDepStatus('dep-geocoder', 'warn', 'Module loaded but getNearestCity not found — Nominatim will be used');
+    }
+  } catch (e) {
+    _setDepStatus('dep-geocoder', 'warn', 'Offline geocoder unavailable — Nominatim will be used as fallback: ' + e.message);
+  }
+
+  // Nominatim — lightweight check with a known coordinate
+  _setDepStatus('dep-nominatim', 'checking', 'Checking Nominatim...');
+  try {
+    const r = await fetch('https://nominatim.openstreetmap.org/status?format=json', {
+      headers: { 'User-Agent': 'swarmfm/1.0' }, signal: AbortSignal.timeout(8000)
+    });
+    if (r.ok) {
+      _setDepStatus('dep-nominatim', 'ok', 'Nominatim API reachable (nominatim.openstreetmap.org)');
+    } else {
+      _setDepStatus('dep-nominatim', 'warn', 'Nominatim returned HTTP ' + r.status + ' — geocoding may be slow');
+    }
+  } catch (e) {
+    _setDepStatus('dep-nominatim', 'down', 'Nominatim unreachable — geocoding will use offline data only: ' + e.message);
+  }
+
+  // Geo seed — try loading the JSON
+  _setDepStatus('dep-seed', 'checking', 'Checking geo seed cache...');
+  try {
+    const seed = await _loadGeoSeed();
+    const count = Object.keys(seed).length;
+    if (count > 0) {
+      _setDepStatus('dep-seed', 'ok', `Geo seed loaded: ${count.toLocaleString()} cached locations`);
+    } else {
+      _setDepStatus('dep-seed', 'warn', 'Geo seed is empty — geocoding will be slower on first run');
+    }
+  } catch (e) {
+    _setDepStatus('dep-seed', 'warn', 'Geo seed failed to load: ' + e.message);
+  }
+}
+
+_checkDependencies();
 </script>
 
 <!-- Foursquare export help modal -->
@@ -1901,8 +2180,11 @@ $('edit-home-auto-btn').addEventListener('click', () => _rerunCorrelation('auto'
   <h3 style="font-size:.85rem;color:var(--accent);margin:16px 0 6px">Your data stays in your browser</h3>
   <p style="font-size:.85rem">All processing runs client-side via Pyodide (Python in WebAssembly). Your Last.fm and Foursquare files are never uploaded to any server.</p>
 
-  <h3 style="font-size:.85rem;color:var(--accent);margin:16px 0 6px">Geocoding via Nominatim</h3>
-  <p style="font-size:.85rem">For checkins that don't already have city data, coordinates rounded to ~10 km are sent to <a href="https://nominatim.openstreetmap.org" target="_blank" style="color:var(--accent)">OpenStreetMap's Nominatim</a> service to resolve city and country names. This is the only network request that includes any location information. See the <a href="https://osmfoundation.org/wiki/Privacy_Policy" target="_blank" style="color:var(--accent)">OSM Foundation privacy policy</a>.</p>
+  <h3 style="font-size:.85rem;color:var(--accent);margin:16px 0 6px">Offline geocoding</h3>
+  <p style="font-size:.85rem">Most coordinates are resolved to city names using <a href="https://github.com/kyr0/offline-geocode-city" target="_blank" style="color:var(--accent)">offline-geocode-city</a>, loaded from <a href="https://esm.sh" target="_blank" style="color:var(--accent)">esm.sh</a>. This library runs entirely in your browser with embedded city data &mdash; no coordinates are sent externally. The library code is fetched once from the CDN on page load.</p>
+
+  <h3 style="font-size:.85rem;color:var(--accent);margin:16px 0 6px">Nominatim (fallback)</h3>
+  <p style="font-size:.85rem">For airports and edge cases the offline geocoder can't resolve, coordinates rounded to ~10 km are sent to <a href="https://nominatim.openstreetmap.org" target="_blank" style="color:var(--accent)">OpenStreetMap's Nominatim</a> service. See the <a href="https://osmfoundation.org/wiki/Privacy_Policy" target="_blank" style="color:var(--accent)">OSM Foundation privacy policy</a>.</p>
 
   <h3 style="font-size:.85rem;color:var(--accent);margin:16px 0 6px">Pre-built location cache</h3>
   <p style="font-size:.85rem">A <code style="font-family:var(--font-mono);font-size:.75rem;background:var(--card2);padding:1px 5px;border-radius:3px">geo_seed.json</code> file is loaded to speed up geocoding. It contains only coordinate-to-city mappings (e.g. <code style="font-family:var(--font-mono);font-size:.75rem;background:var(--card2);padding:1px 5px;border-radius:3px">"40.1,-74.2" &rarr; "New York, US"</code>) at ~10 km grid resolution, derived from the developer's own checkin data. It contains no venue names, timestamps, or personally identifying information. When this cache already has a match, no Nominatim request is made.</p>
