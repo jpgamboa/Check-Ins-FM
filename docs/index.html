@@ -897,8 +897,7 @@ function updateBtn() {
         const cached = [...uniqueCoords].filter(k => seed[k]).length;
         const uncached = needsGeo - cached;
         if (uncached > 0) {
-          const estMin = Math.ceil(uncached * 1.1 / 60);
-          existingNote.innerHTML = `<b>${totalItems.toLocaleString()}</b> checkins &mdash; <b>${needsGeo}</b> unique locations need geocoding (${cached} cached, <b>${uncached} new</b>). Estimated time: <b>~${estMin} min</b> (1 req/sec Nominatim rate limit).`;
+          existingNote.innerHTML = `<b>${totalItems.toLocaleString()}</b> checkins &mdash; <b>${needsGeo}</b> unique locations need geocoding (${cached} cached, <b>${uncached} new</b>). Most will resolve instantly via offline geocoder; airports use Nominatim.`;
         } else {
           existingNote.innerHTML = `<b>${totalItems.toLocaleString()}</b> checkins &mdash; all ${needsGeo} locations are already cached. Geocoding will be instant.`;
         }
@@ -1216,16 +1215,16 @@ function _buildGeoFacts(seed) {
     if (e.country_code) seedCountries.add(e.country_code);
   }
   const facts = [
-    `Nominatim resolves coordinates to city names with suburb-to-city correction for accuracy`,
-    `Your browser caches all geocoding results in localStorage — repeat runs are always instant`,
-    `An offline geocoder is loaded as a backup in case Nominatim is unavailable`,
-    `Nominatim rate limit is 1 request/sec — the seed cache lets us skip already-known locations`,
+    `The offline geocoder resolves most coordinates instantly — no network requests needed`,
+    `A suburb-to-metro correction table maps neighborhoods to their parent cities (e.g. Lakeway → Austin)`,
+    `Your browser caches all results in localStorage — repeat runs are always instant`,
+    `Nominatim is only needed for airports and edge cases the offline geocoder can't handle`,
   ];
   if (entries.length > 0) {
     facts.push(`The pre-built seed cache covers <b>${entries.length.toLocaleString()}</b> locations across <b>${seedCountries.size}</b> countries`);
-    facts.push(`<b>${seedCities.size.toLocaleString()}</b> cities are in the seed cache for instant lookups`);
+    facts.push(`<b>${seedCities.size.toLocaleString()}</b> cities are in the seed cache for extra-fast lookups`);
   }
-  facts.push(`Coordinates are rounded to ~10 km before any network request for privacy`);
+  facts.push(`Coordinates are rounded to ~10 km before any Nominatim request for privacy`);
   return facts;
 }
 
@@ -1268,30 +1267,60 @@ async function geocodeCoords(coords, airportVenues = {}) {
 
   if (toFetch.length === 0) return results;
 
-  // Pre-load offline geocoder (used as fallback if Nominatim fails)
-  const getNearestCity = await _getOfflineGeocoder();
+  // Load offline geocoder + suburb corrections in parallel
+  const [getNearestCity, corrections] = await Promise.all([
+    _getOfflineGeocoder(),
+    _loadSuburbCorrections(),
+  ]);
 
-  const estSec = toFetch.length * 1.1;
-  const estMin = Math.ceil(estSec / 60);
-  log(`Geocoding ${toFetch.length} locations via Nominatim (${estMin > 1 ? '~' + estMin + ' min' : 'should be quick'})`);
-  if (getNearestCity) log(`Offline geocoder ready as fallback if Nominatim is unavailable`);
+  // Phase 1: resolve non-airport coords via offline geocoder (instant)
+  const needNominatim = [];
+  let offlineHits = 0;
+  for (const item of toFetch) {
+    if (airportVenues[item.key]) {
+      needNominatim.push(item);
+      continue;
+    }
+    if (getNearestCity) {
+      try {
+        const r = getNearestCity(item.lat, item.lng);
+        if (r && r.cityName) {
+          const cc = (r.countryIso2 || '').toUpperCase();
+          const city = _correctSuburb(r.cityName, cc);
+          const entry = { city, country: r.countryName || '', country_code: cc };
+          results[item.key] = entry;
+          cache[item.key] = entry;
+          offlineHits++;
+          continue;
+        }
+      } catch {}
+    }
+    needNominatim.push(item);
+  }
+
+  if (offlineHits > 0) {
+    log(`Offline geocoder resolved ${offlineHits}/${toFetch.length} locations instantly`);
+  }
+  if (needNominatim.length > 0) {
+    const estMin = Math.ceil(needNominatim.length * 1.1 / 60);
+    log(`Nominatim needed for ${needNominatim.length} remaining (${estMin > 1 ? '~' + estMin + ' min' : 'should be quick'})`);
+  }
 
   function extractCity(a) {
     return a.city || a.town || a.township || a.village || a.suburb
         || a.municipality || a.county || a.state_district || a.state || '';
   }
 
-  let nominatimFails = 0;
-  let offlineFallbacks = 0;
+  // Phase 2: Nominatim for airports + offline geocoder misses
   const geoStart = Date.now();
-  for (let i = 0; i < toFetch.length; i++) {
-    const { lat, lng, key } = toFetch[i];
-    const remaining = Math.max(0, Math.round((toFetch.length - i) * 1.1));
+  for (let i = 0; i < needNominatim.length; i++) {
+    const { lat, lng, key } = needNominatim[i];
+    const remaining = Math.max(0, Math.round((needNominatim.length - i) * 1.1));
     const remMin = Math.floor(remaining / 60);
     const remSec = remaining % 60;
     const timeStr = remMin > 0 ? `${remMin}m ${remSec}s` : `${remSec}s`;
-    setProgress(10 + (i / toFetch.length) * 70,
-      `Geocoding ${i + 1}/${toFetch.length} \u2014 ~${timeStr} remaining`);
+    setProgress(10 + (i / needNominatim.length) * 70,
+      `Geocoding ${i + 1}/${needNominatim.length} via Nominatim \u2014 ~${timeStr} remaining`);
 
     let resolved = false;
     try {
@@ -1355,20 +1384,16 @@ async function geocodeCoords(coords, airportVenues = {}) {
         cache[key] = results[key];
         resolved = true;
       }
-    } catch (nominatimErr) {
-      // Nominatim failed — use offline geocoder as fallback
-      nominatimFails++;
+    } catch {
+      // Nominatim failed — use offline geocoder as last resort
       if (getNearestCity) {
         try {
           const r = getNearestCity(lat, lng);
           if (r && r.cityName) {
-            results[key] = {
-              city: r.cityName,
-              country: r.countryName || '',
-              country_code: (r.countryIso2 || '').toUpperCase(),
-            };
+            const cc = (r.countryIso2 || '').toUpperCase();
+            const city = _correctSuburb(r.cityName, cc);
+            results[key] = { city, country: r.countryName || '', country_code: cc };
             cache[key] = results[key];
-            offlineFallbacks++;
             resolved = true;
           }
         } catch {}
@@ -1379,11 +1404,7 @@ async function geocodeCoords(coords, airportVenues = {}) {
     }
 
     // Nominatim rate limit: 1 req/sec
-    if (i < toFetch.length - 1) await new Promise(r => setTimeout(r, 1100));
-  }
-
-  if (offlineFallbacks > 0) {
-    log(`Offline geocoder handled ${offlineFallbacks} locations where Nominatim was unavailable`);
+    if (i < needNominatim.length - 1) await new Promise(r => setTimeout(r, 1100));
   }
 
   try { localStorage.setItem(CACHE_KEY, JSON.stringify(cache)); } catch {}
