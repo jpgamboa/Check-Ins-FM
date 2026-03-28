@@ -173,13 +173,13 @@ h1 span { color: var(--accent); }
   accent-color: var(--accent);
 }
 .home-row-labels {
-  display: grid; grid-template-columns: 1fr 160px 100px 100px 28px;
+  display: grid; grid-template-columns: 1fr 100px 160px 100px 100px 28px;
   gap: 6px; margin-bottom: 6px; padding: 0 2px;
   font-family: var(--font-mono); font-size: 0.65rem; color: var(--text-faint);
   text-transform: uppercase; letter-spacing: .04em;
 }
 .home-row {
-  display: grid; grid-template-columns: 1fr 160px 100px 100px 28px;
+  display: grid; grid-template-columns: 1fr 100px 160px 100px 100px 28px;
   gap: 6px; margin-bottom: 6px; align-items: center;
 }
 .home-row input, .home-row select {
@@ -444,7 +444,7 @@ iframe#dashboard-frame {
         <p>This helps distinguish trips from home. Fill in below, or skip to auto-detect.</p>
       </div>
       <div class="home-row-labels">
-        <span>City</span><span>Country</span><span>From (YYYY-MM)</span><span>To (YYYY-MM)</span><span></span>
+        <span>City</span><span>State/Region</span><span>Country</span><span>From (YYYY-MM)</span><span>To (YYYY-MM)</span><span></span>
       </div>
       <div id="home-rows"></div>
       <button class="btn btn-secondary" id="home-add-btn" style="font-size:.8rem;padding:6px 12px;margin-top:8px">+ Add city</button>
@@ -472,6 +472,10 @@ iframe#dashboard-frame {
           <div class="preview-title">Top Artists</div>
           <div id="preview-artists"></div>
         </div>
+        <div class="preview-card">
+          <div class="preview-title">Top Albums</div>
+          <div id="preview-albums"></div>
+        </div>
         <div class="preview-two-col">
           <div class="preview-card">
             <div class="preview-title">Day of Week</div>
@@ -483,6 +487,16 @@ iframe#dashboard-frame {
             <div id="preview-hour" class="preview-hour"></div>
             <div id="preview-hour-labels" class="preview-hour-labels"></div>
           </div>
+        </div>
+        <div class="preview-card">
+          <div class="preview-title">Plays by Year</div>
+          <div id="preview-yearly" class="preview-dow"></div>
+          <div id="preview-yearly-labels" class="preview-dow-labels"></div>
+        </div>
+        <div class="preview-card">
+          <div class="preview-title">New Artists Discovered per Year</div>
+          <div id="preview-new-artists" class="preview-dow"></div>
+          <div id="preview-new-artists-labels" class="preview-dow-labels"></div>
         </div>
       </div>
     </div>
@@ -671,31 +685,66 @@ async function _loadGeoSeed() {
 }
 
 // ── Home cities panel ──────────────────────────────────────────────
-const _COUNTRIES = [
-  ['US','United States'],['CN','China'],['GB','United Kingdom'],['CA','Canada'],
-  ['AU','Australia'],['DE','Germany'],['FR','France'],['JP','Japan'],['KR','South Korea'],
-  ['MX','Mexico'],['BR','Brazil'],['IN','India'],['IT','Italy'],['ES','Spain'],
-  ['NL','Netherlands'],['SE','Sweden'],['NO','Norway'],['DK','Denmark'],['FI','Finland'],
-  ['IE','Ireland'],['BE','Belgium'],['AT','Austria'],['CH','Switzerland'],['PT','Portugal'],
-  ['PL','Poland'],['CZ','Czech Republic'],['GR','Greece'],['TR','Turkey'],['RU','Russia'],
-  ['UA','Ukraine'],['TH','Thailand'],['SG','Singapore'],['NZ','New Zealand'],['AR','Argentina'],
-  ['CL','Chile'],['CO','Colombia'],['PE','Peru'],['IS','Iceland'],['HK','Hong Kong'],
-  ['TW','Taiwan'],['IL','Israel'],['AE','UAE'],['ZA','South Africa'],['EG','Egypt'],
-  ['MY','Malaysia'],['PH','Philippines'],['ID','Indonesia'],['VN','Vietnam'],['HR','Croatia'],
-  ['HU','Hungary'],['RO','Romania'],['LT','Lithuania'],['LV','Latvia'],['EE','Estonia'],
+const _FAVORITES = [['US','United States'],['JP','Japan'],['BR','Brazil']];
+const _ALL_COUNTRIES = [
+  ['AF','Afghanistan'],['AL','Albania'],['DZ','Algeria'],['AD','Andorra'],['AO','Angola'],
+  ['AG','Antigua and Barbuda'],['AR','Argentina'],['AM','Armenia'],['AU','Australia'],['AT','Austria'],
+  ['AZ','Azerbaijan'],['BS','Bahamas'],['BH','Bahrain'],['BD','Bangladesh'],['BB','Barbados'],
+  ['BY','Belarus'],['BE','Belgium'],['BZ','Belize'],['BJ','Benin'],['BT','Bhutan'],
+  ['BO','Bolivia'],['BA','Bosnia and Herzegovina'],['BW','Botswana'],['BR','Brazil'],['BN','Brunei'],
+  ['BG','Bulgaria'],['BF','Burkina Faso'],['BI','Burundi'],['KH','Cambodia'],['CM','Cameroon'],
+  ['CA','Canada'],['CV','Cape Verde'],['CF','Central African Republic'],['TD','Chad'],['CL','Chile'],
+  ['CN','China'],['CO','Colombia'],['KM','Comoros'],['CG','Congo'],['CD','DR Congo'],
+  ['CR','Costa Rica'],['CI','Côte d\'Ivoire'],['HR','Croatia'],['CU','Cuba'],['CY','Cyprus'],
+  ['CZ','Czech Republic'],['DK','Denmark'],['DJ','Djibouti'],['DM','Dominica'],['DO','Dominican Republic'],
+  ['EC','Ecuador'],['EG','Egypt'],['SV','El Salvador'],['GQ','Equatorial Guinea'],['ER','Eritrea'],
+  ['EE','Estonia'],['SZ','Eswatini'],['ET','Ethiopia'],['FJ','Fiji'],['FI','Finland'],
+  ['FR','France'],['GA','Gabon'],['GM','Gambia'],['GE','Georgia'],['DE','Germany'],
+  ['GH','Ghana'],['GR','Greece'],['GD','Grenada'],['GT','Guatemala'],['GN','Guinea'],
+  ['GW','Guinea-Bissau'],['GY','Guyana'],['HT','Haiti'],['HN','Honduras'],['HK','Hong Kong'],
+  ['HU','Hungary'],['IS','Iceland'],['IN','India'],['ID','Indonesia'],['IR','Iran'],
+  ['IQ','Iraq'],['IE','Ireland'],['IL','Israel'],['IT','Italy'],['JM','Jamaica'],
+  ['JP','Japan'],['JO','Jordan'],['KZ','Kazakhstan'],['KE','Kenya'],['KI','Kiribati'],
+  ['KP','North Korea'],['KR','South Korea'],['KW','Kuwait'],['KG','Kyrgyzstan'],['LA','Laos'],
+  ['LV','Latvia'],['LB','Lebanon'],['LS','Lesotho'],['LR','Liberia'],['LY','Libya'],
+  ['LI','Liechtenstein'],['LT','Lithuania'],['LU','Luxembourg'],['MO','Macau'],['MG','Madagascar'],
+  ['MW','Malawi'],['MY','Malaysia'],['MV','Maldives'],['ML','Mali'],['MT','Malta'],
+  ['MH','Marshall Islands'],['MR','Mauritania'],['MU','Mauritius'],['MX','Mexico'],['FM','Micronesia'],
+  ['MD','Moldova'],['MC','Monaco'],['MN','Mongolia'],['ME','Montenegro'],['MA','Morocco'],
+  ['MZ','Mozambique'],['MM','Myanmar'],['NA','Namibia'],['NR','Nauru'],['NP','Nepal'],
+  ['NL','Netherlands'],['NZ','New Zealand'],['NI','Nicaragua'],['NE','Niger'],['NG','Nigeria'],
+  ['MK','North Macedonia'],['NO','Norway'],['OM','Oman'],['PK','Pakistan'],['PW','Palau'],
+  ['PA','Panama'],['PG','Papua New Guinea'],['PY','Paraguay'],['PE','Peru'],['PH','Philippines'],
+  ['PL','Poland'],['PT','Portugal'],['PR','Puerto Rico'],['QA','Qatar'],['RO','Romania'],
+  ['RU','Russia'],['RW','Rwanda'],['KN','Saint Kitts and Nevis'],['LC','Saint Lucia'],
+  ['VC','Saint Vincent'],['WS','Samoa'],['SM','San Marino'],['ST','São Tomé and Príncipe'],
+  ['SA','Saudi Arabia'],['SN','Senegal'],['RS','Serbia'],['SC','Seychelles'],['SL','Sierra Leone'],
+  ['SG','Singapore'],['SK','Slovakia'],['SI','Slovenia'],['SB','Solomon Islands'],['SO','Somalia'],
+  ['ZA','South Africa'],['SS','South Sudan'],['ES','Spain'],['LK','Sri Lanka'],['SD','Sudan'],
+  ['SR','Suriname'],['SE','Sweden'],['CH','Switzerland'],['SY','Syria'],['TW','Taiwan'],
+  ['TJ','Tajikistan'],['TZ','Tanzania'],['TH','Thailand'],['TL','Timor-Leste'],['TG','Togo'],
+  ['TO','Tonga'],['TT','Trinidad and Tobago'],['TN','Tunisia'],['TR','Turkey'],['TM','Turkmenistan'],
+  ['TV','Tuvalu'],['UG','Uganda'],['UA','Ukraine'],['AE','UAE'],['GB','United Kingdom'],
+  ['US','United States'],['UY','Uruguay'],['UZ','Uzbekistan'],['VU','Vanuatu'],['VA','Vatican City'],
+  ['VE','Venezuela'],['VN','Vietnam'],['YE','Yemen'],['ZM','Zambia'],['ZW','Zimbabwe'],
 ];
 function _ccOptions(selected) {
-  return '<option value="">--</option>' +
-    _COUNTRIES.map(([cc, name]) =>
-      `<option value="${cc}"${cc === selected ? ' selected' : ''}>${cc} — ${name}</option>`
-    ).join('');
+  const favOpts = _FAVORITES.map(([cc, name]) =>
+    `<option value="${cc}"${cc === selected ? ' selected' : ''}>${cc} — ${name}</option>`
+  ).join('');
+  const allOpts = _ALL_COUNTRIES.map(([cc, name]) =>
+    `<option value="${cc}"${cc === selected ? ' selected' : ''}>${cc} — ${name}</option>`
+  ).join('');
+  return '<option value="">--</option>' + favOpts +
+    '<option disabled>── ── ── ── ──</option>' + allOpts;
 }
-function _addHomeRow(city = '', cc = '', start = '', end = '') {
+function _addHomeRow(city = '', state = '', cc = '', start = '', end = '') {
   const rows = document.getElementById('home-rows');
   const row = document.createElement('div');
   row.className = 'home-row';
   row.innerHTML = `
     <input type="text" placeholder="e.g. Austin" value="${city}">
+    <input type="text" placeholder="e.g. TX" value="${state}" class="state-input">
     <select title="Country">${_ccOptions(cc)}</select>
     <input type="text" placeholder="2011-01" pattern="\\d{4}-\\d{2}" value="${start}">
     <input type="text" placeholder="2023-06" pattern="\\d{4}-\\d{2}" value="${end}">
@@ -728,15 +777,20 @@ function getManualHomePeriods(mode) {
   const rows = document.querySelectorAll('#home-rows .home-row');
   const periods = [];
   for (const row of rows) {
-    const city = row.querySelector('input[type="text"]').value.trim();
+    const textInputs = [...row.querySelectorAll('input[type="text"]')];
+    const city = textInputs[0]?.value.trim();
+    const state = textInputs[1]?.value.trim();
     const cc = row.querySelector('select').value;
-    const dateInputs = [...row.querySelectorAll('input[type="text"]')];
-    const start = dateInputs[1]?.value.trim(); // second text input
-    const end = dateInputs[2]?.value.trim();   // third text input
+    const start = textInputs[2]?.value.trim();
+    const end = textInputs[3]?.value.trim();
     if (city && cc && start && end && /^\d{4}-\d{2}$/.test(start) && /^\d{4}-\d{2}$/.test(end)) {
-      periods.push({ city, country_code: cc, start: start + '-01', end: end + '-28' });
+      const period = { city, country_code: cc, start: start + '-01', end: end + '-28' };
+      if (state) period.state = state;
+      periods.push(period);
     }
   }
+  // Sort by start date so display order matches chronological order
+  periods.sort((a, b) => a.start.localeCompare(b.start));
   return periods.length > 0 ? periods : null;
 }
 
@@ -754,18 +808,32 @@ function renderPreviewCharts(scrobbles) {
   const artistCounts = {};
   const uniqueArtists = new Set();
 
+  const albumCounts = {};
+  const yearCounts = {};
+  const firstHeard = {}; // artist -> earliest year
+
   for (const s of scrobbles) {
     const ts = s.timestamp;
     if (!ts) continue;
     const month = ts.slice(0, 7);
+    const year = ts.slice(0, 4);
     if (month.length === 7) monthCounts[month] = (monthCounts[month] || 0) + 1;
+    if (year.length === 4) yearCounts[year] = (yearCounts[year] || 0) + 1;
     const dt = new Date(ts);
     if (!isNaN(dt)) {
       const dow = (dt.getUTCDay() + 6) % 7; // Mon=0
       dowCounts[dow]++;
       hourCounts[dt.getUTCHours()]++;
     }
-    if (s.artist) { artistCounts[s.artist] = (artistCounts[s.artist] || 0) + 1; uniqueArtists.add(s.artist); }
+    if (s.artist) {
+      artistCounts[s.artist] = (artistCounts[s.artist] || 0) + 1;
+      uniqueArtists.add(s.artist);
+      if (!firstHeard[s.artist] || year < firstHeard[s.artist]) firstHeard[s.artist] = year;
+    }
+    if (s.album && s.artist) {
+      const albumKey = `${s.artist} — ${s.album}`;
+      albumCounts[albumKey] = (albumCounts[albumKey] || 0) + 1;
+    }
   }
 
   // ── Stats row ──
@@ -826,6 +894,56 @@ function renderPreviewCharts(scrobbles) {
     ).join('');
     const hlEl = document.getElementById('preview-hour-labels');
     hlEl.innerHTML = '<span>0h</span><span>6h</span><span>12h</span><span>18h</span><span>23h</span>';
+  }
+
+  // ── Top Albums ──
+  const sortedAlbums = Object.entries(albumCounts).sort((a, b) => b[1] - a[1]).slice(0, 8);
+  if (sortedAlbums.length > 0) {
+    const maxAl = sortedAlbums[0][1];
+    const albEl = document.getElementById('preview-albums');
+    albEl.innerHTML = sortedAlbums.map(([name, count]) =>
+      `<div class="preview-artist-row">
+        <span class="name" title="${name.replace(/"/g, '&quot;')}">${name}</span>
+        <div class="bar-wrap"><div class="bar" style="width:${count / maxAl * 100}%;background:var(--warm)"></div></div>
+        <span class="count">${count.toLocaleString()}</span>
+      </div>`
+    ).join('');
+  }
+
+  // ── Plays by Year ──
+  const years = Object.keys(yearCounts).sort();
+  if (years.length > 0) {
+    const maxY = Math.max(...years.map(y => yearCounts[y]));
+    const yrEl = document.getElementById('preview-yearly');
+    yrEl.innerHTML = years.map(y =>
+      `<div class="col"><div class="bar" style="height:${Math.max(4, Math.round(yearCounts[y] / maxY * 48))}px"></div></div>`
+    ).join('');
+    const ylEl = document.getElementById('preview-yearly-labels');
+    if (years.length <= 8) {
+      ylEl.innerHTML = years.map(y => `<span>${y}</span>`).join('');
+    } else {
+      ylEl.innerHTML = `<span>${years[0]}</span><span>${years[Math.floor(years.length/2)]}</span><span>${years[years.length-1]}</span>`;
+    }
+  }
+
+  // ── New Artists per Year ──
+  const newByYear = {};
+  for (const [artist, year] of Object.entries(firstHeard)) {
+    newByYear[year] = (newByYear[year] || 0) + 1;
+  }
+  const newYears = Object.keys(newByYear).sort();
+  if (newYears.length > 0) {
+    const maxN = Math.max(...newYears.map(y => newByYear[y]));
+    const naEl = document.getElementById('preview-new-artists');
+    naEl.innerHTML = newYears.map(y =>
+      `<div class="col"><div class="bar" style="height:${Math.max(4, Math.round(newByYear[y] / maxN * 48))}px;background:var(--warm)"></div></div>`
+    ).join('');
+    const nlEl = document.getElementById('preview-new-artists-labels');
+    if (newYears.length <= 8) {
+      nlEl.innerHTML = newYears.map(y => `<span>${y}</span>`).join('');
+    } else {
+      nlEl.innerHTML = `<span>${newYears[0]}</span><span>${newYears[Math.floor(newYears.length/2)]}</span><span>${newYears[newYears.length-1]}</span>`;
+    }
   }
 
   document.getElementById('preview-charts').style.display = 'block';
@@ -1434,7 +1552,12 @@ async function runPipeline() {
         pyodide.FS.readFile('/data/needs_geocoding.json', { encoding: 'utf8' })
       );
       if (needsGeo.length > 0) {
+        const estGeoMin = Math.ceil(needsGeo.length * 1.1 / 60);
         setProgress(10, `Geocoding ${needsGeo.length} locations\u2026`);
+        if (estGeoMin >= 2) {
+          log(`\u23f1 Estimated geocoding time: ~${estGeoMin} minutes (${needsGeo.length} locations at 1 req/sec)`);
+          log(`  Tip: Running locally with a geo_cache.json skips this step entirely.`);
+        }
         const airportVenues = JSON.parse(
           pyodide.FS.readFile('/data/airport_venues.json', { encoding: 'utf8' })
         );

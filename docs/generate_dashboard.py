@@ -522,11 +522,17 @@ def run(data_dir="./data", template_path=None):
     if isinstance(home_periods, dict):
         # Legacy single-home format
         home_periods = [home_periods] if home_periods.get("city") else []
+    def _home_label_part(p):
+        parts = [p['city']]
+        if p.get('state'):
+            parts.append(p['state'])
+        parts.append(p['country_code'])
+        return ', '.join(parts)
+
     if len(home_periods) == 1:
-        p = home_periods[0]
-        home_label = f"{p['city']}, {p['country_code']}"
+        home_label = _home_label_part(home_periods[0])
     elif home_periods:
-        home_label = " → ".join(f"{p['city']}, {p['country_code']}" for p in home_periods)
+        home_label = " → ".join(_home_label_part(p) for p in home_periods)
     else:
         home_label = "unknown"
     print(f"  Home: {home_label}")

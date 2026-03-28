@@ -486,11 +486,11 @@ def run(data_dir="./data"):
     # ── Home periods: manual override or auto-infer ─────────────────────────
     manual_home = _load(manual_home_path, None)
     if manual_home and isinstance(manual_home, list) and len(manual_home) > 0:
-        home_periods = manual_home
+        home_periods = sorted(manual_home, key=lambda p: p.get("start", ""))
         print(f"  Using {len(home_periods)} manual home period(s):")
         for p in home_periods:
-            print(f"    {p['city']}, {p['country_code']}  "
-                  f"({p['start'][:7]} → {p['end'][:7]})")
+            label = f"{p['city']}, {p.get('state', '')}, {p['country_code']}" if p.get('state') else f"{p['city']}, {p['country_code']}"
+            print(f"    {label}  ({p['start'][:7]} → {p['end'][:7]})")
     else:
         home_periods = _infer_home_periods(checkins)
         if len(home_periods) == 1:
@@ -609,7 +609,7 @@ def run(data_dir="./data"):
     ]
 
     # ── Trip detection ────────────────────────────────────────────────────────
-    home_labels = [f"{p['city']}, {p['country_code']}" for p in home_periods]
+    home_labels = [f"{p['city']}, {p.get('state', '')}, {p['country_code']}" if p.get('state') else f"{p['city']}, {p['country_code']}" for p in home_periods]
     print(f"  Detecting trips (home: {' → '.join(home_labels) or '?'})...")
     trips = _detect_trips(checkins, home_periods)
 
