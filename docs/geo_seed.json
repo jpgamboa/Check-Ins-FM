@@ -7353,5 +7353,495 @@
     "city": "Bandung",
     "country": "Indonesia",
     "country_code": "ID"
+  },
+  "35.8,139.5": {
+    "city": "Higashimurayama",
+    "country": "Japan",
+    "country_code": "JP"
+  },
+  "35.7,139.3": {
+    "city": "Fussa",
+    "country": "Japan",
+    "country_code": "JP"
+  },
+  "3.2,101.7": {
+    "city": "Petaling Jaya",
+    "country": "Malaysia",
+    "country_code": "MY"
+  },
+  "-6.2,106.7": {
+    "city": "Ciputat",
+    "country": "Indonesia",
+    "country_code": "ID"
+  },
+  "35.5,139.2": {
+    "city": "Hachiōji",
+    "country": "Japan",
+    "country_code": "JP"
+  },
+  "35.8,139.3": {
+    "city": "Fussa",
+    "country": "Japan",
+    "country_code": "JP"
+  },
+  "35.6,139.3": {
+    "city": "Hachiōji",
+    "country": "Japan",
+    "country_code": "JP"
+  },
+  "35.6,139.4": {
+    "city": "Hachiōji",
+    "country": "Japan",
+    "country_code": "JP"
+  },
+  "-23.6,-46.7": {
+    "city": "São Paulo",
+    "country": "Brazil",
+    "country_code": "BR"
+  },
+  "-33.8,151.1": {
+    "city": "Concord West",
+    "country": "Australia",
+    "country_code": "AU"
+  },
+  "-6.2,106.6": {
+    "city": "Tangerang",
+    "country": "Indonesia",
+    "country_code": "ID"
+  },
+  "-34.0,151.1": {
+    "city": "Miranda",
+    "country": "Australia",
+    "country_code": "AU"
+  },
+  "35.7,139.5": {
+    "city": "Higashimurayama",
+    "country": "Japan",
+    "country_code": "JP"
+  },
+  "-34.0,151.0": {
+    "city": "Revesby",
+    "country": "Australia",
+    "country_code": "AU"
+  },
+  "35.7,139.4": {
+    "city": "Fussa",
+    "country": "Japan",
+    "country_code": "JP"
+  },
+  "41.0,28.8": {
+    "city": "Bağcılar",
+    "country": "Turkey",
+    "country_code": "TR"
+  },
+  "35.8,139.4": {
+    "city": "Fussa",
+    "country": "Japan",
+    "country_code": "JP"
+  },
+  "31.2,121.3": {
+    "city": "Jiangqiao",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "35.6,139.2": {
+    "city": "Hachiōji",
+    "country": "Japan",
+    "country_code": "JP"
+  },
+  "31.3,121.5": {
+    "city": "Shanghai",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "-6.3,106.7": {
+    "city": "Ciputat",
+    "country": "Indonesia",
+    "country_code": "ID"
+  },
+  "-6.3,106.8": {
+    "city": "Jakarta",
+    "country": "Indonesia",
+    "country_code": "ID"
+  },
+  "55.7,37.8": {
+    "city": "Lyublino",
+    "country": "Russia",
+    "country_code": "RU"
+  },
+  "35.5,139.3": {
+    "city": "Hachiōji",
+    "country": "Japan",
+    "country_code": "JP"
+  },
+  "-33.8,150.9": {
+    "city": "Blacktown",
+    "country": "Australia",
+    "country_code": "AU"
+  },
+  "-33.9,150.9": {
+    "city": "Liverpool",
+    "country": "Australia",
+    "country_code": "AU"
+  },
+  "40.6,-73.8": {
+    "city": "Arverne",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "40.6,-74.1": {
+    "city": "Tompkinsville",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "-38.0,145.1": {
+    "city": "Heatherton",
+    "country": "Australia",
+    "country_code": "AU"
+  },
+  "-33.8,151.0": {
+    "city": "Harris Park",
+    "country": "Australia",
+    "country_code": "AU"
+  },
+  "55.8,37.7": {
+    "city": "Bogorodskoye",
+    "country": "Russia",
+    "country_code": "RU"
+  },
+  "29.3,48.1": {
+    "city": "Bayān",
+    "country": "Kuwait",
+    "country_code": "KW"
+  },
+  "40.6,-74.0": {
+    "city": "Flatbush",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "29.1,48.1": {
+    "city": "Al Manqaf",
+    "country": "Kuwait",
+    "country_code": "KW"
+  },
+  "-37.8,145.2": {
+    "city": "Vermont",
+    "country": "Australia",
+    "country_code": "AU"
+  },
+  "55.9,37.6": {
+    "city": "Altuf’yevskiy",
+    "country": "Russia",
+    "country_code": "RU"
+  },
+  "-37.9,145.1": {
+    "city": "Moorabbin",
+    "country": "Australia",
+    "country_code": "AU"
+  },
+  "40.9,-73.9": {
+    "city": "The Bronx",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "-38.0,145.2": {
+    "city": "Dandenong",
+    "country": "Australia",
+    "country_code": "AU"
+  },
+  "41.1,29.1": {
+    "city": "Üsküdar",
+    "country": "Turkey",
+    "country_code": "TR"
+  },
+  "-37.9,145.2": {
+    "city": "Burwood East",
+    "country": "Australia",
+    "country_code": "AU"
+  },
+  "-34.0,150.9": {
+    "city": "Holsworthy",
+    "country": "Australia",
+    "country_code": "AU"
+  },
+  "31.3,121.4": {
+    "city": "Shanghai",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "-23.6,-46.5": {
+    "city": "São Paulo",
+    "country": "Brazil",
+    "country_code": "BR"
+  },
+  "-6.1,106.7": {
+    "city": "Tangerang",
+    "country": "Indonesia",
+    "country_code": "ID"
+  },
+  "-37.8,145.3": {
+    "city": "Bayswater",
+    "country": "Australia",
+    "country_code": "AU"
+  },
+  "-33.7,151.1": {
+    "city": "Pennant Hills",
+    "country": "Australia",
+    "country_code": "AU"
+  },
+  "41.0,29.2": {
+    "city": "Sancaktepe",
+    "country": "Turkey",
+    "country_code": "TR"
+  },
+  "-33.7,151.0": {
+    "city": "Glenhaven",
+    "country": "Australia",
+    "country_code": "AU"
+  },
+  "41.1,28.9": {
+    "city": "Bağcılar",
+    "country": "Turkey",
+    "country_code": "TR"
+  },
+  "-37.7,145.0": {
+    "city": "Heidelberg West",
+    "country": "Australia",
+    "country_code": "AU"
+  },
+  "29.2,48.1": {
+    "city": "Ar Riqqah",
+    "country": "Kuwait",
+    "country_code": "KW"
+  },
+  "41.1,28.8": {
+    "city": "Bağcılar",
+    "country": "Turkey",
+    "country_code": "TR"
+  },
+  "40.6,-73.9": {
+    "city": "Bergen Beach",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "-33.9,151.0": {
+    "city": "Fairfield",
+    "country": "Australia",
+    "country_code": "AU"
+  },
+  "-2.9,104.7": {
+    "city": "Palembang",
+    "country": "Indonesia",
+    "country_code": "ID"
+  },
+  "-6.3,106.9": {
+    "city": "Jakarta",
+    "country": "Indonesia",
+    "country_code": "ID"
+  },
+  "40.9,29.2": {
+    "city": "Üsküdar",
+    "country": "Turkey",
+    "country_code": "TR"
+  },
+  "-37.8,144.8": {
+    "city": "Brooklyn",
+    "country": "Australia",
+    "country_code": "AU"
+  },
+  "-34.0,151.2": {
+    "city": "Maroubra",
+    "country": "Australia",
+    "country_code": "AU"
+  },
+  "-6.1,106.9": {
+    "city": "Jakarta",
+    "country": "Indonesia",
+    "country_code": "ID"
+  },
+  "-6.1,107.1": {
+    "city": "Jakarta",
+    "country": "Indonesia",
+    "country_code": "ID"
+  },
+  "40.6,-74.2": {
+    "city": "Bloomfield",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "55.8,37.8": {
+    "city": "Novogireyevo",
+    "country": "Russia",
+    "country_code": "RU"
+  },
+  "40.8,-73.8": {
+    "city": "Hunts Point",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "-35.0,138.5": {
+    "city": "Blacktown",
+    "country": "Australia",
+    "country_code": "AU"
+  },
+  "-6.3,107.0": {
+    "city": "Jakarta",
+    "country": "Indonesia",
+    "country_code": "ID"
+  },
+  "29.0,48.1": {
+    "city": "Al Aḩmadī",
+    "country": "Kuwait",
+    "country_code": "KW"
+  },
+  "-37.7,145.1": {
+    "city": "Bundoora",
+    "country": "Australia",
+    "country_code": "AU"
+  },
+  "31.4,121.4": {
+    "city": "Nanxiang",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "-37.9,144.9": {
+    "city": "Williamstown",
+    "country": "Australia",
+    "country_code": "AU"
+  },
+  "31.3,121.3": {
+    "city": "Nanxiang",
+    "country": "China",
+    "country_code": "CN"
+  },
+  "-38.1,145.3": {
+    "city": "Narre Warren South",
+    "country": "Australia",
+    "country_code": "AU"
+  },
+  "-38.0,145.0": {
+    "city": "Black Rock",
+    "country": "Australia",
+    "country_code": "AU"
+  },
+  "55.7,37.5": {
+    "city": "Amin’yevo",
+    "country": "Russia",
+    "country_code": "RU"
+  },
+  "-6.3,106.6": {
+    "city": "Ciputat",
+    "country": "Indonesia",
+    "country_code": "ID"
+  },
+  "-37.7,144.9": {
+    "city": "Essendon North",
+    "country": "Australia",
+    "country_code": "AU"
+  },
+  "-37.9,145.3": {
+    "city": "Knoxfield",
+    "country": "Australia",
+    "country_code": "AU"
+  },
+  "-34.1,151.0": {
+    "city": "Engadine",
+    "country": "Australia",
+    "country_code": "AU"
+  },
+  "55.6,37.8": {
+    "city": "Alekseyevka",
+    "country": "Russia",
+    "country_code": "RU"
+  },
+  "-38.2,145.1": {
+    "city": "Mornington",
+    "country": "Australia",
+    "country_code": "AU"
+  },
+  "-37.7,144.7": {
+    "city": "Taylors Hill",
+    "country": "Australia",
+    "country_code": "AU"
+  },
+  "-2.9,104.6": {
+    "city": "Palembang",
+    "country": "Indonesia",
+    "country_code": "ID"
+  },
+  "-38.1,145.1": {
+    "city": "Frankston East",
+    "country": "Australia",
+    "country_code": "AU"
+  },
+  "-37.7,145.2": {
+    "city": "Eltham North",
+    "country": "Australia",
+    "country_code": "AU"
+  },
+  "-6.1,106.5": {
+    "city": "Tangerang",
+    "country": "Indonesia",
+    "country_code": "ID"
+  },
+  "55.6,37.7": {
+    "city": "Kolomenskoye",
+    "country": "Russia",
+    "country_code": "RU"
+  },
+  "55.7,37.4": {
+    "city": "Amin’yevo",
+    "country": "Russia",
+    "country_code": "RU"
+  },
+  "55.9,37.5": {
+    "city": "Otradnoye",
+    "country": "Russia",
+    "country_code": "RU"
+  },
+  "40.7,-73.7": {
+    "city": "Bellaire",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "40.9,-73.8": {
+    "city": "Morris Park",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "-6.1,106.6": {
+    "city": "Tangerang",
+    "country": "Indonesia",
+    "country_code": "ID"
+  },
+  "40.7,-74.2": {
+    "city": "Bloomfield",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "41.8,-71.9": {
+    "city": "Brooklyn Heights",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "40.5,-74.2": {
+    "city": "Great Kills",
+    "country": "United States",
+    "country_code": "US"
+  },
+  "-3.0,104.9": {
+    "city": "Palembang",
+    "country": "Indonesia",
+    "country_code": "ID"
+  },
+  "-23.5,-46.5": {
+    "city": "São Paulo",
+    "country": "Brazil",
+    "country_code": "BR"
+  },
+  "-6.4,106.8": {
+    "city": "Ciputat",
+    "country": "Indonesia",
+    "country_code": "ID"
   }
 }
