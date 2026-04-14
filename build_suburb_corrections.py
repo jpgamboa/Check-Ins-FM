@@ -115,6 +115,7 @@ def main():
         # Manual overrides for names the offline geocoder returns
         # that aren't in GeoNames cities15000
         manual = {
+            "Deerfield|US": "Denver",
             "Lakeway|US": "Austin",
             "Bee Cave|US": "Austin",
             "West Lake Hills|US": "Austin",

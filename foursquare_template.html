@@ -83,7 +83,7 @@
 
   .chart-card {
     background: var(--card); border: 1px solid var(--border);
-    border-radius: 14px; padding: 18px; overflow: hidden;
+    border-radius: 14px; padding: 18px; overflow: visible;
     backdrop-filter: blur(12px);
     transition: border-color .2s;
     cursor: pointer;
@@ -765,7 +765,7 @@ function renderFoursquare() {
     },
   ], L({
     barmode: 'group', showlegend: true,
-    legend: { x: 0.01, y: 0.98, font: { color: DIM, size: 11 }, bgcolor: 'rgba(0,0,0,0)' },
+    legend: { x: 0.12, y: 0.98, font: { color: DIM, size: 11 }, bgcolor: 'rgba(0,0,0,0)' },
     yaxis: { gridcolor: GRID, zerolinecolor: GRID, ticksuffix: '%' },
     margin: { t: 16, r: 16, b: 40, l: 50 },
   }), CFG);

@@ -47,7 +47,7 @@ def _extract_city(address):
     Nominatim address dicts use different keys depending on the
     type of place. Walk through them in order of specificity.
     """
-    for key in ("city", "town", "township", "village", "suburb",
+    for key in ("city", "town", "township", "village",
                 "municipality", "county", "state_district", "state"):
         val = address.get(key)
         if val:
