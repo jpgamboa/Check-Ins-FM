@@ -1306,13 +1306,28 @@ async function geocodeCoords(coords, airportVenues = {}) {
     else toFetch.push({ lat, lng, key: k });
   }
 
-  if (toFetch.length === 0) return results;
-
   // Load offline geocoder + suburb corrections in parallel
   const [getNearestCity, corrections] = await Promise.all([
     _getOfflineGeocoder(),
     _loadSuburbCorrections(),
   ]);
+
+  // Apply suburb corrections to cached results
+  for (const k of Object.keys(results)) {
+    const e = results[k];
+    if (e.city) {
+      const corrected = _correctSuburb(e.city, e.country_code);
+      if (corrected !== e.city) {
+        e.city = corrected;
+        cache[k] = e;
+      }
+    }
+  }
+
+  if (toFetch.length === 0) {
+    try { localStorage.setItem(CACHE_KEY, JSON.stringify(cache)); } catch {}
+    return results;
+  }
 
   // Phase 1: resolve non-airport coords via offline geocoder (instant)
   const needNominatim = [];
@@ -1421,6 +1436,7 @@ async function geocodeCoords(coords, airportVenues = {}) {
           } catch {}
         }
 
+        city = _correctSuburb(city, cc);
         results[key] = { city, country, country_code: cc };
         cache[key] = results[key];
         resolved = true;
